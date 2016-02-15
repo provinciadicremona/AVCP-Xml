@@ -1,0 +1,13 @@
+ISTRUZIONI PER L'INSTALLAZIONE:
+
+1 - Spostare la cartella avcp e tutto il suo contenuto nel path di apache.
+	E' possibile rinominare la cartella;
+2 - Usando phpMyAdmin o un altro client mysql, creare un nuovo database 
+	con la codifica caratteri impostata a "utf8_general_ci";
+3 -	Sempre da phpMyAdmin o dal client mysql, spostarsi nel db appena creato ed
+	esequire tutte insieme le query contenute nel file 'avcp.sql';
+4 - Aprire il file './app/config.php' e completare la configurazione seguendo
+	le istruzioni.
+
+NB: E' consigliabile l'installazione su un server non accessibile da internet o, se 
+proprio non se ne può fare a meno, proteggere almeno l'accesso alla cartella.
