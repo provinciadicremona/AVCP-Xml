@@ -1,0 +1,62 @@
+/* Wrapper for page content to push down footer */
+#wrap {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	/* Negative indent footer by it's height */
+	margin: 0 auto -141px;
+}
+
+#push,
+footer {
+        height: 100px;
+}
+
+
+footer {
+	marigin: 0;
+	margin-top: 1em;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: @gray;
+	background-color: @grayLighter;
+	border-top: 5px solid darken(@green, 15%);
+	.box-shadow(~"0 -1px 10px rgba(0,0,0,.3)");
+}
+footer a {
+  color: @grayLight;
+  text-decoration: none;
+}
+footer a:hover,
+footer a:focus {
+  color: @grayDark;
+  text-decoration: underline;
+}
+
+
+article {
+	margin: 2em 0;
+}
+
+.form-signin {
+	max-width: 300px;
+	padding: 19px 29px 29px;
+	margin: 30px auto 20px;
+	background-color: @white;
+	border: 1px solid @grayLighter;
+	.border-radius(5px);
+	.box-shadow(~"0 1px 10px rgba(0,0,0,.1)");
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+	margin-bottom: 10px;
+}
+
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+	font-size: 16px;
+	height: auto;
+	margin-bottom: 15px;
+	padding: 7px 9px;
+}

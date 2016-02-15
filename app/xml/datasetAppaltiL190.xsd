@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:legge190="legge190_1_0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="legge190_1_0" version="1.0">
+	<xsd:include schemaLocation="TypesL190.xsd"/>
+	<xsd:element name="pubblicazione">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="metadata">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="titolo" type="xsd:string"/>
+							<xsd:element name="abstract" type="xsd:string"/>
+							<xsd:element name="dataPubbicazioneDataset" type="xsd:date" nillable="false"/>
+							<xsd:element name="entePubblicatore" type="xsd:string" nillable="false"/>
+							<xsd:element name="dataUltimoAggiornamentoDataset" type="xsd:date"/>
+							<xsd:element name="annoRiferimento" type="xsd:int" nillable="false"/>
+							<!--riferimento al file stesso-->
+							<xsd:element name="urlFile" type="xsd:anyURI" nillable="false"/>
+							<xsd:element name="licenza"/>
+							<!--licenza opendata-->
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="data">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="lotto" minOccurs="0" maxOccurs="unbounded">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="cig" type="legge190:CigType" nillable="false"/>
+										<xsd:element name="strutturaProponente" nillable="false">
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="codiceFiscaleProp" type="legge190:codiceFiscaleType" nillable="false"/>
+													<xsd:element name="denominazione" type="legge190:denominazioneType" nillable="false"/>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="oggetto" type="legge190:oggettoType" nillable="false"/>
+										<xsd:element name="sceltaContraente" type="legge190:sceltaContraenteType" nillable="false"/>
+										<xsd:element name="partecipanti">
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="raggruppamento" minOccurs="0" maxOccurs="unbounded">
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="membro" type="legge190:aggregatoType" minOccurs="2" maxOccurs="unbounded"/>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="partecipante" type="legge190:singoloType" minOccurs="0" maxOccurs="unbounded"/>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="aggiudicatari">
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="aggiudicatarioRaggruppamento" minOccurs="0" maxOccurs="unbounded">
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="membro" type="legge190:aggregatoType" minOccurs="2" maxOccurs="unbounded"/>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="aggiudicatario" type="legge190:singoloType" minOccurs="0" maxOccurs="unbounded"/>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="importoAggiudicazione" type="legge190:ImportoType"/>
+										<xsd:element name="tempiCompletamento">
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="dataInizio" type="xsd:date" minOccurs="0"/>
+													<xsd:element name="dataUltimazione" type="xsd:date" minOccurs="0"/>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="importoSommeLiquidate" type="legge190:ImportoType"/>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!--strutture tipo interne-->
+	<xsd:complexType name="aggregatoType">
+		<xsd:sequence>
+			<xsd:annotation>
+				<xsd:documentation>E' obbligatorio almeno uno tra codice Fiscale e identificativo estero</xsd:documentation>
+			</xsd:annotation>
+			<xsd:choice>
+				<xsd:element name="codiceFiscale" type="legge190:codiceFiscaleType" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="identificativoFiscaleEstero" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			</xsd:choice>
+			<xsd:element name="ragioneSociale" type="legge190:denominazioneType" minOccurs="1"/>
+			<xsd:element name="ruolo" type="legge190:ruoloType" minOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="singoloType">
+		<xsd:sequence>
+			<xsd:annotation>
+				<xsd:documentation>E' obbligatorio almeno uno tra codice Fiscale e identificativo estero</xsd:documentation>
+			</xsd:annotation>
+			<xsd:choice>
+				<xsd:element name="codiceFiscale" type="legge190:codiceFiscaleType" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="identificativoFiscaleEstero" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			</xsd:choice>
+			<xsd:element name="ragioneSociale" type="legge190:denominazioneType" minOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
