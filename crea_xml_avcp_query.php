@@ -62,7 +62,7 @@ while ($lotto = $result_lotti->fetch_assoc()) {
     foreach ($lotto as $key => $value) {
         $$key = stripslashes($value);
     }
-    $oggetto = $ragioneSociale = htmlspecialchars($oggetto, ENT_NOQUOTES, 'UTF-8');
+    $oggetto = htmlspecialchars($oggetto, ENT_NOQUOTES, 'UTF-8');
     $XML_FILE .= "<lotto>\n";
     $XML_FILE .= "<cig>" . $cig . "</cig>\n";
     $XML_FILE .= "<strutturaProponente>\n";
