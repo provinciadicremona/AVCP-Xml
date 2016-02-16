@@ -35,19 +35,19 @@
 /**
  * Indirizzo dell'host su sui risiede il db (di solito è 'localhost')
  */
-define('DB_HOST', '');
+define('DB_HOST', 'localhost');
 /**
  * Nome del database usato dal programma
  */
-define('DB_NAME', '');
+define('DB_NAME', 'avcp');
 /**
  *  Utente che si connette al db
  */
-define('DB_USER', '');
+define('DB_USER', 'avcp');
 /**
  * Password dell'utente che si connette al db
  */
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'password');
 
 
 
@@ -64,9 +64,9 @@ define('DB_PASSWORD', '');
 -------------------------------------------------------------- */
 $user = array(
 	'admin' => 'password-admin',
-	'utente-1' => 'password-utente-1',
-	'utente-2' => 'password-utente-2',
-	'utente-3' => 'password-utente-3'
+	'utente-1' => 'password-1',
+	'utente-2' => 'password-2',
+	'utente-3' => 'password-3'
 	);
 
 /* --------------------------------------------------------------
@@ -75,8 +75,8 @@ $user = array(
 /**
  * Attenzione ai caratteri di escape per gli apstrofi!!!
  */
-define('ENTE_PROPONENTE', 'Inserire usando qui il nome dell\'ente proponente');
-define('CF_PROPONENTE', 'Inserire qui il codice fiscale ente');
+define('ENTE_PROPONENTE', 'Nome Ente');
+define('CF_PROPONENTE', '99999999999');
 
 /**
  * Licenza di utilizzo dei dati preimpostata a IODL 2.0
