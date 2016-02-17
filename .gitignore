@@ -1,0 +1,8 @@
+# File temporanei
+*~
+
+# Eclipse Core
+.project
+local.properties
+.settings/
+.loadpath
