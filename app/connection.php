@@ -14,14 +14,10 @@ if ($db->connect_errno) {
 $anniValidi = array (
         'options' => array (
                 'min_range' => 2012,
-                'max_range' => (int) (date('Y') + 1) 
-        ) 
+                'max_range' => (int) (date('Y') + 1)
+        )
 );
 
-// Estraggo la lista degli anni bloccati e avanzati al successivo
-$bloccati = array (
-        '0000' => 'n' 
-);
 
 // Estraggo l'elenco degli anni bloccati e relativo stato di avanzamento:
 $queryBloccati = "SELECT anno, avanzato FROM bloccati ORDER BY anno ASC";
@@ -32,4 +28,9 @@ if ($quantiBloccati > 0) {
         $tmp = $resBloccati->fetch_assoc();
         $bloccati[$tmp['anno']] = $tmp['avanzato'];
     }
+} else {
+    // Estraggo la lista degli anni bloccati e avanzati al successivo
+    $bloccati = array (
+            '0000' => 'n'
+    );    
 }
