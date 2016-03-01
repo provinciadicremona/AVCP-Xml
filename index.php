@@ -19,6 +19,8 @@
  * To contact the authors send an email to <sito@provincia.cremona.it>
  */
 session_start();
+
+define('INSTALL_DIR', dirname(__FILE__));
 // Disabilito la visualizzazione dei notice.
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
 
@@ -40,6 +42,7 @@ $callToJqueryUI = '
 	<script src="js/jquery.ui.datepicker.js"></script>
 	<script src="js/jquery.ui.datepicker-it.js"></script>
 	';
+
 require_once 'header.php';
 require_once 'app/controller/indexController.php';
 require_once 'footer.php';
