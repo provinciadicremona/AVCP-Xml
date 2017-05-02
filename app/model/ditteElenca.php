@@ -19,7 +19,7 @@ for($x = 0; $x < $quante; $x++) {
     if ($ditte[$x]['partecipa'] > 0) {
         $ditte[$x]['elimina'] = '<i class="icon-ban-circle" title="Partecipa a gare"></i>';
         
-        $lotti = split('xxxxx', $ditte[$x]['id_aggiudicatari']);
+        $lotti = explode('xxxxx', $ditte[$x]['id_aggiudicatari']);
         $sLotti = array_unique($lotti);
         $ditte[$x]['lotti'] = null;
         $conta = 1;
