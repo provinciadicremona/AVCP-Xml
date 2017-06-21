@@ -13,8 +13,9 @@ if (is_null($_POST['action'])) {
             $fn = fgetcsv($fh, 600, ',', '"');
             $n = 0;
             $numErrori = 0;
+            $logImport = "LOG errori di importazione...\n";
             $query = "INSERT IGNORE INTO avcp_ditta
-			(`codiceFiscale`, `ragioneSociale`, `estero`) VALUES " . PHP_EOL;
+            (`codiceFiscale`, `ragioneSociale`, `estero`) VALUES " . PHP_EOL;
             while ($row = fgetcsv($fh, 1024, ',', '"')) {
                 
                 foreach ($row as $key => $value) {
@@ -23,12 +24,14 @@ if (is_null($_POST['action'])) {
                 if (!controllaCF($rows[$n]['codiceFiscale'])) {
                     if ($rows[$n]['estero'] != 1) {
                         $numErrori++;
+                        $logImport .= "Codice fiscale errato per: " . implode(",", $rows[$n]) . "\n";
                         continue;
                     }
                 }
                 
                 if (empty($rows[$n]['ragioneSociale'])) {
                     $numErrori++;
+                    $logImport .= "Ragione Sociale mancante per: " . implode(",", $rows[$n]) . "\n";
                     continue;
                 }
                 if (empty($rows[$n]['estero'])) {
