@@ -7,13 +7,13 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 --
 
 CREATE TABLE `avcp_ditta` (
-  `codiceFiscale` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `ragioneSociale` varchar(250) CHARACTER SET utf8 NOT NULL,
-  `estero` varchar(1) CHARACTER SET utf8 NOT NULL DEFAULT '0',
-  `userins` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `flag` varchar(8) CHARACTER SET utf8 DEFAULT NULL,
-  UNIQUE KEY `ditta` (`codiceFiscale`),
-  UNIQUE KEY `cf-rs` (`codiceFiscale`,`ragioneSociale`)
+    `codiceFiscale` varchar(255) CHARACTER SET utf8 NOT NULL,
+    `ragioneSociale` varchar(250) CHARACTER SET utf8 NOT NULL,
+    `estero` varchar(1) CHARACTER SET utf8 NOT NULL DEFAULT '0',
+    `userins` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+    `flag` varchar(8) CHARACTER SET utf8 DEFAULT NULL,
+    UNIQUE KEY `ditta` (`codiceFiscale`),
+    UNIQUE KEY `cf-rs` (`codiceFiscale`,`ragioneSociale`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='tabella ditte avcp';
 
 -- --------------------------------------------------------
@@ -23,16 +23,16 @@ CREATE TABLE `avcp_ditta` (
 --
 
 CREATE TABLE `avcp_ld` (
-  `id` int(11) unsigned DEFAULT NULL,
-  `cig` varchar(10) NOT NULL,
-  `codiceFiscale` varchar(255) NOT NULL,
-  `ruolo` varchar(255) NOT NULL,
-  `funzione` set('01-PARTECIPANTE','02-AGGIUDICATARIO') NOT NULL DEFAULT '02-AGGIUDICATARIO' COMMENT 'cosa fa la ditta',
-  `raggruppamento` int(11) NOT NULL DEFAULT '0',
-  `flag` varchar(8) DEFAULT NULL,
-  KEY `gara-ditta` (`cig`,`codiceFiscale`),
-  KEY `codiceFiscale` (`codiceFiscale`),
-  KEY `id-funz` (`id`,`funzione`)
+    `id` int(11) unsigned DEFAULT NULL,
+    `cig` varchar(10) NOT NULL,
+    `codiceFiscale` varchar(255) NOT NULL,
+    `ruolo` varchar(255) NOT NULL,
+    `funzione` set('01-PARTECIPANTE','02-AGGIUDICATARIO') NOT NULL DEFAULT '02-AGGIUDICATARIO' COMMENT 'cosa fa la ditta',
+    `raggruppamento` int(11) NOT NULL DEFAULT '0',
+    `flag` varchar(8) DEFAULT NULL,
+    KEY `gara-ditta` (`cig`,`codiceFiscale`),
+    KEY `codiceFiscale` (`codiceFiscale`),
+    KEY `id-funz` (`id`,`funzione`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Relazione lotto/ditta';
 
 -- --------------------------------------------------------
@@ -42,23 +42,23 @@ CREATE TABLE `avcp_ld` (
 --
 
 CREATE TABLE `avcp_lotto` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `anno` int(4) NOT NULL,
-  `cig` varchar(10) CHARACTER SET utf8 NOT NULL DEFAULT '0000000000',
-  `numAtto` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `codiceFiscaleProp` varchar(11) CHARACTER SET utf8 NOT NULL DEFAULT 'Inserire CF',
-  `denominazione` varchar(250) CHARACTER SET utf8 NOT NULL DEFAULT 'Denominazione Ente',
-  `oggetto` varchar(250) CHARACTER SET utf8 NOT NULL,
-  `sceltaContraente` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '00-DA DEFINIRE',
-  `importoAggiudicazione` decimal(15,2) DEFAULT '0.00',
-  `dataInizio` date DEFAULT NULL,
-  `dataUltimazione` date DEFAULT NULL,
-  `importoSommeLiquidate` decimal(15,2) DEFAULT '0.00',
-  `userins` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `flag` varchar(8) CHARACTER SET utf8 DEFAULT NULL,
-  `chiuso` BOOLEAN NOT NULL DEFAULT FALSE,
-  PRIMARY KEY (`id`),
-  KEY `anno-user` (`anno`,`userins`)
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `anno` int(4) NOT NULL,
+    `cig` varchar(10) CHARACTER SET utf8 NOT NULL DEFAULT '0000000000',
+    `numAtto` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+    `codiceFiscaleProp` varchar(11) CHARACTER SET utf8 NOT NULL DEFAULT 'Inserire CF',
+    `denominazione` varchar(250) CHARACTER SET utf8 NOT NULL DEFAULT 'Denominazione Ente',
+    `oggetto` varchar(250) CHARACTER SET utf8 NOT NULL,
+    `sceltaContraente` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '00-DA DEFINIRE',
+    `importoAggiudicazione` decimal(15,2) DEFAULT '0.00',
+    `dataInizio` date DEFAULT NULL,
+    `dataUltimazione` date DEFAULT NULL,
+    `importoSommeLiquidate` decimal(15,2) DEFAULT '0.00',
+    `userins` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+    `flag` varchar(8) CHARACTER SET utf8 DEFAULT NULL,
+    `chiuso` BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (`id`),
+    KEY `anno-user` (`anno`,`userins`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='tabella avcp del CIG/Lotto';
 
 -- --------------------------------------------------------
@@ -68,8 +68,8 @@ CREATE TABLE `avcp_lotto` (
 --
 
 CREATE TABLE `avcp_ruoloType` (
-  `sceltaContraente` varchar(255) NOT NULL COMMENT 'tipo scelta contraente',
-  UNIQUE KEY `sceltaContraente` (`sceltaContraente`)
+    `sceltaContraente` varchar(255) NOT NULL COMMENT 'tipo scelta contraente',
+    UNIQUE KEY `sceltaContraente` (`sceltaContraente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tipo scelta contraente';
 
 -- --------------------------------------------------------
@@ -92,8 +92,8 @@ INSERT INTO `avcp_ruoloType` (`sceltaContraente`) VALUES
 --
 
 CREATE TABLE `avcp_sceltaContraenteType` (
-  `ruolo` varchar(255) NOT NULL COMMENT 'tipo scelta contraente',
-  UNIQUE KEY `ruolo` (`ruolo`)
+    `ruolo` varchar(255) NOT NULL COMMENT 'tipo scelta contraente',
+    UNIQUE KEY `ruolo` (`ruolo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tipo scelta contraente';
 
 -- --------------------------------------------------------
@@ -129,8 +129,8 @@ INSERT INTO `avcp_sceltaContraenteType` (`ruolo`) VALUES
 --
 
 CREATE TABLE `bloccati` (
-  `anno` int(11) NOT NULL,
-  `avanzato` enum('s','n') NOT NULL DEFAULT 'n'
+    `anno` int(11) NOT NULL,
+    `avanzato` enum('s','n') NOT NULL DEFAULT 'n'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

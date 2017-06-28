@@ -16,7 +16,6 @@
               <a href="mailto:sito@provincia.cremona.it">
                 <i class="icon-envelope"></i>&nbsp;sito@provincia.cremona.it</a>
                 </address>
-          
           </div>
           <div class="span4 text-right">
             <img src="img/gplv3.png" alt="GPL V3 Logo">
@@ -30,11 +29,11 @@
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="js/jquery.js"></script>
   <script src="js/bootstrap.js"></script>
-  <?php
-    if (null !== $customJsScript) {
-      echo $callToJqueryUI . PHP_EOL;
-      echo $customJsScript . PHP_EOL;
-    }
-  ?>
+<?php
+if (null !== $customJsScript) {
+    echo $callToJqueryUI . PHP_EOL;
+    echo $customJsScript . PHP_EOL;
+}
+?>
 </body>
 </html>
