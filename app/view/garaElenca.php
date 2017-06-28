@@ -73,8 +73,9 @@ $customJsScript .= PHP_EOL . '
 					<option <?php if ($u === $usersel) echo "selected";?>><?php echo $u;?></option>
 					<?php endforeach;?>
 					
-				</select> <input class="btn btn-primary" type="submit"
-					value="Filtra &raquo;" />
+				</select> <input class="btn btn-primary" type="submit" value="Filtra &raquo;" />
+				&nbsp;<a href="app/webServices/odsUserExport.php?anno=<?php echo $anno; ?>&amp;user=<?php echo $usersel; ?>" 
+				title="Elenco relativo all'utente selezionato e comprensivo di numero atto">Scarica elenco in formato ods</a>
 			</form>
 
 			<!--  Inizio liveSearch -->

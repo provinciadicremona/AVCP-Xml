@@ -10,6 +10,7 @@ if (empty($_GET['anno'])) {
 				<p>Qualcuno dei dati non era corretto, <a href="./">torna alla Homepage</a></p>
 			</div>
 		</div>';
+    //continue;
 } else {
     $whereUser = null;
     if (key_exists('usersel', $_POST) && !empty($_POST['usersel'])) {
@@ -30,7 +31,7 @@ if (empty($_GET['anno'])) {
         $whereUser = " AND l.`userins` = '" . $usersel . "'";
     }
     
-    $anno = filter_input(INPUT_GET, 'anno', FILTER_VALIDATE_INT);
+    $anno = $db->real_escape_string(trim($_GET['anno']));
     $query = "
 	SELECT
     	l.`id`,
@@ -43,7 +44,7 @@ if (empty($_GET['anno'])) {
     	(SELECT count(*) FROM `avcp_ld` as ldl WHERE l.`id` = ldl.`id`  AND ldl.funzione = '02-AGGIUDICATARIO') as aggiudicatari,
 	    l.`userins`,
 	   GROUP_CONCAT(ditta.`ragioneSociale` SEPARATOR 'xxxxx') as nome_aggiudicatari
-	FROM
+	FROM 
 	   `avcp_lotto`as l
 	LEFT JOIN
 	   `avcp_ld` as ld
@@ -53,7 +54,7 @@ if (empty($_GET['anno'])) {
 	   `avcp_ditta` as ditta
 	ON
 	   ld.`codiceFiscale` = ditta.`codiceFiscale`
-    WHERE
+    WHERE 
 	   l.`anno` = '" . $anno . "'" . $whereUser . "
 	GROUP BY l.`id`
 	";

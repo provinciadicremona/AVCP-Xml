@@ -56,6 +56,7 @@ CREATE TABLE `avcp_lotto` (
   `importoSommeLiquidate` decimal(15,2) DEFAULT '0.00',
   `userins` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `flag` varchar(8) CHARACTER SET utf8 DEFAULT NULL,
+  `chiuso` BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (`id`),
   KEY `anno-user` (`anno`,`userins`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='tabella avcp del CIG/Lotto';
@@ -155,3 +156,11 @@ CREATE VIEW `avcp_vista_gare` AS select `l`.`id` AS `id`,`l`.`cig` AS `cig`,`l`.
 --
 
 CREATE VIEW `avcp_xml_ditte` AS select `avcp_ld`.`id` AS `id`,`avcp_ld`.`cig` AS `cig`,`avcp_ditta`.`codiceFiscale` AS `codiceFiscale`,`avcp_ditta`.`estero` AS `estero`,`avcp_ld`.`ruolo` AS `ruolo`,`avcp_ld`.`funzione` AS `funzione`,`avcp_ld`.`raggruppamento` AS `raggruppamento`,`avcp_ditta`.`ragioneSociale` AS `ragioneSociale` from (`avcp_ld` join `avcp_ditta`) where (`avcp_ld`.`codiceFiscale` = `avcp_ditta`.`codiceFiscale`) order by `avcp_ld`.`funzione`,`avcp_ld`.`raggruppamento`;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura per la vista `avcp_export_ods`
+--
+
+CREATE VIEW `avcp_export_ods`  AS  select `l`.`id` AS `id`,`l`.`anno` AS `anno`,`l`.`numAtto` AS `numAtto`,`l`.`cig` AS `cig`,`l`.`oggetto` AS `oggetto`,`l`.`sceltaContraente` AS `sceltaContraente`,`l`.`dataInizio` AS `dataInizio`,`l`.`dataUltimazione` AS `dataUltimazione`,`l`.`importoAggiudicazione` AS `importoAggiudicazione`,`l`.`importoSommeLiquidate` AS `importoSommeLiquidate`,(select count(0) from `avcp_ld` `ldl` where ((`l`.`id` = `ldl`.`id`) and (`ldl`.`funzione` = '01-PARTECIPANTE'))) AS `partecipanti`,(select count(0) from `avcp_ld` `ldl` where ((`l`.`id` = `ldl`.`id`) and (`ldl`.`funzione` = '02-AGGIUDICATARIO'))) AS `aggiudicatari`,`l`.`userins` AS `userins`,group_concat(`ditta`.`ragioneSociale` separator 'xxxxx') AS `nome_aggiudicatari` from ((`avcp_lotto` `l` left join `avcp_ld` `ld` on(((`l`.`id` = `ld`.`id`) and (`ld`.`funzione` = '02-AGGIUDICATARIO')))) left join `avcp_ditta` `ditta` on((`ld`.`codiceFiscale` = `ditta`.`codiceFiscale`))) group by `l`.`id` order by `l`.`anno`,`l`.`id` ;
