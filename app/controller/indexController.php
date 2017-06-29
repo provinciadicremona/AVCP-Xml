@@ -1,6 +1,7 @@
 <?php
+// Controller principale
+// gestisce il login e smista le richieste agli altri controller
 require_once 'app/config.php';
-
 if (!isset($_SESSION['user']) && empty($_SESSION['user'])) {
     $_GET['mask'] = 'signin';
 }
