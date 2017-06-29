@@ -14,18 +14,18 @@ if (is_null($_POST['action'])) {
             $numErrori = 0;
             $logImport = "LOG errori di importazione...\n";
             $query = "INSERT IGNORE INTO avcp_lotto
-            (`anno`,
-            `cig`,
-            `numAtto`,
-            `codiceFiscaleProp`,
-            `denominazione` ,
-            `oggetto`,
-            `sceltaContraente`,
-            `dataInizio`,
-            `dataUltimazione`,
-            `importoAggiudicazione`,
-            `importoSommeLiquidate`,
-            `userins`) VALUES " . PHP_EOL;
+                (`anno`,
+                `cig`,
+                `numAtto`,
+                `codiceFiscaleProp`,
+                `denominazione` ,
+                `oggetto`,
+                `sceltaContraente`,
+                `dataInizio`,
+                `dataUltimazione`,
+                `importoAggiudicazione`,
+                `importoSommeLiquidate`,
+                `userins`) VALUES " . PHP_EOL;
             while ($row = fgetcsv($fh, 1024, ',', '"')) {
                 foreach ($row as $key => $value) {
                     $rows[$n][$fn[$key]] = $db->real_escape_string(trim($value));

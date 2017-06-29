@@ -23,19 +23,16 @@ if (isset($_GET['id'])) {
         $formAction .= '&amp;raggruppamento=' . $raggruppamento;
         $formRag = '<input type="hidden" name="raggruppamento" id="raggruppamento" value="' . $raggruppamento . '" />';
         $queryRuolo = "SELECT * FROM avcp_ruoloType ORDER BY sceltaContraente ASC";
-        
         $resRuolo = $db->query($queryRuolo);
         $formRuolo = '
-			<fieldset>
-				<legend>Ruolo nel raggruppamento ' . $raggruppamento . ':</legend>' . PHP_EOL;
+            <fieldset>
+                <legend>Ruolo nel raggruppamento ' . $raggruppamento . ':</legend>' . PHP_EOL;
         $formRuolo .= '<select name="ruolo" id="ruolo">' . PHP_EOL;
-        
         $num = $resRuolo->num_rows;
         for($x = 0; $x < $num; $x++) {
             $ruolo = $resRuolo->fetch_assoc();
             $formRuolo .= '<option value="' . $ruolo['sceltaContraente'] . '">' . $ruolo['sceltaContraente'] . '</option>' . PHP_EOL;
         }
-        
         $formRuolo .= '</select>' . PHP_EOL . '</fieldset>' . PHP_EOL;
     }
 }

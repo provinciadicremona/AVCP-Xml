@@ -5,7 +5,7 @@ if (empty($_GET['do']) || $_GET['do'] == 'login') {
     $localVersion = fread($fh, 1024);
     fclose($fh);
     $localVersion = str_replace('_', '.', $localVersion);
-    
+
     // Seleziono gli anni presenti nel database dei lotti
     $queryAnno = "SELECT DISTINCT anno FROM avcp_lotto GROUP BY anno ORDER BY anno DESC";
     $resAnno = $db->query($queryAnno);
@@ -13,7 +13,7 @@ if (empty($_GET['do']) || $_GET['do'] == 'login') {
     $xmlLink = null;
     $xmlVal = null;
     $elencoGareLink = null;
-    
+
     if ($quanti > 0) {
         for($x = 0; $x < $quanti; $x++) {
             $anno[$x] = $resAnno->fetch_assoc();
@@ -48,11 +48,11 @@ if (empty($_GET['do']) || $_GET['do'] == 'login') {
     require_once 'app/view/index.php';
 } else {
     switch ($_GET['do']){
-        case 'aggiorna':
-            require_once 'app/webServices/isUpdated.php';
-            require_once 'app/view/aggiornamenti.php';
-            break;
-        default:
-            break;
+    case 'aggiorna':
+        require_once 'app/webServices/isUpdated.php';
+        require_once 'app/view/aggiornamenti.php';
+        break;
+    default:
+        break;
     }
 }

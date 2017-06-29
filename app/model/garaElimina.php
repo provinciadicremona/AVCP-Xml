@@ -1,12 +1,12 @@
 <?php
 if (!empty(filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT))) {
     $queryVer = "SELECT count(id) as quante, anno FROM avcp_lotto
-	WHERE id = '" . $db->real_escape_string($_GET['id']) . "' GROUP BY anno";
+        WHERE id = '" . $db->real_escape_string($_GET['id']) . "' GROUP BY anno";
     $resVer = $db->query($queryVer);
     $row = $resVer->fetch_assoc();
     $numVer = $row['quante'];
     $anno = $row['anno'];
-    
+
     if ($numVer != 1) {
         $messElimina = "La gara che desideri eliminare non esiste!";
     } elseif (array_key_exists($anno, $bloccati)) {

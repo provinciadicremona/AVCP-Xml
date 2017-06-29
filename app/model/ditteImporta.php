@@ -15,9 +15,9 @@ if (is_null($_POST['action'])) {
             $numErrori = 0;
             $logImport = "LOG errori di importazione...\n";
             $query = "INSERT IGNORE INTO avcp_ditta
-            (`codiceFiscale`, `ragioneSociale`, `estero`) VALUES " . PHP_EOL;
+                (`codiceFiscale`, `ragioneSociale`, `estero`) VALUES " . PHP_EOL;
             while ($row = fgetcsv($fh, 1024, ',', '"')) {
-                
+
                 foreach ($row as $key => $value) {
                     $rows[$n][$fn[$key]] = $db->real_escape_string(trim($value));
                 }
@@ -28,7 +28,7 @@ if (is_null($_POST['action'])) {
                         continue;
                     }
                 }
-                
+
                 if (empty($rows[$n]['ragioneSociale'])) {
                     $numErrori++;
                     $logImport .= "Ragione Sociale mancante per: " . implode(",", $rows[$n]) . "\n";
@@ -37,7 +37,7 @@ if (is_null($_POST['action'])) {
                 if (empty($rows[$n]['estero'])) {
                     $rows[$n]['estero'] = '0';
                 }
-                
+
                 foreach ($rows[$n] as $key => $value) {
                     if (empty($rows[$n][$key])) {
                         if ($key == 'estero') {
@@ -49,7 +49,7 @@ if (is_null($_POST['action'])) {
                         $rowQ[$n][$key] = "'" . $value . "'";
                     }
                 }
-                
+
                 if ($n > 0) {
                     $query .= ", " . PHP_EOL;
                 }
@@ -57,7 +57,7 @@ if (is_null($_POST['action'])) {
                 $n++;
             }
             fclose($fh);
-            
+
             $res = $db->query($query);
             $numGareFile = $n + $numErrori;
             $numOk = $db->affected_rows;
