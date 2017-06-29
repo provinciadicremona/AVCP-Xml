@@ -1,7 +1,7 @@
 <div class="row">
     <div class="span12">
         <div class="well well-large">
-            <div class="page-header">   
+            <div class="page-header">
                 <h1>Riepilogo importazione</h1>
                 <p>Le gare eventualmente non importate perchè non valide possono essere comunque inserite manualmente</p>
             </div>
