@@ -43,14 +43,14 @@ $result_lotti = $db->query($query_lotti);
 $number_lotti = $result_lotti->num_rows;
 
 $XML_TOT .= '<legge190:pubblicazione xsi:schemaLocation="legge190_1_0 datasetAppaltiL190.xsd"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:legge190="legge190_1_0">
-	<metadata>
-		<titolo> Pubblicazione 1 legge 190</titolo>
-		<abstract> Pubblicazione 1 legge 190 anno 1 rif. 2010' . ' aggiornamento del ' . $date_agg_full . '</abstract>
-		<dataPubbicazioneDataset>' . $dataPubb . '</dataPubbicazioneDataset>
-		<entePubblicatore>' . stripslashes(ENTE_PROPONENTE) . '</entePubblicatore>
-		<dataUltimoAggiornamentoDataset>' . $date_agg . '</dataUltimoAggiornamentoDataset>
-		<annoRiferimento>' . $anno_rif . '</annoRiferimento>' . "\n";
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:legge190="legge190_1_0">
+    <metadata>
+    <titolo> Pubblicazione 1 legge 190</titolo>
+    <abstract> Pubblicazione 1 legge 190 anno 1 rif. 2010' . ' aggiornamento del ' . $date_agg_full . '</abstract>
+    <dataPubbicazioneDataset>' . $dataPubb . '</dataPubbicazioneDataset>
+    <entePubblicatore>' . stripslashes(ENTE_PROPONENTE) . '</entePubblicatore>
+    <dataUltimoAggiornamentoDataset>' . $date_agg . '</dataUltimoAggiornamentoDataset>
+    <annoRiferimento>' . $anno_rif . '</annoRiferimento>' . "\n";
 if (URL_XML_FILE_ANNUALE == 'NO') {
     $XML_TOT .= '<urlFile>' . URL_XML_FILE . '</urlFile>' . "\n";
 } else {
@@ -58,8 +58,8 @@ if (URL_XML_FILE_ANNUALE == 'NO') {
 }
 
 $XML_TOT .= '
-	<licenza>' . LICENZA . '</licenza>
-	</metadata>' . PHP_EOL;
+    <licenza>' . LICENZA . '</licenza>
+    </metadata>' . PHP_EOL;
 $XML_TOT .= '<data>' . PHP_EOL;
 while ($lotto = $result_lotti->fetch_assoc()) {
     foreach ($lotto as $key => $value) {
@@ -77,9 +77,9 @@ while ($lotto = $result_lotti->fetch_assoc()) {
         $sceltaContraente = '06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI  GARA ART. 221 D.LGS. 163/2006';
     }
     $XML_FILE .= "<sceltaContraente>" . $sceltaContraente . "</sceltaContraente>\n";
-    
+
     // ### PARTECIPANTI ######
-    
+
     $XML_FILE .= "<partecipanti>\n";
     $raggruppamento_old = 1;
     $raggruppamento_start = 0;
@@ -126,14 +126,14 @@ while ($lotto = $result_lotti->fetch_assoc()) {
         }
     } // fine while partecipanti
     $result_partecipanti->free(); // pulisco partecipanti
-    
+
     if ($raggruppamento_start == 1) {
         $XML_RAGG .= "</raggruppamento>\n";
         $XML_FILE .= $XML_RAGG;
     }
     $XML_FILE .= $XML_PART;
     $XML_FILE .= "</partecipanti>\n";
-    
+
     // ### AGGIUDICATARI ######
     $XML_FILE .= "<aggiudicatari>\n";
     $raggruppamento_old = 1;
@@ -184,7 +184,7 @@ while ($lotto = $result_lotti->fetch_assoc()) {
     }
     $XML_FILE .= $XML_RAGG . $XML_AGG;
     $XML_FILE .= "</aggiudicatari>\n";
-    
+
     // ####### importi e tempi #####
     $XML_FILE .= "<importoAggiudicazione>" . $importoAggiudicazione . "</importoAggiudicazione>\n";
     $XML_FILE .= "<tempiCompletamento>\n";

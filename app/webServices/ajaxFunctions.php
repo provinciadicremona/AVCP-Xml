@@ -1,16 +1,15 @@
 <?php
-
+// Funzione che converte un array in formato json
+// Utilizzata solo per vecchie versioni di PHP
 function array_to_json($array) {
     if (!is_array($array)) {
         return false;
     }
-
+    // Testo se la'array è associativo. Se 0 no, altrimenti sì
     $associative = count(array_diff(array_keys($array), array_keys(array_keys($array))));
     if ($associative) {
-
         $construct = array ();
         foreach ($array as $key => $value) {
-
             // We first copy each key/value pair into a staging array,
             // formatting each key and value properly as we go.
 
