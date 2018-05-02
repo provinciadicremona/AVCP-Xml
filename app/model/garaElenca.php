@@ -10,7 +10,7 @@ if (empty($_GET['anno'])) {
                 <p>Qualcuno dei dati non era corretto, <a href="./">torna alla Homepage</a></p>
             </div>
         </div>';
-    //continue;
+    return;
 } else {
     $whereUser = null;
     if (key_exists('usersel', $_POST) && !empty($_POST['usersel'])) {
