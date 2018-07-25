@@ -23,6 +23,16 @@ $customJsScript = '
     });
 </script>
 ';
+// inizialize unset variables
+isset($anno) || $anno = '';
+isset($id) || $id = '';
+isset($cig) || $cig = '';
+isset($numAtto) || $numAtto = '';
+isset($oggetto) || $oggetto = '';
+isset($dataInizio) || $dataInizio = '';
+isset($dataUltimazione) || $dataUltimazione = '';
+isset($importoAggiudicazione) || $importoAggiudicazione = '';
+isset($importoSommeLiquidate) || $importoSommeLiquidate = '';
 ?>
 <div class="row">
     <div class="span8 offset2">
