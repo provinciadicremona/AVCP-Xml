@@ -13,8 +13,8 @@ function get_resource_path($resource) {
     $metadata = stream_get_meta_data($resource);
     return $metadata['uri'];
 }
-
-$anno = filter_input(INPUT_GET, 'anno', FILTER_VALIDATE_INT, $anniValidi);
+// TO FIX???
+$anno = filter_input(INPUT_GET, 'anno', FILTER_VALIDATE_INT, isset($anniValidi)?$anniValidi:'');
 if (empty($anno)) {
     die('Anno non corretto');
 }
@@ -30,7 +30,7 @@ try {
 }
 
 $anno_rif = $anno;
-require_once 'xml/testa_xml_avcp_query.php';
+require_once __DIR__ . '/xml/testa_xml_avcp_query.php';
 
 try {
     if (!($document = simplexml_load_string($XML_TOT)))
