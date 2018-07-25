@@ -1,3 +1,8 @@
+<?php
+// init undefined vars
+isset($ragioneSociale) || $ragioneSociale = '';
+isset($codiceFiscale) || $codiceFiscale = '';
+?>
 <div class="row">
     <div class="span8 offset2">
         <h1>Ditta</h1>
