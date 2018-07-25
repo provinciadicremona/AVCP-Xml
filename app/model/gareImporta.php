@@ -1,11 +1,11 @@
 <?php
 if (is_null($_POST['action'])) {
     // Se non sto inserendo chiamo la maschera e le istruzioni
-    require_once 'app/view/gareImportaIstr.php';
+    require_once __DIR__ . '/../view/gareImportaIstr.php';
 } else {
     // Controllo che ci sia il file e che sia un csv
     if ($_FILES['csv']['error'] != 0) {
-        require_once 'app/view/gareImportaError.php';
+        require_once __DIR__ . '/../view/gareImportaError.php';
     } else {
         if (($fh = fopen($_FILES['csv']['tmp_name'], 'r')) !== false) {
             // in $fn metto i nomi delle colonne che sono la prima riga del csv
@@ -78,7 +78,7 @@ if (is_null($_POST['action'])) {
             $riepilogo = str_replace('Duplicates', '</p><p><span class="label label-warning">Tentativi di inserimenti doppi</span>', $riepilogo);
             $riepilogo = str_replace('Warnings:', '</p><p><span class="label label-warning">Errori corretti durante l\'imortazione:</span>', $riepilogo);
             $riepilogo .= '</p>';
-            require_once 'app/view/gareImporta.php';
+            require_once __DIR__ . '/../view/gareImporta.php';
         } else {
             echo "File non leggibile...";
         }
