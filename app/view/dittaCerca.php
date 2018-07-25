@@ -1,8 +1,13 @@
 <?php
+// init undefined vars
+isset($ragioneSociale) || $ragioneSociale = '';
+isset($codiceFiscale) || $codiceFiscale = '';
+isset($esteroRadio) || $esteroRadio = array(' checked','');
+
 $customJsScript = '
 <script>
     $(function() {
-        var ac_config = {
+        let ac_config = {
         source: "app/webServices/searchDitta.php",
         select: function(event, ui){
             $("#cercaRagSoc").val(ui.item.ragioneSociale);
@@ -36,7 +41,7 @@ $customJsScript = '
                 </fieldset>
                 <fieldset>
                     <legend>
-                        <?php if (!is_null($_GET['id'])): ?>
+                        <?php if (isset($_GET['id']) && !is_null($_GET['id'])): ?>
                         Inserisci ditta /
                     <?php endif; ?>
                         Ditta selezionata:</legend>
