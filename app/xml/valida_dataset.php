@@ -41,7 +41,7 @@ if (isset($_GET['anno'])) {
 // Enable user error handling
 libxml_use_internal_errors(true);
 
-require_once 'testa_xml_avcp_query.php';
+require_once __DIR__ . '/testa_xml_avcp_query.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,7 +128,7 @@ if ($xml->schemaValidate('./datasetAppaltiL190.xsd')) {
                 <div class="well">
 <?php
 if (isset($_GET['source']) && $_GET['source'] == 'on') {
-    echo '<pre id="xml" class="language-markup" data-line="' . $outErrorLine . '"><code class="language-markup">';
+    echo '<pre id="xml" class="language-markup" data-line="' . (isset($outErrorLine)?$outErrorLine:'') . '"><code class="language-markup">';
     echo nl2br(htmlentities($XML_TOT));
     echo '</code></pre>' . PHP_EOL;
 } else {
