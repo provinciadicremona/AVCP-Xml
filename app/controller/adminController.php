@@ -1,5 +1,6 @@
 <?php
 // Controller dei metodi riservati all'utente admin
+isset($_GET['do']) || $_GET['do'] = null;
 switch ($_GET['do']){
 case 'blocca':
     require_once __DIR__ . '/../model/annoBlocca.php';
@@ -15,9 +16,10 @@ case 'arretra':
     break;
 case 'messaggio':
     require_once __DIR__ . '/../model/messaggio.php';
+    break;
 default:
     break;
 }
 if (isset($_GET['do']) && $_GET['do'] != 'messaggio') {
-    require_once __DIR__ . '../view/annoOp.php';
+    require_once __DIR__ . '/../view/annoOp.php';
 }
