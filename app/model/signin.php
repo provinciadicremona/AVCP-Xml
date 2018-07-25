@@ -3,7 +3,7 @@ switch ($_GET['do']){
 case 'logout':
     session_destroy();
     session_unset();
-    require_once 'app/view/signinLoggedOut.php';
+    require_once __DIR__ . '/../view/signinLoggedOut.php';
     break;
 case 'login':
     if (!empty($_POST['password']) && $_POST['password'] == $user[$_POST['login']]) {
@@ -38,10 +38,10 @@ case 'login':
 <?php
         }
         fclose($fmh);
-        require_once 'app/model/indexModel.php';
+        require_once __DIR__ . '/../model/indexModel.php';
     } else {
         $failedLogin = true;
-        require_once 'app/view/signinForm.php';
+        require_once __DIR__ . '/../view/signinForm.php';
     }
     break;
 }
