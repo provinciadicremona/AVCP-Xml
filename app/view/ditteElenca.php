@@ -39,7 +39,9 @@ $customJsScript .= PHP_EOL . '
 ';
 ?>
 
-<?php echo $conferma; ?>
+<?php if (isset($conferma)){
+    echo $conferma;
+} ?>
 <div class="row">
     <div class="span12">
         <h1>Elenco Ditte</h1>
@@ -111,7 +113,7 @@ $customJsScript .= PHP_EOL . '
                     <td>
                         <?php echo $ditta['estero']; ?>
                     </td>
-                    <td><?php echo $ditta['lotti']; ?></td>
+                    <td><?php echo isset($ditta['lotti'])?$ditta['lotti']:''; ?></td>
                 </tr>
             <?php endforeach;	?>
         <?php endif;?>
