@@ -19,10 +19,11 @@
  * To contact the authors send an email to <sito@provincia.cremona.it>
  */
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
-require_once ('./app/config.php');
+require_once __DIR__ . '/app/config.php';
 
 $XML_FILE = null;
-$anno_rif = filter_input(INPUT_GET, 'anno', FILTER_VALIDATE_INT, $anniValidi);
+// FIX ??? $anniValidi
+$anno_rif = filter_input(INPUT_GET, 'anno', FILTER_VALIDATE_INT, isset($anniValidi)?$anniValidi:'');
 
 if (empty($anno_rif)) {
     die('Anno non corretto');
