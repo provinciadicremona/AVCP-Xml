@@ -1,7 +1,9 @@
 <?php
 $query = "SELECT * FROM avcp_vista_ditte ORDER BY ragioneSociale";
 $res = $db->query($query);
-$quante = $db->affected_rows;
+// $quante = $db->affected_rows;
+// mysqli affected_rows fail under x-debug, use $res->num_rows
+$quante = $res->num_rows;
 $outElenco = null;
 $contraente = null;
 
@@ -31,4 +33,4 @@ for($x = 0; $x < $quante; $x++) {
     }
 }
 $res->free();
-require_once 'app/view/ditteElenca.php';
+require_once __DIR__ . '/../view/ditteElenca.php';

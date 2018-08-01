@@ -59,7 +59,7 @@ switch ($_GET['do']){
         }
         $resCe->free();
         if ($ce['presente'] == 0) {
-            require_once 'app/functions.php';
+            require_once __DIR__ . '/../functions.php';
             // Controllo che non manchino i campi principali
             try {
                 if (empty($ragioneSociale)) {
@@ -439,5 +439,5 @@ for($x = 0; $x < $numPart; $x++) {
     }
 }
 $resPart->free();
-require_once 'app/view/garaPartTop.php';
-require_once 'app/view/garaPartElenco.php';
+require_once __DIR__ . '/../view/garaPartTop.php';
+require_once __DIR__ . '/../view/garaPartElenco.php';

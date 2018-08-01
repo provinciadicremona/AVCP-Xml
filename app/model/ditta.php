@@ -3,7 +3,7 @@ if (!empty($_GET['do'])) {
     foreach ($_POST as $key => $value) {
         $$key = $db->real_escape_string(trim($value));
     }
-    require_once 'app/functions.php';
+    require_once __DIR__ . '/../functions.php';
     // Controllo che non manchino i campi principali
     try {
         if (empty($ragioneSociale)) {
@@ -30,7 +30,7 @@ if (!empty($_GET['do'])) {
     // Controllo il Codice fiscale
     $codiceFiscale = strtoupper($codiceFiscale);
     try {
-        if (($estero != 1 && !controllaCF($codiceFiscale)) && $_POST['action'] != 'Seleziona') {
+        if (($estero != 1 && !controllaCF($codiceFiscale)) && isset($_POST['action']) && $_POST['action'] != 'Seleziona') {
             throw new Exception('
                 <div class="row">
                 <div class="span8 offset2">
@@ -105,12 +105,12 @@ switch ($_GET['do']){
                         </div>
                     </div>
                 </div>' . PHP_EOL;
-            require_once 'app/view/dittaInsModOk.php';
+            require_once __DIR__ . '/../view/dittaInsModOk.php';
         }
         break;
     case 'modificaDitta':
         if (!empty($action) && $action = "Seleziona") {
-            require_once 'app/view/dittaInsModOk.php';
+            require_once __DIR__ . '/../view/dittaInsModOk.php';
             continue;
         }
         if (empty($oldCodiceFiscale))
@@ -152,14 +152,14 @@ switch ($_GET['do']){
                             </div>
                         </div>
                     </div>' . PHP_EOL;
-                require_once 'app/view/dittaInsModOk.php';
+                require_once __DIR__ . '/../view/dittaInsModOk.php';
             }
         } catch (Exception $e) {
             echo $e->getMessage();
         }
         break;
     case 'errore':
-        require_once 'footer.php';
+        require_once __DIR__ . '/../../footer.php';
         break;
     default:
         if (!empty($_GET['codiceFiscale'])) {
@@ -191,7 +191,6 @@ switch ($_GET['do']){
             $formDo = 'inserisciDitta';
             $formButton = 'Inserisci';
         }
-        require_once 'app/view/dittaForm.php';
+        require_once __DIR__ . '/../view/dittaForm.php';
         break;
 }
-?>

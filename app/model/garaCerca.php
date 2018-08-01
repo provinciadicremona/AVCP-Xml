@@ -1,9 +1,10 @@
 <?php
-if (!is_null($_GET['idDaElenco'])) {
+if (isset($_GET['idDaElenco']) && !is_null($_GET['idDaElenco'])) {
     $id = filter_input(INPUT_GET, 'idDaElenco', FILTER_VALIDATE_INT);
 } else {
     $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 }
+isset($_GET['event']) || $_GET['event'] = null;
 switch ($_GET['event']){
 case 'garaSelezionata':
     $query = "SELECT
@@ -33,10 +34,10 @@ case 'garaSelezionata':
                 $$key = stripslashes($value);
             }
             $res->free();
-            require_once 'app/view/garaInsModOk.php';
+            require_once __DIR__ . '/../view/garaInsModOk.php';
         }
         break;
     default:
-        require_once 'app/view/garaCerca.php';
+        require_once __DIR__ . '/../view/garaCerca.php';
         break;
 }

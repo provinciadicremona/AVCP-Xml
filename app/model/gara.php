@@ -130,7 +130,7 @@ switch ($_GET['do']){
                         </div>
                     </div>
                 </div>' . PHP_EOL;
-            require_once 'app/view/garaInsModOk.php';
+            require_once __DIR__ . '/../view/garaInsModOk.php';
         }
         $res->free;
         break;
@@ -219,7 +219,7 @@ switch ($_GET['do']){
                         </div>
                     </div>
                 </div>' . PHP_EOL;
-            require_once 'app/view/garaInsModOk.php';
+            require_once __DIR__ . '/../view/garaInsModOk.php';
         } else {
             echo '<div class="row">
                     <div class="span8 offset2">
@@ -229,14 +229,14 @@ switch ($_GET['do']){
                         </div>
                     </div>
                 </div>' . PHP_EOL;
-            require_once 'app/view/garaInsModOk.php';
+            require_once __DIR__ . '/../view/garaInsModOk.php';
         }
         break;
     case 'elencaGareAnno':
-        require_once 'app/view/garaElenca.php';
+        require_once __DIR__ . '/../view/garaElenca.php';
         break;
     case 'errore':
-        require_once 'footer.php';
+        require_once __DIR__ . '/../../footer.php';
         break;
     default:
         if (!empty($_GET['id'])) {
@@ -264,16 +264,17 @@ switch ($_GET['do']){
         $queryContr = "SELECT * FROM avcp_sceltaContraenteType ORDER BY ruolo ASC";
         $res = $db->query($queryContr);
         $numContr = $res->num_rows;
+        $ruoloOutput = '';
         for($x = 0; $x < $numContr; $x++) {
             $row = $res->fetch_assoc();
             $ruolo = stripslashes($row['ruolo']);
-            if ($ruolo == $sceltaContraente) {
+            if (isset($sceltaContraente) && $ruolo == $sceltaContraente) {
                 $ruoloOutput .= '<option value="' . $ruolo . '" selected>' . $ruolo . '</option>';
             } else {
                 $ruoloOutput .= '<option value="' . $ruolo . '">' . $ruolo . '</option>';
             }
         }
         $res->free();
-        require_once 'app/view/garaForm.php';
+        require_once __DIR__ . '/../view/garaForm.php';
         break;
 }

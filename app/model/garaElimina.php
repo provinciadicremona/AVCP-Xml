@@ -18,5 +18,5 @@ if (!empty(filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT))) {
         $resDelLd = $db->query($queryDelLd);
         $messElimina = "Gara eliminata";
     }
-    require_once 'app/view/garaElimina.php';
+    require_once __DIR__ . '/../view/garaElimina.php';
 }

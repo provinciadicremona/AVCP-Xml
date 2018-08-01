@@ -71,4 +71,4 @@ if (empty($_GET['anno'])) {
     } // end for
     $res->free();
 }
-require_once 'app/view/garaElenca.php';
+require_once __DIR__ . '/../view/garaElenca.php';

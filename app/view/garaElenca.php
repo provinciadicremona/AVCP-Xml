@@ -17,7 +17,7 @@ $customJsScript .= PHP_EOL . '
             $("#filter").keyup(function(){
 
                 // Retrieve the input field text and reset the count to zero
-                var filter = $(this).val(), count = 0;
+                let filter = $(this).val(), count = 0;
 
                 // Loop through the comment list
                 $("#elenco tr.dati").each(function(){
@@ -37,11 +37,10 @@ $customJsScript .= PHP_EOL . '
             });
 
             // Update the count
-            var numberItems = count;
-            if (count > 1){
-                $("#filter-count").text("Trovate "+count+" gare");
-            } else if (count == 1) {
-                $("#filter-count").text("Trovata "+count+" gara");
+            if (numberItems > 1){
+                $("#filter-count").text("Trovate "+numberItems+" gare");
+            } else if (numberItems == 1) {
+                $("#filter-count").text("Trovata "+numberItems+" gara");
             } else {
                 $("#filter-count").text("Nessuna gara trovata");
                 }
@@ -49,6 +48,7 @@ $customJsScript .= PHP_EOL . '
         });
     </script>
 ';
+isset($usersel) || $usersel = '';
 ?>
 <div class="row">
     <div class="span12">
@@ -59,8 +59,8 @@ $customJsScript .= PHP_EOL . '
             <form
                 action="?mask=gara&amp;do=elencaGareAnno&amp;anno=<?php echo $anno;?>"
                 method="post" class="form-inline">
-                <label for="usersel">Filtra per utente:</label> <select
-                    name="usersel">
+                <label for="usersel">Filtra per utente:</label>
+                <select name="usersel">
                     <option value="tutti"
                         <?php if ($usersel == 'tutti') echo "selected"; ?>>-- Tutti --</option>
                     <option value="vuota"
@@ -143,7 +143,7 @@ foreach ($userList as $u) :
                         href="?mask=gara&amp;do=partecipantiGara&amp;id=<?php echo $out[$x]['id'];?>"
                         title="Modifica partecipanti"><i class="icon-user"></i></a>
 <?php
-    if ($sceltaContraente == '00-DA DEFINIRE')
+    if (isset($sceltaContraente) && $sceltaContraente == '00-DA DEFINIRE')
         echo '<br /><span class="label label-important">Definire Contraente!</span>';
 ?>
                     </td>

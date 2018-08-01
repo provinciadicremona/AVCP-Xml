@@ -1,7 +1,7 @@
 <?php
 $messageFileName = './message.txt';
 $okMess = false;
-if ($_GET['action'] == 'modifica') {
+if (isset($_GET['action']) && $_GET['action'] == 'modifica') {
     if (is_writable($messageFileName)) {
         if ($fmh = fopen($messageFileName, 'w+')) {
             fwrite($fmh, $_POST['messaggio']);
@@ -23,4 +23,4 @@ if ($messageSize > 0) {
     $contents = '';
 }
 fclose($fmh);
-require_once 'app/view/messaggio.php';
+require_once __DIR__ . '/../view/messaggio.php';

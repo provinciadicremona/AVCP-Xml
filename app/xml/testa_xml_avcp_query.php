@@ -19,12 +19,14 @@
  * To contact the authors send an email to <sito@provincia.cremona.it>
  */
 error_reporting(E_ALL ^ E_NOTICE);
-$daChi = substr_count($_SERVER['PHP_SELF'], 'resume');
-if ($daChi === 0) {
-    require_once '../config.php';
-} else {
-    require_once 'config.php';
-}
+// check non necesario utilizzando il path relativo.
+// $daChi = substr_count($_SERVER['PHP_SELF'], 'resume');
+// if ($daChi === 0) {
+//     require_once __DIR__ . '/../config.php';
+// } else {
+//     require_once 'config.php';
+// }
+require_once __DIR__ . '/../config.php';
 $anno_rif = filter_input(INPUT_GET, 'anno', FILTER_VALIDATE_INT, $anniValidi);
 
 if (empty($anno_rif)) {
