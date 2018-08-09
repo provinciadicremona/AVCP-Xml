@@ -137,7 +137,7 @@
                     <p>Sono disponibili 2 tipi di validazioni:</p>
                     <ul>
                         <li><strong>Semplice</strong>: è molto veloce e segnala gli errori</li>
-                        <li><strong>Con sorgente</strong>: è molto lenta e oltre a
+                        <li><strong>Con sorgente</strong>: è più lenta ma oltre a
                             segnalare gli errori visualizza il codice XML generato</li>
                     </ul>
                     <p>

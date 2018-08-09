@@ -128,7 +128,7 @@ if ($xml->schemaValidate('./datasetAppaltiL190.xsd')) {
                 <div class="well">
 <?php
 if (isset($_GET['source']) && $_GET['source'] == 'on') {
-    echo '<pre id="xml" class="language-markup" data-line="' . (isset($outErrorLine)?$outErrorLine:'') . '"><code class="language-markup">';
+    echo '<pre id="xml"><code class="language-markup" data-line="' . (isset($outErrorLine)?$outErrorLine:'') . '">';
     echo nl2br(htmlentities($XML_TOT));
     echo '</code></pre>' . PHP_EOL;
 } else {
