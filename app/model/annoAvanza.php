@@ -8,7 +8,7 @@ if ($_SESSION['user'] == 'admin' && $bloccati[$annoStart] == 'n') {
         FROM
         avcp_lotto
         WHERE
-        (importoAggiudicazione > importoSommeLiquidate OR importoAggiudicazione = 0)
+        (importoAggiudicazione > importoSommeLiquidate OR importoAggiudicazione = 0) AND chiuso = 0
         AND anno = '${annoStart}'";
     $resLotto = $db->query($qLotto);
     if ($resLotto) {

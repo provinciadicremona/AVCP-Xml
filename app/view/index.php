@@ -6,7 +6,7 @@
                 AVCP Xml <small> - versione <?php echo $localVersion; ?></small>
             </h1>
             <p>Generatore di dataset XML per l'Autorità per la Vigilanza sui
-                Contratti Pubblici - art.32 L. 190/2012</p>
+                Contratti Pubblici - art. 1 comma 32 L. 190/2012</p>
             <?php if ($_SESSION['user'] == 'admin'): ?>
             <i class="icon-pencil"></i>&nbsp;<a
                 href="?mask=admin&amp;do=messaggio">Imposta/Modifica il messaggio

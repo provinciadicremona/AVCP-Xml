@@ -133,7 +133,7 @@ foreach ($userList as $u) :
                     <td><a
                         href="?mask=gara&amp;do=cercaGara&amp;event=garaSelezionata&amp;idDaElenco=<?php echo $out[$x]['id'];?>"
                         title="Gestisci gara"><i class="icon-search"></i></a>
-                        &nbsp;/&nbsp;
+                     <!--   &nbsp;/&nbsp;
                         <?php if (!array_key_exists($anno, $bloccati)):?>
                         <a href="?mask=gara&amp;id=<?php echo $out[$x]['id'];?>"
                         title="Modifica dati gara"><i class="icon-pencil"></i></a>
@@ -142,6 +142,7 @@ foreach ($userList as $u) :
                         <a
                         href="?mask=gara&amp;do=partecipantiGara&amp;id=<?php echo $out[$x]['id'];?>"
                         title="Modifica partecipanti"><i class="icon-user"></i></a>
+                    -->
 <?php
     if (isset($sceltaContraente) && $sceltaContraente == '00-DA DEFINIRE')
         echo '<br /><span class="label label-important">Definire Contraente!</span>';

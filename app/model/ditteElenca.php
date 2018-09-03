@@ -32,5 +32,7 @@ for($x = 0; $x < $quante; $x++) {
         $ditte[$x]['elimina'] = '<a href="?mask=ditta&amp;do=eliminaDitta&amp;eleDitta=' . $ditte[$x]['codiceFiscale'] . '" title="Elimina ditta"><i class="icon-trash"></a></i>';
     }
 }
-$res->free();
+if ($quante > 0) {
+    $res->free();
+}
 require_once __DIR__ . '/../view/ditteElenca.php';
