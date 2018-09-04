@@ -30,29 +30,29 @@ if ($currentVersion > $localVersion) {
     // Comunico che esiste una nuova versione
     $currentVersion = str_replace('_', '.', $currentVersion);
     $outVersion .= '
-	<div class="alert alert-info">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<strong>Una nuova versione di AVCP Xml presente: ' . $currentVersion . '</strong><br />
-		<a href="http://www.provincia.cremona.it/urp/?view=Pagina&amp;id=5354"><i class="icon-download-alt"></i>&nbsp;Scaricala dal sito della Provincia di Cremona</a>
-		</div>' . PHP_EOL;
-    
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Una nuova versione di AVCP Xml presente: ' . $currentVersion . '</strong><br />
+        <a href="http://www.provincia.cremona.it/urp/?view=Pagina&amp;id=5354"><i class="icon-download-alt"></i>&nbsp;Scaricala dal sito della Provincia di Cremona</a>
+        </div>' . PHP_EOL;
+
     // Recupero le note di rilascio
-    
+
     // crea una risorsa cURL
     $ch = curl_init();
-    
+
     // imposto l'URL da interrogare
     curl_setopt($ch, CURLOPT_URL, 'http://www.provincia.cremona.it/avcp-repo/note');
-    
+
     // escludo l'header dall'output
     curl_setopt($ch, CURLOPT_HEADER, 0);
-    
+
     // Imposto un massimo di 5 secondi prima di interrompere l'operazione
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-    
+
     // Sopprimo l'output sul browser
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    
+
     // recupero l'URL e lo assegno in variabile
     $noteRilascio = curl_exec($ch);
     // Comunico le note di rilascio

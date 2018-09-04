@@ -1,7 +1,7 @@
 <div class="row">
    <div class="span8 offset2">
    <div class="well">
-       
+
 <h3 style="text-align: center;">GNU GENERAL PUBLIC LICENSE</h3>
 <p style="text-align: center;">Version 3, 29 June 2007</p>
 
@@ -81,7 +81,7 @@ modification follow.</p>
 
 <p>&ldquo;Copyright&rdquo; also means copyright-like laws that apply to other kinds of
 works, such as semiconductor masks.</p>
- 
+
 <p>&ldquo;The Program&rdquo; refers to any copyrightable work licensed under this
 License.  Each licensee is addressed as &ldquo;you&rdquo;.  &ldquo;Licensees&rdquo; and
 &ldquo;recipients&rdquo; may be individuals or organizations.</p>
@@ -520,7 +520,7 @@ actual knowledge that, but for the patent license, your conveying the
 covered work in a country, or your recipient's use of the covered work
 in a country, would infringe one or more identifiable patents in that
 country that you have reason to believe are valid.</p>
-  
+
 <p>If, pursuant to or in connection with a single transaction or
 arrangement, you convey, or propagate by procuring conveyance of, a
 covered work, and grant a patent license to some of the parties
@@ -630,7 +630,7 @@ Program, unless a warranty or assumption of liability accompanies a
 copy of the Program in return for a fee.</p>
 
 <p>END OF TERMS AND CONDITIONS</p>
-		</div>
+        </div>
     </div>
 </div>
 <br />

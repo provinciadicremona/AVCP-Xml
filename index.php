@@ -34,14 +34,14 @@ session_regenerate_id();
 $customJsScript = null;
 
 $callToJqueryUI = '
-	<script src="js/jquery.ui.core.js"></script>
-	<script src="js/jquery.ui.widget.js"></script>
-	<script src="js/jquery.ui.position.js"></script>
-	<script src="js/jquery.ui.menu.js"></script>
-	<script src="js/jquery.ui.autocomplete.js"></script>
-	<script src="js/jquery.ui.datepicker.js"></script>
-	<script src="js/jquery.ui.datepicker-it.js"></script>
-	';
+    <script src="js/jquery.ui.core.js"></script>
+    <script src="js/jquery.ui.widget.js"></script>
+    <script src="js/jquery.ui.position.js"></script>
+    <script src="js/jquery.ui.menu.js"></script>
+    <script src="js/jquery.ui.autocomplete.js"></script>
+    <script src="js/jquery.ui.datepicker.js"></script>
+    <script src="js/jquery.ui.datepicker-it.js"></script>
+    ';
 
 require_once 'header.php';
 require_once 'app/controller/indexController.php';

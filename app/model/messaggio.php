@@ -1,7 +1,12 @@
 <?php
 $messageFileName = './message.txt';
 $okMess = false;
-if ($_GET['action'] == 'modifica') {
+if (!is_writable($messageFileName)) {
+    if (false === chmod($messageFileName, 666)) {
+        echo "Il file messagge.txt non è modificabile.<br /> Contattare l'amministratore del sistema per modificare i permessi del file.";
+    }
+}
+if (isset($_GET['action']) && $_GET['action'] == 'modifica') {
     if (is_writable($messageFileName)) {
         if ($fmh = fopen($messageFileName, 'w+')) {
             fwrite($fmh, $_POST['messaggio']);
@@ -23,4 +28,4 @@ if ($messageSize > 0) {
     $contents = '';
 }
 fclose($fmh);
-require_once 'app/view/messaggio.php';
+require_once __DIR__ . '/../view/messaggio.php';

@@ -19,10 +19,11 @@
  * To contact the authors send an email to <sito@provincia.cremona.it>
  */
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
-require_once ('./app/config.php');
+require_once __DIR__ . '/app/config.php';
 
 $XML_FILE = null;
-$anno_rif = filter_input(INPUT_GET, 'anno', FILTER_VALIDATE_INT, $anniValidi);
+// FIX ??? $anniValidi
+$anno_rif = filter_input(INPUT_GET, 'anno', FILTER_VALIDATE_INT, isset($anniValidi)?$anniValidi:'');
 
 if (empty($anno_rif)) {
     die('Anno non corretto');
@@ -41,13 +42,13 @@ $result_lotti = $db->query($query_lotti);
 $number_lotti = $result_lotti->num_rows;
 
 echo '<legge190:pubblicazione xsi:schemaLocation="legge190_1_0 datasetAppaltiL190.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:legge190="legge190_1_0">
-	<metadata>
-	<titolo> Pubblicazione 1 legge 190</titolo>
-	<abstract> Pubblicazione 1 legge 190 anno 1 rif. 2010' . ' aggiornamento del ' . $date_agg_full . '</abstract>
-	<dataPubbicazioneDataset>' . $dataPubb . '</dataPubbicazioneDataset>
-	<entePubblicatore>' . stripslashes(ENTE_PROPONENTE) . '</entePubblicatore>
-	<dataUltimoAggiornamentoDataset>' . $date_agg . '</dataUltimoAggiornamentoDataset>
-	<annoRiferimento>' . $anno_rif . '</annoRiferimento>';
+    <metadata>
+    <titolo> Pubblicazione 1 legge 190</titolo>
+    <abstract> Pubblicazione 1 legge 190 anno 1 rif. 2010' . ' aggiornamento del ' . $date_agg_full . '</abstract>
+    <dataPubbicazioneDataset>' . $dataPubb . '</dataPubbicazioneDataset>
+    <entePubblicatore>' . stripslashes(ENTE_PROPONENTE) . '</entePubblicatore>
+    <dataUltimoAggiornamentoDataset>' . $date_agg . '</dataUltimoAggiornamentoDataset>
+    <annoRiferimento>' . $anno_rif . '</annoRiferimento>';
 if (URL_XML_FILE_ANNUALE == 'NO') {
     echo '<urlFile>' . URL_XML_FILE . '</urlFile>' . PHP_EOL;
 } else {
@@ -55,8 +56,8 @@ if (URL_XML_FILE_ANNUALE == 'NO') {
 }
 
 echo '
-	<licenza>' . LICENZA . '</licenza>
-	</metadata>' . PHP_EOL;
+    <licenza>' . LICENZA . '</licenza>
+    </metadata>' . PHP_EOL;
 echo '<data>' . PHP_EOL;
 while ($lotto = $result_lotti->fetch_assoc()) {
     foreach ($lotto as $key => $value) {
@@ -74,9 +75,9 @@ while ($lotto = $result_lotti->fetch_assoc()) {
         $sceltaContraente = '06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI  GARA ART. 221 D.LGS. 163/2006';
     }
     $XML_FILE .= "<sceltaContraente>" . $sceltaContraente . "</sceltaContraente>\n";
-    
+
     // ### PARTECIPANTI ######
-    
+
     $XML_FILE .= "<partecipanti>\n";
     $raggruppamento_old = 1;
     $raggruppamento_start = 0;
@@ -129,11 +130,11 @@ while ($lotto = $result_lotti->fetch_assoc()) {
     }
     $XML_FILE .= $XML_PART;
     $XML_FILE .= "</partecipanti>\n";
-    
+
     // ### AGGIUDICATARI ######
-    
+
     $XML_FILE .= "<aggiudicatari>\n";
-    
+
     $raggruppamento_old = 1;
     $raggruppamento_start = 0;
     // $XML_RAGG ="<aggiudicatarioRaggruppamento>\n";
@@ -183,7 +184,7 @@ while ($lotto = $result_lotti->fetch_assoc()) {
     }
     $XML_FILE .= $XML_RAGG . $XML_AGG;
     $XML_FILE .= "</aggiudicatari>\n";
-    
+
     // ####### importi e tempi #####
     $XML_FILE .= "<importoAggiudicazione>" . $importoAggiudicazione . "</importoAggiudicazione>";
     $XML_FILE .= "<tempiCompletamento>";

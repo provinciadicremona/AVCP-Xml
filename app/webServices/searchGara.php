@@ -1,14 +1,15 @@
 <?php
+// Cerca una gara all'interno della tabella avcp_lotti
+// e restituisce un array coi risultati in formato json
 require_once '../config.php';
-
 $cerca = $db->real_escape_string($_GET['term']);
 
 $query = "SELECT id, oggetto, cig, anno FROM avcp_lotto
-	WHERE (
-	   oggetto LIKE '%" . $cerca . "%'
-	   OR cig LIKE '%" . $cerca . "%'
-	   )
-	ORDER BY anno DESC";
+    WHERE (
+        oggetto LIKE '%" . $cerca . "%'
+        OR cig LIKE '%" . $cerca . "%'
+    )
+    ORDER BY anno DESC";
 
 $res = $db->query($query);
 $num = $res->num_rows;

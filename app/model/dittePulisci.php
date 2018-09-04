@@ -7,4 +7,4 @@ $queryLd = "DELETE FROM `avcp_ld` WHERE codiceFiscale IS NULL OR codiceFiscale =
 $resLd = $db->query($queryLd);
 $numLd = $db->affected_rows;
 
-require_once 'app/view/dittePulisci.php';
+require_once __DIR__ . '/../view/dittePulisci.php';

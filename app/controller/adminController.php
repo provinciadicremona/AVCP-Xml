@@ -1,22 +1,25 @@
 <?php
+// Controller dei metodi riservati all'utente admin
+isset($_GET['do']) || $_GET['do'] = null;
 switch ($_GET['do']){
-    case 'blocca':
-        require_once 'app/model/annoBlocca.php';
-        break;
-    case 'sblocca':
-        require_once 'app/model/annoSblocca.php';
-        break;
-    case 'avanza':
-        require_once 'app/model/annoAvanza.php';
-        break;
-    case 'arretra':
-        require_once 'app/model/annoArretra.php';
-        break;
-    case 'messaggio':
-        require_once 'app/model/messaggio.php';
-    default:
-        break;
+case 'blocca':
+    require_once __DIR__ . '/../model/annoBlocca.php';
+    break;
+case 'sblocca':
+    require_once __DIR__ . '/../model/annoSblocca.php';
+    break;
+case 'avanza':
+    require_once __DIR__ . '/../model/annoAvanza.php';
+    break;
+case 'arretra':
+    require_once __DIR__ . '/../model/annoArretra.php';
+    break;
+case 'messaggio':
+    require_once __DIR__ . '/../model/messaggio.php';
+    break;
+default:
+    break;
 }
-if ($_GET['do'] != 'messaggio') {
-    require_once 'app/view/annoOp.php';
+if (isset($_GET['do']) && $_GET['do'] != 'messaggio') {
+    require_once __DIR__ . '/../view/annoOp.php';
 }

@@ -5,10 +5,10 @@ $messOk = false;
 
 if ($_SESSION['user'] == 'admin' && $bloccati[$annoDa] == 's') {
     $queryDel = "DELETE `avcp_lotto`, `avcp_ld`
-    FROM `avcp_lotto`
-    LEFT JOIN `avcp_ld`
-    ON avcp_lotto.id = avcp_ld.id
-    WHERE (avcp_lotto.flag = 'da${annoDa}') AND (avcp_lotto.anno = '${annoA}')";
+        FROM `avcp_lotto`
+        LEFT JOIN `avcp_ld`
+        ON avcp_lotto.id = avcp_ld.id
+        WHERE (avcp_lotto.flag = 'da${annoDa}') AND (avcp_lotto.anno = '${annoA}')";
     $resDel = $db->query($queryDel);
     if ($resDel != false) {
         $queryUp = "UPDATE `bloccati` SET avanzato = 'n' WHERE anno = '${annoDa}'";
