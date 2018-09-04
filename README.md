@@ -3,7 +3,7 @@ Generatore di dataset XML per l'Autorità per la Vigilanza sui Contratti Pubblic
 
 
 ## Upgrade dalla versione 0.7.1
-Per aggiornare il programma, [https://github.com/proviniciacremona/AVCP-Xml/releases|scaricare la release più recente] e seguire le istruzioni riportate di seguito.
+Per aggiornare il programma, [scaricare la release più recente](https://github.com/proviniciacremona/AVCP-Xml/releases) e seguire le istruzioni riportate di seguito.
 
 Query SQL da lanciare in phpMyAdmin per preparare il database alla nuova versione.
 
