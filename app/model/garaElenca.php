@@ -40,6 +40,7 @@ if (empty($_GET['anno'])) {
         l.`sceltaContraente`,
         l.`importoAggiudicazione`,
         l.`importoSommeLiquidate`,
+        l.`chiuso`,
         (SELECT count(*) FROM `avcp_ld` as ldl WHERE l.`id` = ldl.`id`  AND ldl.funzione = '01-PARTECIPANTE') as partecipanti,
         (SELECT count(*) FROM `avcp_ld` as ldl WHERE l.`id` = ldl.`id`  AND ldl.funzione = '02-AGGIUDICATARIO') as aggiudicatari,
         l.`userins`,

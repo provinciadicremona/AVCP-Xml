@@ -120,7 +120,7 @@ foreach ($userList as $u) :
             <table class="table table-striped table-condensed table-hover"
                 id="elenco">
                 <tr>
-                    <th width="10%">Azioni</th>
+                    <th>&nbsp;</th>
                     <th>Oggetto e C.I.G.</th>
                     <th width="8%"><abbr title="Importo di aggiudicazione">Imp. Agg.</abbr></th>
                     <th width="8%"><abbr title="Importo somme liquidate">Imp. Liq.</abbr></th>
@@ -129,20 +129,14 @@ foreach ($userList as $u) :
                     <th><abbr title="Utente che ha inserito o importato la gara">Utente</abbr></th>
                 </tr>
             <?php for($x=0; $x < $quante; $x++): ?>
+<?php if ($out[$x]['chiuso'] == 1 || $out[$x]['importoSommeLiquidate'] >= ($out[$x]['importoAggiudicazione'] )) : ?>
+                <tr class="text-center dati success">
+<?php else : ?>
                 <tr class="text-center dati">
-                    <td><a
+<?php endif; ?>
+                    <td><p>&nbsp;<a
                         href="?mask=gara&amp;do=cercaGara&amp;event=garaSelezionata&amp;idDaElenco=<?php echo $out[$x]['id'];?>"
-                        title="Gestisci gara"><i class="icon-search"></i></a>
-                     <!--   &nbsp;/&nbsp;
-                        <?php if (!array_key_exists($anno, $bloccati)):?>
-                        <a href="?mask=gara&amp;id=<?php echo $out[$x]['id'];?>"
-                        title="Modifica dati gara"><i class="icon-pencil"></i></a>
-                        &nbsp;/&nbsp;
-                        <?php endif; ?>
-                        <a
-                        href="?mask=gara&amp;do=partecipantiGara&amp;id=<?php echo $out[$x]['id'];?>"
-                        title="Modifica partecipanti"><i class="icon-user"></i></a>
-                    -->
+                        title="Gestisci gara"><i class="icon-search"></i></a>&nbsp;</p>
 <?php
     if (isset($sceltaContraente) && $sceltaContraente == '00-DA DEFINIRE')
         echo '<br /><span class="label label-important">Definire Contraente!</span>';

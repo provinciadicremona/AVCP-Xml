@@ -1,6 +1,11 @@
 <?php
 $messageFileName = './message.txt';
 $okMess = false;
+if (!is_writable($messageFileName)) {
+    if (false === chmod($messageFileName, 666)) {
+        echo "Il file messagge.txt non è modificabile.<br /> Contattare l'amministratore del sistema per modificare i permessi del file.";
+    }
+}
 if (isset($_GET['action']) && $_GET['action'] == 'modifica') {
     if (is_writable($messageFileName)) {
         if ($fmh = fopen($messageFileName, 'w+')) {
