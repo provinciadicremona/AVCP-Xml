@@ -138,8 +138,61 @@ CREATE TABLE `bloccati` (
 --
 -- Struttura per la vista `avcp_vista_ditte`
 --
-
-CREATE VIEW `avcp_vista_ditte` AS select `d`.`codiceFiscale` AS `codiceFiscale`,`d`.`ragioneSociale` AS `ragioneSociale`,`d`.`estero` AS `estero`,`d`.`flag` AS `flag`,`d`.`userins` AS `userins`,(select count(0) from `avcp_ld` `ldl` where (`d`.`codiceFiscale` = `ldl`.`codiceFiscale`)) AS `partecipa`,group_concat(`ld`.`id` separator 'xxxxx') AS `id_aggiudicatari` from (`avcp_ditta` `d` left join `avcp_ld` `ld` on((`d`.`codiceFiscale` = `ld`.`codiceFiscale`))) group by `d`.`codiceFiscale` order by `d`.`ragioneSociale`;
+CREATE VIEW `avcp_vista_ditte` AS
+SELECT
+    `d`.`codiceFiscale` AS `codiceFiscale`,
+    `d`.`ragioneSociale` AS `ragioneSociale`,
+    `d`.`estero` AS `estero`,
+    `d`.`flag` AS `flag`,
+    `d`.`userins` AS `userins`,
+    (
+    SELECT
+        COUNT(0)
+    FROM
+        `avcp_ld` `ldl`
+    WHERE
+        (
+            (
+                `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
+            ) AND(
+                `ldl`.`funzione` LIKE '01-PARTECIPANTE'
+            )
+        )
+) AS `partecipa`,
+(
+SELECT
+    COUNT(0)
+FROM
+    `avcp_ld` `ldl`
+WHERE
+    (
+        (
+            `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
+        ) AND(
+            `ldl`.`funzione` LIKE '02-AGGIUDICATARIO'
+        )
+    )
+) AS `aggiudica`
+FROM
+    (
+        `avcp_ditta` `d`
+    LEFT JOIN
+        `avcp_ld` `ld`
+    ON
+        (
+            (
+                (
+                    `d`.`codiceFiscale` = `ld`.`codiceFiscale`
+                ) AND(
+                    `ld`.`funzione` LIKE '01-PARTECIPANTE'
+                )
+            )
+        )
+    )
+GROUP BY
+    `d`.`codiceFiscale`
+ORDER BY
+    `d`.`ragioneSociale`;
 
 -- --------------------------------------------------------
 

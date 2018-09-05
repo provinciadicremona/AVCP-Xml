@@ -19,13 +19,6 @@
  * To contact the authors send an email to <sito@provincia.cremona.it>
  */
 error_reporting(E_ALL ^ E_NOTICE);
-// check non necesario utilizzando il path relativo.
-// $daChi = substr_count($_SERVER['PHP_SELF'], 'resume');
-// if ($daChi === 0) {
-//     require_once __DIR__ . '/../config.php';
-// } else {
-//     require_once 'config.php';
-// }
 require_once __DIR__ . '/../config.php';
 $anno_rif = filter_input(INPUT_GET, 'anno', FILTER_VALIDATE_INT, $anniValidi);
 
@@ -67,6 +60,7 @@ while ($lotto = $result_lotti->fetch_assoc()) {
     foreach ($lotto as $key => $value) {
         $$key = stripslashes($value);
     }
+    $oggetto = mb_convert_encoding($oggetto, "UTF-8", "ISO-8859-15, ISO-8859-1, CP1251, CP1252");
     $oggetto = htmlspecialchars($oggetto, ENT_NOQUOTES, 'UTF-8');
     $XML_FILE .= "<lotto>\n";
     $XML_FILE .= "<cig>" . $cig . "</cig>\n";

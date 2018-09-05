@@ -1,5 +1,5 @@
 <?php
-$query = "SELECT * FROM avcp_vista_ditte ORDER BY ragioneSociale";
+$query = "SELECT * FROM `avcp_vista_ditte` ORDER BY `ragioneSociale`";
 $res = $db->query($query);
 // $quante = $db->affected_rows;
 // mysqli affected_rows fail under x-debug, use $res->num_rows
@@ -20,14 +20,6 @@ for($x = 0; $x < $quante; $x++) {
     }
     if ($ditte[$x]['partecipa'] > 0) {
         $ditte[$x]['elimina'] = '<i class="icon-ban-circle" title="Partecipa a gare"></i>';
-
-        $lotti = explode('xxxxx', $ditte[$x]['id_aggiudicatari']);
-        $sLotti = array_unique($lotti);
-        $ditte[$x]['lotti'] = null;
-        $conta = 1;
-        foreach ($sLotti as $l) {
-            $ditte[$x]['lotti'] .= '<a href="?mask=gara&amp;do=partecipantiGara&amp;id=' . $l . '" title="Vedi gara"> ' . $conta++ . '</a>' . '&nbsp;';
-        }
     } else {
         $ditte[$x]['elimina'] = '<a href="?mask=ditta&amp;do=eliminaDitta&amp;eleDitta=' . $ditte[$x]['codiceFiscale'] . '" title="Elimina ditta"><i class="icon-trash"></a></i>';
     }
