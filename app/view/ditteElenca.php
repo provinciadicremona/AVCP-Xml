@@ -82,7 +82,7 @@ $customJsScript .= PHP_EOL . '
                     </td>
                     <td>
     <?php if ($ditta['partecipa'] > 0) : ?>
-        <a href="?mask=ditta&amp;do=gareDitta&amp;event=partecipa&amp;id=<?php echo $ditta['codiceFiscale']; ?>"><?php echo $ditta['partecipa']; ?>
+        <a href="?mask=ditta&amp;do=dittaGare&amp;event=partecipa&amp;id=<?php echo $ditta['codiceFiscale']; ?>"><?php echo $ditta['partecipa']; ?>
         <?php if ($ditta['partecipa'] > 1) : ?>
             &nbsp;gare
         <?php else : ?>
@@ -95,7 +95,7 @@ $customJsScript .= PHP_EOL . '
                     </td>
                     <td>
     <?php if ($ditta['aggiudica'] > 0) : ?>
-        <a href="?mask=ditta&amp;do=gareDitta&amp;event=aggiudica&amp;id=<?php echo $ditta['codiceFiscale']; ?>"><?php echo $ditta['aggiudica']; ?>
+        <a href="?mask=ditta&amp;do=dittaGare&amp;event=aggiudica&amp;id=<?php echo $ditta['codiceFiscale']; ?>"><?php echo $ditta['aggiudica']; ?>
         <?php if ($ditta['aggiudica'] > 1) : ?>
             &nbsp;gare
         <?php else : ?>

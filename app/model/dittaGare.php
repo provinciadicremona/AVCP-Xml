@@ -2,7 +2,9 @@
     Dettaglio gare ditta
 </h1>
 <?php
-
+if (!empty($_GET['codiceFiscale'])) {
+    $cf = $db->real_escape_string($_GET['codiceFiscale']);
+}
 $query = "
 SELECT
     `d`.*,
