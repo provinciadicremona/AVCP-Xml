@@ -12,6 +12,7 @@ SELECT
     `ld`.funzione,
     `l`.oggetto,
     `l`.anno,
+    `l`.numAtto,
     `l`.cig
 FROM
     `avcp_ditta` AS `d`,
@@ -26,5 +27,10 @@ ORDER BY
 ";
 $res = $db->query($query);
 $quanti = $res->num_rows;
-echo $quanti;
-
+for ($i = 0; $i < $quanti; $i++) {
+    $rows[$i] = $res->fetch_assoc();
+    foreach ($rows[$i] as $key => $value) {
+        $rows[$i][$key] = mb_convert_encoding($value, "UTF-8", "ISO-8859-15, ISO-8859-1, CP1251, CP1252"); 
+    }
+}
+print_r($rows);
