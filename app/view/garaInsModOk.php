@@ -47,8 +47,10 @@ function dataIta($data) {
                 href="?mask=gara&amp;do=elencaGareAnno&amp;anno=<?php echo $anno;?>"><i
                 class="icon-backward icon-white"></i>&nbsp;&nbsp;Vai all'elenco gare <?php echo $anno;?></a>
         </p>
+        <p class="lead">
+            <?php echo stripslashes($oggetto);?><br />
+        </p>
         <p>
-            <strong>Oggetto: </strong> <?php echo stripslashes($oggetto);?><br />
             <strong>Anno: </strong> <?php echo stripslashes($anno);?>&nbsp;-&nbsp;<strong>C.I.G.:
             </strong> <?php echo stripslashes($cig);?> <br />
             <strong>Scelta contraente: </strong> <?php echo stripslashes($sceltaContraente);?><br />

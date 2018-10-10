@@ -1,6 +1,3 @@
-<h1>
-    Dettaglio gare ditta
-</h1>
 <?php
 if (!empty($_GET['id'])) {
     $cf = $db->real_escape_string($_GET['id']);
@@ -33,4 +30,4 @@ for ($i = 0; $i < $quanti; $i++) {
         $rows[$i][$key] = mb_convert_encoding($value, "UTF-8", "ISO-8859-15, ISO-8859-1, CP1251, CP1252"); 
     }
 }
-print_r($rows);
+require_once __DIR__ . '/../view/dittaGare.php';
