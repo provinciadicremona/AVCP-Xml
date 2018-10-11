@@ -30,6 +30,7 @@ CREATE VIEW `avcp_export_ods` AS select
     `l`.`dataUltimazione` AS `dataUltimazione`,
     `l`.`importoAggiudicazione` AS `importoAggiudicazione`,
     `l`.`importoSommeLiquidate` AS `importoSommeLiquidate`,
+    `l`.`chiuso` AS `chiuso`,
     (select count(0) 
         from `avcp_ld` `ldl` 
         where ((`l`.`id` = `ldl`.`id`) 
@@ -48,7 +49,6 @@ CREATE VIEW `avcp_export_ods` AS select
     group by `l`.`id` 
     order by `l`.`anno`,
     `l`.`id`;
-
 ```
 
 ### Modificata la vista per l'elenco delle ditte

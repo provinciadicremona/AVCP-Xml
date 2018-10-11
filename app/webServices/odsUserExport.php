@@ -77,6 +77,7 @@ if ($anno > 2011 && $anno <= date('Y')) {
 
     // content.xml - intestazione
     fwrite($tmpcontentxml, '<table:table-row>
+        <table:table-cell office:value-type="string" table:style-name="table_header"><text:p>Stato</text:p></table:table-cell>
         <table:table-cell office:value-type="string" table:style-name="table_header"><text:p>ID</text:p></table:table-cell>
         <table:table-cell office:value-type="string" table:style-name="table_header"><text:p>Anno</text:p></table:table-cell>
         <table:table-cell office:value-type="string" table:style-name="table_header"><text:p>Utente</text:p></table:table-cell>
@@ -95,8 +96,14 @@ if ($anno > 2011 && $anno <= date('Y')) {
 
     // content.xml - righe
     foreach ($rows as $row) {
+        if ($row['importoSommeLiquidate'] >= $row['importoAggiudicazione'] || $row['chiuso'] == 1) {
+            $row['stato'] = 'conclusa';
+        } else {
+            $row['stato'] = 'in corso';
+        } 
         fwrite($tmpcontentxml, "<table:table-row>\n"); // inizio riga
 
+        fwrite($tmpcontentxml, '<table:table-cell office:value-type="string"><text:p><![CDATA['.$row['stato'].']]></text:p></table:table-cell>');
         fwrite($tmpcontentxml, '<table:table-cell office:value-type="string"><text:p><![CDATA['.$row['id'].']]></text:p></table:table-cell>');
         fwrite($tmpcontentxml, '<table:table-cell office:value-type="string"><text:p><![CDATA['.$row['anno'].']]></text:p></table:table-cell>');
         fwrite($tmpcontentxml, '<table:table-cell office:value-type="string"><text:p><![CDATA['.$row['userins'].']]></text:p></table:table-cell>');

@@ -216,4 +216,33 @@ CREATE VIEW `avcp_xml_ditte` AS select `avcp_ld`.`id` AS `id`,`avcp_ld`.`cig` AS
 -- Struttura per la vista `avcp_export_ods`
 --
 
-CREATE VIEW `avcp_export_ods`  AS  select `l`.`id` AS `id`,`l`.`anno` AS `anno`,`l`.`numAtto` AS `numAtto`,`l`.`cig` AS `cig`,`l`.`oggetto` AS `oggetto`,`l`.`sceltaContraente` AS `sceltaContraente`,`l`.`dataInizio` AS `dataInizio`,`l`.`dataUltimazione` AS `dataUltimazione`,`l`.`importoAggiudicazione` AS `importoAggiudicazione`,`l`.`importoSommeLiquidate` AS `importoSommeLiquidate`,(select count(0) from `avcp_ld` `ldl` where ((`l`.`id` = `ldl`.`id`) and (`ldl`.`funzione` = '01-PARTECIPANTE'))) AS `partecipanti`,(select count(0) from `avcp_ld` `ldl` where ((`l`.`id` = `ldl`.`id`) and (`ldl`.`funzione` = '02-AGGIUDICATARIO'))) AS `aggiudicatari`,`l`.`userins` AS `userins`,group_concat(`ditta`.`ragioneSociale` separator 'xxxxx') AS `nome_aggiudicatari` from ((`avcp_lotto` `l` left join `avcp_ld` `ld` on(((`l`.`id` = `ld`.`id`) and (`ld`.`funzione` = '02-AGGIUDICATARIO')))) left join `avcp_ditta` `ditta` on((`ld`.`codiceFiscale` = `ditta`.`codiceFiscale`))) group by `l`.`id` order by `l`.`anno`,`l`.`id` ;
+CREATE VIEW `avcp_export_ods` AS select 
+    `l`.`id` AS `id`,
+    `l`.`anno` AS `anno`,
+    `l`.`numAtto` AS `numAtto`,
+    `l`.`cig` AS `cig`,
+    `l`.`oggetto` AS `oggetto`,
+    `l`.`sceltaContraente` AS `sceltaContraente`,
+    `l`.`dataInizio` AS `dataInizio`,
+    `l`.`dataUltimazione` AS `dataUltimazione`,
+    `l`.`importoAggiudicazione` AS `importoAggiudicazione`,
+    `l`.`importoSommeLiquidate` AS `importoSommeLiquidate`,
+    `l`.`chiuso` AS `chiuso`,
+    (select count(0) 
+        from `avcp_ld` `ldl` 
+        where ((`l`.`id` = `ldl`.`id`) 
+            and (`ldl`.`funzione` = '01-PARTECIPANTE'))) AS `partecipanti`,
+    (select count(0) from `avcp_ld` `ldl` 
+        where ((`l`.`id` = `ldl`.`id`) 
+            and (`ldl`.`funzione` = '02-AGGIUDICATARIO'))) AS `aggiudicatari`,
+    `l`.`userins` AS `userins`,
+    group_concat(`ditta`.`ragioneSociale` separator 'xxxxx') AS `nome_aggiudicatari` 
+    from ((`avcp_lotto` `l` 
+            left join `avcp_ld` `ld` 
+            on(((`l`.`id` = `ld`.`id`) 
+                    and (`ld`.`funzione` = '02-AGGIUDICATARIO')))) 
+        left join `avcp_ditta` `ditta` 
+        on((`ld`.`codiceFiscale` = `ditta`.`codiceFiscale`))) 
+    group by `l`.`id` 
+    order by `l`.`anno`,
+    `l`.`id`;
