@@ -1,13 +1,4 @@
 <?php
-
-function cleanGetInt() {
-    ;
-}
-
-function cleanGetString() {
-    ;
-}
-
 /**
  *
  * @param string $c_f        
