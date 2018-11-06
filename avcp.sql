@@ -152,11 +152,9 @@ SELECT
         `avcp_ld` `ldl`
     WHERE
         (
-            (
-                `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
-            ) AND(
-                `ldl`.`funzione` LIKE '01-PARTECIPANTE'
-            )
+            `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
+        ) AND(
+            `ldl`.`funzione` LIKE '01-PARTECIPANTE'
         )
 ) AS `partecipa`,
 (
@@ -166,11 +164,9 @@ FROM
     `avcp_ld` `ldl`
 WHERE
     (
-        (
-            `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
-        ) AND(
-            `ldl`.`funzione` LIKE '02-AGGIUDICATARIO'
-        )
+        `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
+    ) AND(
+        `ldl`.`funzione` LIKE '02-AGGIUDICATARIO'
     )
 ) AS `aggiudica`
 FROM
@@ -180,13 +176,9 @@ FROM
         `avcp_ld` `ld`
     ON
         (
-            (
-                (
-                    `d`.`codiceFiscale` = `ld`.`codiceFiscale`
-                ) AND(
-                    `ld`.`funzione` LIKE '01-PARTECIPANTE'
-                )
-            )
+            `d`.`codiceFiscale` = `ld`.`codiceFiscale`
+        ) AND(
+            `ld`.`funzione` LIKE '01-PARTECIPANTE'
         )
     )
 GROUP BY
