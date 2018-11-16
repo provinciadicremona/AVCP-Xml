@@ -192,7 +192,57 @@ ORDER BY
 -- Struttura per la vista `avcp_vista_gare`
 --
 
-CREATE VIEW `avcp_vista_gare` AS select `l`.`id` AS `id`,`l`.`cig` AS `cig`,`l`.`oggetto` AS `oggetto`,`l`.`sceltaContraente` AS `sceltaContraente`,`l`.`importoAggiudicazione` AS `importoAggiudicazione`,`l`.`importoSommeLiquidate` AS `importoSommeLiquidate`,(select count(0) from `avcp_ld` `ldl` where ((`l`.`id` = `ldl`.`id`) and (`ldl`.`funzione` = '01-PARTECIPANTE'))) AS `partecipanti`,(select count(0) from `avcp_ld` `ldl` where ((`l`.`id` = `ldl`.`id`) and (`ldl`.`funzione` = '02-AGGIUDICATARIO'))) AS `aggiudicatari`,`l`.`userins` AS `userins`,group_concat(`ditta`.`ragioneSociale` separator 'xxxxx') AS `nome_aggiudicatari` from ((`avcp_lotto` `l` left join `avcp_ld` `ld` on(((`l`.`id` = `ld`.`id`) and (`ld`.`funzione` = '02-AGGIUDICATARIO')))) left join `avcp_ditta` `ditta` on((`ld`.`codiceFiscale` = `ditta`.`codiceFiscale`))) group by `l`.`id` order by `l`.`anno`,`l`.`id`;
+CREATE VIEW `avcp_vista_gare` AS
+SELECT
+    `l`.`id` AS `id`,
+    `l`.`cig` AS `cig`,
+    `l`.`oggetto` AS `oggetto`,
+    `l`.`sceltaContraente` AS `sceltaContraente`,
+    `l`.`importoAggiudicazione` AS `importoAggiudicazione`,
+    `l`.`importoSommeLiquidate` AS `importoSommeLiquidate`,
+    (
+    SELECT
+        COUNT(0)
+    FROM
+        `avcp_ld` `ldl`
+    WHERE
+        (
+            (`l`.`id` = `ldl`.`id`) AND(`ldl`.`funzione` = '01-PARTECIPANTE')
+        )
+) AS `partecipanti`,
+(
+SELECT
+    COUNT(0)
+FROM
+    `avcp_ld` `ldl`
+WHERE
+    (`l`.`id` = `ldl`.`id`) AND(
+        `ldl`.`funzione` = '02-AGGIUDICATARIO'
+    )
+) AS `aggiudicatari`,
+`l`.`userins` AS `userins`,
+GROUP_CONCAT(
+    `ditta`.`ragioneSociale` SEPARATOR 'xxxxx'
+) AS `nome_aggiudicatari`
+FROM
+    `avcp_lotto` `l`
+LEFT JOIN
+    `avcp_ld` `ld`
+ON
+    (`l`.`id` = `ld`.`id`) AND(
+        `ld`.`funzione` = '02-AGGIUDICATARIO'
+    )
+LEFT JOIN
+    `avcp_ditta` `ditta`
+ON
+    (
+        `ld`.`codiceFiscale` = `ditta`.`codiceFiscale`
+    )
+GROUP BY
+    `l`.`id`
+ORDER BY
+    `l`.`anno`,
+    `l`.`id`;
 
 -- --------------------------------------------------------
 
@@ -200,7 +250,27 @@ CREATE VIEW `avcp_vista_gare` AS select `l`.`id` AS `id`,`l`.`cig` AS `cig`,`l`.
 -- Struttura per la vista `avcp_xml_ditte`
 --
 
-CREATE VIEW `avcp_xml_ditte` AS select `avcp_ld`.`id` AS `id`,`avcp_ld`.`cig` AS `cig`,`avcp_ditta`.`codiceFiscale` AS `codiceFiscale`,`avcp_ditta`.`estero` AS `estero`,`avcp_ld`.`ruolo` AS `ruolo`,`avcp_ld`.`funzione` AS `funzione`,`avcp_ld`.`raggruppamento` AS `raggruppamento`,`avcp_ditta`.`ragioneSociale` AS `ragioneSociale` from (`avcp_ld` join `avcp_ditta`) where (`avcp_ld`.`codiceFiscale` = `avcp_ditta`.`codiceFiscale`) order by `avcp_ld`.`funzione`,`avcp_ld`.`raggruppamento`;
+CREATE VIEW `avcp_xml_ditte` AS
+SELECT
+    `avcp_ld`.`id` AS `id`,
+    `avcp_ld`.`cig` AS `cig`,
+    `avcp_ditta`.`codiceFiscale` AS `codiceFiscale`,
+    `avcp_ditta`.`estero` AS `estero`,
+    `avcp_ld`.`ruolo` AS `ruolo`,
+    `avcp_ld`.`funzione` AS `funzione`,
+    `avcp_ld`.`raggruppamento` AS `raggruppamento`,
+    `avcp_ditta`.`ragioneSociale` AS `ragioneSociale`
+FROM
+    (`avcp_ld`
+JOIN
+    `avcp_ditta`)
+WHERE
+    (
+        `avcp_ld`.`codiceFiscale` = `avcp_ditta`.`codiceFiscale`
+    )
+ORDER BY
+    `avcp_ld`.`funzione`,
+    `avcp_ld`.`raggruppamento`;
 
 -- --------------------------------------------------------
 
@@ -220,21 +290,21 @@ CREATE VIEW `avcp_export_ods` AS select
     `l`.`importoAggiudicazione` AS `importoAggiudicazione`,
     `l`.`importoSommeLiquidate` AS `importoSommeLiquidate`,
     `l`.`chiuso` AS `chiuso`,
-    (select count(0) 
-        from `avcp_ld` `ldl` 
-        where ((`l`.`id` = `ldl`.`id`) 
-            and (`ldl`.`funzione` = '01-PARTECIPANTE'))) AS `partecipanti`,
-    (select count(0) from `avcp_ld` `ldl` 
-        where ((`l`.`id` = `ldl`.`id`) 
-            and (`ldl`.`funzione` = '02-AGGIUDICATARIO'))) AS `aggiudicatari`,
+    (SELECT COUNT(0) 
+        FROM `avcp_ld` `ldl` 
+        WHERE ((`l`.`id` = `ldl`.`id`) 
+            AND (`ldl`.`funzione` = '01-PARTECIPANTE'))) AS `partecipanti`,
+    (SELECT COUNT(0) FROM `avcp_ld` `ldl` 
+        WHERE ((`l`.`id` = `ldl`.`id`) 
+            AND (`ldl`.`funzione` = '02-AGGIUDICATARIO'))) AS `aggiudicatari`,
     `l`.`userins` AS `userins`,
     group_concat(`ditta`.`ragioneSociale` separator 'xxxxx') AS `nome_aggiudicatari` 
-    from ((`avcp_lotto` `l` 
-            left join `avcp_ld` `ld` 
-            on(((`l`.`id` = `ld`.`id`) 
+    FROM ((`avcp_lotto` `l` 
+            LEFT JOIN `avcp_ld` `ld` 
+            ON(((`l`.`id` = `ld`.`id`) 
                     and (`ld`.`funzione` = '02-AGGIUDICATARIO')))) 
-        left join `avcp_ditta` `ditta` 
-        on((`ld`.`codiceFiscale` = `ditta`.`codiceFiscale`))) 
-    group by `l`.`id` 
-    order by `l`.`anno`,
+        LEFT JOIN `avcp_ditta` `ditta` 
+        ON(`ld`.`codiceFiscale` = `ditta`.`codiceFiscale`)) 
+    GROUP BY `l`.`id` 
+    ORDER BY `l`.`anno`,
     `l`.`id`;
