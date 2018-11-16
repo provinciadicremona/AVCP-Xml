@@ -38,7 +38,7 @@ if (!empty($rows)) :
             <?php endif; ?>
         <?php endif; ?>
         </td>
-                <td><?php echo $part['ragioneSociale']; ?><br /></td>
+                <td><a href="?mask=ditta&amp;do=dittaGare&amp;event=partecipa&amp;id=<?php echo $part['codiceFiscale']; ?>"><?php echo $part['ragioneSociale']; ?></a><br /></td>
             </tr>
 <?php
 endforeach ;

@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * APVC Xml - Generatore dataset per art. 32 L. 190/2012
+ * APVC Xml - Generatore dataset per art. 1 comma 32 L. 190/2012
  * Copyright (C) 2013  Claudio Roncaglio e Gianni Bassini
  *
  * This program is free software: you can redistribute it and/or modify

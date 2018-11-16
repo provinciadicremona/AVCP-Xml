@@ -53,12 +53,16 @@ if ($aggiudicata > 0) {
                 $raggOld = $rows[$x]['raggruppamento'];
             }
             $outTopAg .= 'Ruolo: ' . $rows[$x]['ruolo'] . ' - ';
-            $outTopAg .= 'C.F.: ' . $rows[$x]['codiceFiscale'] . ' - ' . $rows[$x]['ragioneSociale'] . '<br />' . PHP_EOL;
+            $outTopAg .= 'C.F.: ' . $rows[$x]['codiceFiscale'] . ' - ';
+            $outTopAg .='<a href="?mask=ditta&do=dittaGare&event=aggiudica&id=' . $rows[$x]['codiceFiscale'] . '">';
+            $outTopAg .= $rows[$x]['ragioneSociale'] . '</a><br />' . PHP_EOL;
         } else {
             if ($x > 0) {
                 $outTopAg .= '<hr />' . PHP_EOL;
             }
-            $outTopAg .= 'C.F.: ' . $rows[$x]['codiceFiscale'] . ' - ' . $rows[$x]['ragioneSociale'] . PHP_EOL;
+            $outTopAg .= 'C.F.: ' . $rows[$x]['codiceFiscale'] . ' - ';
+            $outTopAg .='<a href="?mask=ditta&do=dittaGare&event=aggiudica&id=' . $rows[$x]['codiceFiscale'] . '">';
+            $outTopAg .= $rows[$x]['ragioneSociale'] . '</a><br />' . PHP_EOL;
         }
     }
     $outTopAg .= '</div>' . PHP_EOL;

@@ -57,35 +57,6 @@ $customJsScript .= PHP_EOL . '
                 </fieldset>
             </form>
             <!-- fine liveSearch (aggiunta id=elenco a table -->
-            <div id="cercaModal" class="modal hide fade" tabindex="-1"
-                role="dialog" aria-labelledby="cercaModalLabel" aria-hidden="true">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">×</button>
-                    <h3 id="cercaModalLabel">Ricerca</h3>
-                </div>
-                <div class="modal-body">
-                    <p>Scrivendo all'interno di questo campo si restringerà l'elenco
-                        alle righe che soddisfano i criteri di ricerca.</p>
-                    <h4>Attenzione!</h4>
-                    <p>
-                        La ricerca <strong>non distingue</strong> tra maiuscole e
-                        minuscole e soprattutto, per inserire i caratteri <strong>punto</strong>
-                        (.) e <strong>più</strong> (+) ricordarsi di farli precedere dal <strong>carattere
-                            "\"</strong>.
-                    </p>
-                    <p>Ad esempio:</p>
-                    <ul>
-                        <li>per trovare la ditta B+B Solutions, cercare b\+b</li>
-                        <li>per trovare la ditta A.Cispi, cercare a\.cispi</li>
-                    </ul>
-
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Chiudi</button>
-                </div>
-            </div>
-            <!-- / modal -->
             <table class="table table-striped table-condensed table-hover"
                 id="elenco">
                 <tr>
@@ -93,10 +64,11 @@ $customJsScript .= PHP_EOL . '
                     <th width="18%">Codice Fiscale</th>
                     <th>Ragione Sociale</th>
                     <th>Nazionalità</th>
-                    <th>Gare</th>
+                    <th>Partecipa</th>
+                    <th>Aggiudica</th>
                 </tr>
-        <?php if (isset($ditte)): ?>
-            <?php foreach ($ditte as $ditta): ?>
+<?php if (isset($ditte)): ?>
+<?php foreach ($ditte as $ditta): ?>
                 <tr class="dati">
                     <td><a
                         href="?mask=ditta&amp;codiceFiscale=<?php echo $ditta['codiceFiscale']; ?>"
@@ -104,16 +76,36 @@ $customJsScript .= PHP_EOL . '
                         &nbsp;/&nbsp;
                         <?php echo $ditta['elimina']; ?>
                     </td>
-                    <td>
-                        &nbsp;<?php echo $ditta['codiceFiscale']; ?>
+                    <td> &nbsp;<?php echo $ditta['codiceFiscale']; ?> </td>
+                    <td> <?php echo $ditta['ragioneSociale']; ?> </td>
+                    <td> <?php echo $ditta['estero']; ?>
                     </td>
                     <td>
-                        <?php echo $ditta['ragioneSociale']; ?>
+    <?php if ($ditta['partecipa'] > 0) : ?>
+        <a href="?mask=ditta&amp;do=dittaGare&amp;event=partecipa&amp;id=<?php echo $ditta['codiceFiscale']; ?>"><?php echo $ditta['partecipa']; ?>
+        <?php if ($ditta['partecipa'] > 1) : ?>
+            &nbsp;gare
+        <?php else : ?>
+            &nbsp;gara
+        <?php endif;?>
+        </a>
+    <?php else : ?>
+        nessuna
+    <?php endif;?>
                     </td>
                     <td>
-                        <?php echo $ditta['estero']; ?>
+    <?php if ($ditta['aggiudica'] > 0) : ?>
+        <a href="?mask=ditta&amp;do=dittaGare&amp;event=aggiudica&amp;id=<?php echo $ditta['codiceFiscale']; ?>"><?php echo $ditta['aggiudica']; ?>
+        <?php if ($ditta['aggiudica'] > 1) : ?>
+            &nbsp;gare
+        <?php else : ?>
+            &nbsp;gara
+        <?php endif;?>
+        </a>
+    <?php else : ?>
+        nessuna
+    <?php endif;?>
                     </td>
-                    <td><?php echo isset($ditta['lotti'])?$ditta['lotti']:''; ?></td>
                 </tr>
             <?php endforeach;	?>
         <?php endif;?>
@@ -121,3 +113,34 @@ $customJsScript .= PHP_EOL . '
         </div>
     </div>
 </div>
+
+<!-- Finestra di aiuto -->
+<div id="cercaModal" class="modal hide fade" tabindex="-1"
+    role="dialog" aria-labelledby="cercaModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+            aria-hidden="true">×</button>
+        <h3 id="cercaModalLabel">Ricerca</h3>
+    </div>
+    <div class="modal-body">
+        <p>Scrivendo all'interno di questo campo si restringerà l'elenco
+            alle righe che soddisfano i criteri di ricerca.</p>
+        <h4>Attenzione!</h4>
+        <p>
+            La ricerca <strong>non distingue</strong> tra maiuscole e
+            minuscole e soprattutto, per inserire i caratteri <strong>punto</strong>
+            (.) e <strong>più</strong> (+) ricordarsi di farli precedere dal <strong>carattere
+                "\"</strong>.
+        </p>
+        <p>Ad esempio:</p>
+        <ul>
+            <li>per trovare la ditta B+B Solutions, cercare b\+b</li>
+            <li>per trovare la ditta A.Cispi, cercare a\.cispi</li>
+        </ul>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Chiudi</button>
+    </div>
+</div>
+<!-- / finestra di aiuto -->

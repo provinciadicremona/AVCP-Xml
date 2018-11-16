@@ -8,6 +8,9 @@ case 'cercaDitta':
 case 'elencaDitte':
     require_once __DIR__ . '/../model/ditteElenca.php';
     break;
+case 'dittaGare':
+    require_once __DIR__ . '/../model/dittaGare.php';
+    break;
 case 'eliminaDitta':
     require_once __DIR__ . '/../model/dittaElimina.php';
     break;

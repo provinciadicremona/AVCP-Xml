@@ -10,6 +10,7 @@ case 'logout':
     break;
 default:
     $failedLogin = false;
+    require_once 'app/checkDbUpdate.php';
     require_once 'app/view/signinForm.php';
     break;
 }
