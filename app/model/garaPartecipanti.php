@@ -143,8 +143,29 @@ switch ($_GET['do']){
                 break;
             }
         }
-        if (empty($funzione))
+        if (empty($funzione)) {
             $funzione = '01-PARTECIPANTE';
+        }
+        // TODO: Controllare che la ditta non sia presente e usare $id al posto del valore in $_GET
+        $queryPresente = "SELECT count(id) as inserita FROM `avcp_ld` WHERE id = ".$id." and codiceFiscale LIKE '".$codiceFiscale."'";
+        $resPresente = $db->query($queryPresente);
+        $presente = $resPresente->fetch_assoc();
+        try {
+            if ($presente['inserita'] > 0 ) 
+                throw new Exception('
+                    <div class="row">
+                        <div class="span12">
+                            <div class="alert alert-error">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong>Impossibile inserire la ditta:</strong><br /> una ditta con questo codice fiscale
+                                &egrave; gi&agrave; assegnata a questa gara.
+                            </div>
+                        </div>
+                        </div>', 1);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            break;
+        }
         $queryAggDitta = "
             INSERT INTO avcp_ld
                 (

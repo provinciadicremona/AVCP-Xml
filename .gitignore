@@ -7,8 +7,11 @@
 # # KDE directory preferences
 .directory
 
-# # Linux trash folder which might appear on any partition or disk
+# Linux trash folder which might appear on any partition or disk
 .Trash-*
+
+# Vim swp files
+*.swp
 
 # Eclipse Core
 .project
