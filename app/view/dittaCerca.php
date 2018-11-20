@@ -37,7 +37,7 @@ $customJsScript = '
             <div class="well">
                 <fieldset>
                     <legend>Cerca ragione sociale o C.F.:</legend>
-                    <input type="text" name="cercaRagSoc" id="cercaRagSoc" class="span6" placeholder="Cerca ragione sociale o Codice Fiscale" />
+                    <input type="text" name="cercaRagSoc" id="cercaRagSoc" class="span6" placeholder="Cerca ragione sociale o Codice Fiscale" autofocus />
                 </fieldset>
                 <fieldset>
                     <legend>

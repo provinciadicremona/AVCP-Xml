@@ -56,7 +56,7 @@ isset($importoSommeLiquidate) || $importoSommeLiquidate = '';
                     <legend>Dati gara:</legend>
                     <label for="anno">Anno di riferimento</label> <input type="text"
                         name="anno" class="span1" placeholder="Anno"
-                        value="<?php echo $anno; ?>" /> <input type="hidden" name="id"
+                        value="<?php echo $anno; ?>" autofocus/> <input type="hidden" name="id"
                         id="id" value="<?php echo $id; ?>" /> <label for="cig">C.I.G.</label>
                     <input type="text" name="cig" maxlength="10"
                         placeholder="Codice Identificativo Gara"

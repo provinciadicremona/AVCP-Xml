@@ -39,7 +39,7 @@ $customJsScript = '
                 <fieldset>
                     <legend>Cerca oggetto o C.I.G.:</legend>
                     <input type="text" name="cercaOggetto" id="cercaOggetto"
-                        class="span6" placeholder="Ricerca tramite oggetto o C.I.G." />
+                        class="span6" placeholder="Ricerca tramite oggetto o C.I.G." autofocus />
                 </fieldset>
                 <fieldset>
                     <legend>Gara selezionata:</legend>
