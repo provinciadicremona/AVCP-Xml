@@ -123,7 +123,6 @@ INSERT INTO `avcp_sceltaContraenteType` (`ruolo`) VALUES
 ('28-PROCEDURA AI SENSI DEI REGOLAMENTI DEGLI ORGANI COSTITUZIONALI');
 
 -- --------------------------------------------------------
-
 --
 -- Struttura della tabella `bloccati`
 --
@@ -134,7 +133,13 @@ CREATE TABLE `bloccati` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+--
+-- Struttura della tabella `versioni`
+--
 
+CREATE TABLE IF NOT EXISTS `versioni` (`ver` CHAR(10) CHARACTER SET utf8 NOT NULL)  ENGINE InnoDB DEFAULT CHARSET=utf8 COMMENT='Versioni del programma installate';
+
+-- --------------------------------------------------------
 --
 -- Struttura per la vista `avcp_vista_ditte`
 --

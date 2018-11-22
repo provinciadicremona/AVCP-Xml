@@ -1,4 +1,13 @@
 <?php
+/*
+ * Creo la tabella delle versioni, se non esiste, e vado a leggere il valore
+ * massimo per confrontarlo con quello del file version.txt Se è minore, allora
+ * procedo a lanciare le query di aggiornamento.
+ *
+ * Query di creazione: 
+ * CREATE TABLE IF NOT EXISTS `versioni` (`ver`CHAR(10) CHARACTER SET utf8 NOT NULL) ENGINE InnoDB DEFAULT CHARSET=utf8 COMMENT='Versioni del programma installate';
+ */
+
 // Controllo la presenza del campo 'aggiudica' nella vista
 // 'avcp_vista_ditte' per capire se il db ha bisogno di 
 // essere aggiornato.
