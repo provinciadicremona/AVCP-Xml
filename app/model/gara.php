@@ -51,7 +51,7 @@ switch ($_GET['do']){
         }
         // Verifico che l'anno sia compreso tra 2012 e anno corrente + 1
         try {
-            if (empty(filter_input(INPUT_POST, 'anno', FILTER_VALIDATE_INT, $anniValidi)))
+            if (empty($anno) || !(in_array($anno, $anniValidi)))
                 throw new Exception('
                     <div class="row">
                     <div class="span8 offset2">
@@ -135,7 +135,7 @@ switch ($_GET['do']){
         $res->free;
         break;
     case 'modificaGara':
-        $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+        $id = (int) $_GET['id'];
         // Verifico che l'anno non sia bloccato
         try {
             if (array_key_exists($anno, $bloccati))
@@ -155,7 +155,7 @@ switch ($_GET['do']){
         }
         // Verifico che l'anno sia compreso tra 2012 e anno corrente + 1
         try {
-            if (empty(filter_input(INPUT_POST, 'anno', FILTER_VALIDATE_INT, $anniValidi)))
+            if (empty($anno) || !(in_array($anno, $anniValidi)))
                 throw new Exception('
                     <div class="row">
                     <div class="span8 offset2">
@@ -240,7 +240,7 @@ switch ($_GET['do']){
         break;
     default:
         if (!empty($_GET['id'])) {
-            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+            $id = (int) $_GET['id'];
             $queryGara = "
                     SELECT * FROM avcp_lotto
                     WHERE
