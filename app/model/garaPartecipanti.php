@@ -1,5 +1,5 @@
 <?php
-$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+$id = (int) filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 if (!empty($id)) {
     $query = "SELECT id, anno, oggetto, cig, numAtto
@@ -202,7 +202,7 @@ switch ($_GET['do']){
         }
         break;
     case 'eliminaDitta':
-        if (!empty($_GET['codiceFiscale']) && !empty($id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT))) {
+        if (!empty($_GET['codiceFiscale']) && !empty($id)) {
             $queryDelDitta = "DELETE FROM avcp_ld
                 WHERE
                     codiceFiscale = '" . trim($db->real_escape_string($_GET['codiceFiscale'])) . "'
