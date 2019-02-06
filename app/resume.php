@@ -14,10 +14,6 @@ function get_resource_path($resource) {
     return $metadata['uri'];
 }
 // TO FIX???
-$anno = filter_input(INPUT_GET, 'anno', FILTER_VALIDATE_INT, isset($anniValidi)?$anniValidi:'');
-if (empty($anno)) {
-    die('Anno non corretto');
-}
 $type = filter_input(INPUT_GET, 'type', FILTER_SANITIZE_STRING);
 $uri = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL);
 
@@ -29,7 +25,6 @@ try {
     die();
 }
 
-$anno_rif = $anno;
 require_once __DIR__ . '/xml/testa_xml_avcp_query.php';
 
 try {

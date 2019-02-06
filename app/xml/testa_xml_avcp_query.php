@@ -20,11 +20,7 @@
  */
 error_reporting(E_ALL ^ E_NOTICE);
 require_once __DIR__ . '/../config.php';
-$anno_rif = filter_input(INPUT_GET, 'anno', FILTER_VALIDATE_INT, $anniValidi);
-
-if (empty($anno_rif)) {
-    die('Anno non corretto');
-}
+$anno = (int) $_GET['anno'];
 
 $XML_FILE = null;
 $XML_TOT = null;
@@ -32,8 +28,8 @@ $XML_TOT .= '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>' . "\n";
 $XML_TOT .= '<!DOCTYPE legge190:pubblicazione>' . PHP_EOL;
 $date_agg = date("Y-m-d");
 $date_agg_full = date("Y-m-d H:i:s");
-$dataPubb = $anno_rif + 1 . "-01-31";
-$query_lotti = "SELECT * FROM avcp_lotto WHERE anno = '" . $anno_rif . "' AND sceltaContraente != '00-DA DEFINIRE'";
+$dataPubb = $anno + 1 . "-01-31";
+$query_lotti = "SELECT * FROM avcp_lotto WHERE anno = '" . $anno . "' AND sceltaContraente != '00-DA DEFINIRE'";
 $result_lotti = $db->query($query_lotti);
 $number_lotti = $result_lotti->num_rows;
 
@@ -45,11 +41,11 @@ $XML_TOT .= '<legge190:pubblicazione xsi:schemaLocation="legge190_1_0 datasetApp
     <dataPubbicazioneDataset>' . $dataPubb . '</dataPubbicazioneDataset>
     <entePubblicatore>' . stripslashes(ENTE_PROPONENTE) . '</entePubblicatore>
     <dataUltimoAggiornamentoDataset>' . $date_agg . '</dataUltimoAggiornamentoDataset>
-    <annoRiferimento>' . $anno_rif . '</annoRiferimento>' . "\n";
+    <annoRiferimento>' . $anno . '</annoRiferimento>' . "\n";
 if (URL_XML_FILE_ANNUALE == 'NO') {
     $XML_TOT .= '<urlFile>' . URL_XML_FILE . '</urlFile>' . "\n";
 } else {
-    $XML_TOT .= '<urlFile>' . URL_XML_FILE_ANNUALE . $anno_rif . '.xml</urlFile>' . "\n";
+    $XML_TOT .= '<urlFile>' . URL_XML_FILE_ANNUALE . $anno . '.xml</urlFile>' . "\n";
 }
 
 $XML_TOT .= '

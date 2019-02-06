@@ -33,6 +33,7 @@ if (!empty($_GET['do'])) {
 switch ($_GET['do']){
     case 'inserisciGara':
         // Verifico che l'anno non sia bloccato
+
         try {
             if (array_key_exists($anno, $bloccati))
                 throw new Exception('
@@ -51,7 +52,7 @@ switch ($_GET['do']){
         }
         // Verifico che l'anno sia compreso tra 2012 e anno corrente + 1
         try {
-            if (empty($anno) || !(in_array($anno, $anniValidi)))
+            if (empty($anno) || $anno < $anniValidi['options']['min_range'] || $anno > $anniValidi['options']['max_range'])
                 throw new Exception('
                     <div class="row">
                     <div class="span8 offset2">
@@ -155,7 +156,7 @@ switch ($_GET['do']){
         }
         // Verifico che l'anno sia compreso tra 2012 e anno corrente + 1
         try {
-            if (empty($anno) || !(in_array($anno, $anniValidi)))
+            if (empty($anno) || $anno < $anniValidi['options']['min_range'] || $anno > $anniValidi['options']['max_range'])
                 throw new Exception('
                     <div class="row">
                     <div class="span8 offset2">
