@@ -29,19 +29,31 @@ if (!empty($_GET['do'])) {
         // Imposto do a errore per essere gestito dallo switch
         $_GET['do'] = 'errore';
     }
+    // Imposto i campi vuoti con valori di default
+    if (empty($cig) || $cig == '')
+        $cig = '0000000000';
+    if (empty($importoAggiudicazione))
+        $importoAggiudicazione = '0.00';
+    if (empty($importoSommeLiquidate))
+        $importoSommeLiquidate = '0.00';
+    if (empty($dataInizio))
+        $dataInizio = '0000-00-00';
+    if (empty($dataUltimazione))
+        $dataUltimazione= '0000-00-00';
 }
 switch ($_GET['do']){
     case 'inserisciGara':
-        // Verifico che l'anno non sia bloccato
-
+        // Verifico che l'anno sia compreso tra 2012 e anno corrente
+        // Il 2012 è stato il primo anno della rilevazione.
         try {
-            if (array_key_exists($anno, $bloccati))
+            if (!in_array($anno, $anniValidi))
                 throw new Exception('
                     <div class="row">
                     <div class="span8 offset2">
                         <div class="alert alert-error">
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong>Errore nell\'inserimento della gara:</strong><br /> gli inserimenti per l\'anno ' . $anno . ' sono bloccati
+                            <strong>Errore nell\'inserimento della gara:</strong><br />gli inserimenti per l\'anno ' . $anno . ' non sono consentiti
+                            <br />Sono accettati questi anni: ' . implode(", ", $anniValidi) . '. 
                         </div>
                         <p>Torna alla <a href="./">home page</a></p>
                     </div>
@@ -50,28 +62,6 @@ switch ($_GET['do']){
             echo $e->getMessage();
             break;
         }
-        // Verifico che l'anno sia compreso tra 2012 e anno corrente + 1
-        try {
-            if (empty($anno) || $anno < $anniValidi['options']['min_range'] || $anno > $anniValidi['options']['max_range'])
-                throw new Exception('
-                    <div class="row">
-                    <div class="span8 offset2">
-                        <div class="alert alert-error">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong>Errore nell\'inserimento della gara:</strong><br /> l\'anno ' . $anno . ' non è consentito
-                            <br />Sono accettati anni compresi tra ' . $anniValidi['options']['min_range'] . ' e ' . $anniValidi['options']['max_range'] . '
-                        </div>
-                        <p>Torna alla <a href="./">home page</a></p>
-                    </div>
-                    </div>', 1);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            break;
-        }
-
-        // Imposto il cig al valore di default se non specificato
-        if (empty($cig) || $cig == '')
-            $cig = '0000000000';
         $queryIns = "
             INSERT INTO avcp_lotto
             (
@@ -131,21 +121,23 @@ switch ($_GET['do']){
                         </div>
                     </div>
                 </div>' . PHP_EOL;
-            require_once __DIR__ . '/../view/garaInsModOk.php';
+            require_once AVCP_DIR . 'app/view/garaInsModOk.php';
         }
         $res->free;
         break;
     case 'modificaGara':
-        $id = (int) $_GET['id'];
-        // Verifico che l'anno non sia bloccato
+        $id = (int) $_POST['id'];
+        // Verifico che l'anno sia compreso tra 2012 e anno corrente
+        // Il 2012 è stato il primo anno della rilevazione.
         try {
-            if (array_key_exists($anno, $bloccati))
+            if (!in_array($anno, $anniValidi))
                 throw new Exception('
                     <div class="row">
                     <div class="span8 offset2">
                         <div class="alert alert-error">
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong>Errore nella modifica della gara:</strong><br /> le modifiche per l\'anno ' . $anno . ' sono bloccate
+                            <strong>Errore nella modifica della gara:</strong><br />le modifiche per l\'anno ' . $anno . ' non sono consentite
+                            <br />Sono accettati questi anni: ' . implode(", ", $anniValidi) . '. 
                         </div>
                         <p>Torna alla <a href="./">home page</a></p>
                     </div>
@@ -154,27 +146,8 @@ switch ($_GET['do']){
             echo $e->getMessage();
             break;
         }
-        // Verifico che l'anno sia compreso tra 2012 e anno corrente + 1
-        try {
-            if (empty($anno) || $anno < $anniValidi['options']['min_range'] || $anno > $anniValidi['options']['max_range'])
-                throw new Exception('
-                    <div class="row">
-                    <div class="span8 offset2">
-                        <div class="alert alert-error">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong>Errore nella modifica della gara:</strong><br /> l\'anno ' . $anno . ' non è consentito
-                            <br />Sono accettati anni compresi tra ' . $anniValidi['options']['min_range'] . ' e ' . $anniValidi['options']['max_range'] . '
-                        </div>
-                        <p>Torna alla <a href="./">home page</a></p>
-                    </div>
-                    </div>', 1);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            break;
-        }
+        // TODO Spostare in alto dopo il controllo del $_GET[do]
         // Imposto il cig al valore di default se non specificato
-        if (empty($cig) || $cig == '')
-            $cig = '0000000000';
         $queryMod = "
             UPDATE avcp_lotto
             SET
@@ -220,7 +193,7 @@ switch ($_GET['do']){
                         </div>
                     </div>
                 </div>' . PHP_EOL;
-            require_once __DIR__ . '/../view/garaInsModOk.php';
+            require_once AVCP_DIR . 'app/view/garaInsModOk.php';
         } else {
             echo '<div class="row">
                     <div class="span8 offset2">
@@ -230,14 +203,14 @@ switch ($_GET['do']){
                         </div>
                     </div>
                 </div>' . PHP_EOL;
-            require_once __DIR__ . '/../view/garaInsModOk.php';
+            require_once AVCP_DIR . 'app/view/garaInsModOk.php';
         }
         break;
     case 'elencaGareAnno':
-        require_once __DIR__ . '/../view/garaElenca.php';
+        require_once AVCP_DIR . 'app/view/garaElenca.php';
         break;
     case 'errore':
-        require_once __DIR__ . '/../../footer.php';
+        require_once AVCP_DIR . 'footer.php';
         break;
     default:
         if (!empty($_GET['id'])) {
@@ -272,10 +245,10 @@ switch ($_GET['do']){
             if (isset($sceltaContraente) && $ruolo == $sceltaContraente) {
                 $ruoloOutput .= '<option value="' . $ruolo . '" selected>' . $ruolo . '</option>';
             } else {
-                $ruoloOutput .= '<option value="' . $ruolo . '">' . $ruolo . '</option>';
+                $ruoloOutput .= '<option value="'. $ruolo . '">' . $ruolo . '</option>';
             }
         }
         $res->free();
-        require_once __DIR__ . '/../view/garaForm.php';
+        require_once AVCP_DIR . 'app/view/garaForm.php';
         break;
 }

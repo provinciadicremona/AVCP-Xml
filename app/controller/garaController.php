@@ -3,27 +3,27 @@
 isset($_GET['do']) || $_GET['do'] = null;
 switch ($_GET['do']){
 case 'cercaGara':
-    require_once __DIR__ . '/../model/garaCerca.php';
+    require_once AVCP_DIR . 'app/model/garaCerca.php';
     break;
 case 'partecipantiGara':
-    require_once __DIR__ . '/../model/garaPartecipanti.php';
+    require_once AVCP_DIR . 'app/model/garaPartecipanti.php';
     break;
 case 'aggiungiDitta':
-    require_once __DIR__ . '/../model/garaPartecipanti.php';
+    require_once AVCP_DIR . 'app/model/garaPartecipanti.php';
     break;
 case 'eliminaDitta':
-    require_once __DIR__ . '/../model/garaPartecipanti.php';
+    require_once AVCP_DIR . 'app/model/garaPartecipanti.php';
     break;
 case 'eliminaAggiudicatari':
-    require_once __DIR__ . '/../model/garaPartecipanti.php';
+    require_once AVCP_DIR . 'app/model/garaPartecipanti.php';
     break;
 case 'eliminaGara':
-    require_once __DIR__ . '/../model/garaElimina.php';
+    require_once AVCP_DIR . 'app/model/garaElimina.php';
     break;
 case 'elencaGareAnno':
-    require_once __DIR__ . '/../model/garaElenca.php';
+    require_once AVCP_DIR . 'app/model/garaElenca.php';
     break;
 default:
-    require_once __DIR__ . '/../model/gara.php';
+    require_once AVCP_DIR . 'app/model/gara.php';
     break;
 }

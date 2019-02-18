@@ -1,5 +1,5 @@
 <?php
-require_once '../config.php';
+require_once AVCP_DIR . 'app/config.php';
 
 // Converte una data dal formato Y-m-d a quello d-m-Y
 function dataIta($data) {
@@ -96,7 +96,7 @@ if ($anno > 2011 && $anno <= date('Y')) {
 
     // content.xml - righe
     foreach ($rows as $row) {
-        if ($row['importoSommeLiquidate'] >= $row['importoAggiudicazione'] || $row['chiuso'] == 1) {
+        if (($row['importoAggiudicazione'] > 0 && $row['importoSommeLiquidate'] >= $row['importoAggiudicazione']) || $row['chiuso'] == 1) {
             $row['stato'] = 'conclusa';
         } else {
             $row['stato'] = 'in corso';

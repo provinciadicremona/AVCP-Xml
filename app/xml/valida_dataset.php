@@ -41,7 +41,7 @@ if (isset($_GET['anno'])) {
 // Enable user error handling
 libxml_use_internal_errors(true);
 
-require_once __DIR__ . '/testa_xml_avcp_query.php';
+require_once 'testa_xml_avcp_query.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,14 +1,14 @@
 <?php
 if (is_null($_POST['action'])) {
     // Se non sto inserendo chiamo la maschera e le istruzioni
-    require_once __DIR__ . '/../view/ditteImportaIstr.php';
+    require_once AVCP_DIR . 'app/view/ditteImportaIstr.php';
 } else {
     // Controllo che ci sia il file
     if ($_FILES['csv']['error'] != 0) {
-        require_once __DIR__ . '/../view/ditteImportaError.php';
+        require_once AVCP_DIR . 'app/view/ditteImportaError.php';
     } else {
         if (($fh = fopen($_FILES['csv']['tmp_name'], 'r')) !== false) {
-            require_once __DIR__ . '/../functions.php';
+            require_once AVCP_DIR . 'app/functions.php';
             // in $fn metto i nomi delle colonne che sono la prima riga del csv
             $fn = fgetcsv($fh, 600, ',', '"');
             $n = 0;
@@ -67,7 +67,7 @@ if (is_null($_POST['action'])) {
             $riepilogo = str_replace('Duplicates', '</p><p><span class="label label-warning">Tentativi di inserimenti doppi</span>', $riepilogo);
             $riepilogo = str_replace('Warnings:', '</p><p><span class="label label-warning">Errori corretti durante l\'imortazione:</span>', $riepilogo);
             $riepilogo .= '</p>';
-            require_once __DIR__ . '/../view/ditteImporta.php';
+            require_once AVCP_DIR . 'app/view/ditteImporta.php';
         } else {
             echo "File non leggibile...";
         }

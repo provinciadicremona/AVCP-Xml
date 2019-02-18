@@ -15,4 +15,4 @@ if (!empty($_GET['eleDitta'])) {
                     </div>';
     }
 }
-require_once __DIR__ . '/ditteElenca.php';
+require_once AVCP_DIR . 'app/model/ditteElenca.php';

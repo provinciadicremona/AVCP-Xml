@@ -6,11 +6,11 @@ if (empty($_GET['do'])) {
 switch ($_GET['do']){
 case 'login':
 case 'logout':
-    require_once 'app/model/signin.php';
+    require_once AVCP_DIR . 'app/model/signin.php';
     break;
 default:
     $failedLogin = false;
-    require_once 'app/checkDbUpdate.php';
-    require_once 'app/view/signinForm.php';
+    require_once AVCP_DIR . 'app/checkDbUpdate.php';
+    require_once AVCP_DIR . 'app/view/signinForm.php';
     break;
 }

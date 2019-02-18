@@ -3,24 +3,24 @@
 isset($_GET['do']) || $_GET['do'] = null;
 switch ($_GET['do']){
 case 'cercaDitta':
-    require_once __DIR__ . '/../model/dittaCerca.php';
+    require_once AVCP_DIR . 'app/model/dittaCerca.php';
     break;
 case 'elencaDitte':
-    require_once __DIR__ . '/../model/ditteElenca.php';
+    require_once AVCP_DIR . 'app/model/ditteElenca.php';
     break;
 case 'dittaGare':
-    require_once __DIR__ . '/../model/dittaGare.php';
+    require_once AVCP_DIR . 'app/model/dittaGare.php';
     break;
 case 'eliminaDitta':
-    require_once __DIR__ . '/../model/dittaElimina.php';
+    require_once AVCP_DIR . 'app/model/dittaElimina.php';
     break;
 case 'pulisciDitte':
-    require_once __DIR__ . '/../model/dittePulisci.php';
+    require_once AVCP_DIR . 'app/model/dittePulisci.php';
     break;
 default:
     if (!empty($_POST['codiceFiscale'])) {
         $_GET['codiceFiscale'] = $_POST['codiceFiscale'];
     }
-    require_once __DIR__ . '/../model/ditta.php';
+    require_once AVCP_DIR . 'app/model/ditta.php';
     break;
 }

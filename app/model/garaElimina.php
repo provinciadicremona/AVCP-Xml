@@ -34,5 +34,5 @@ if (array_key_exists('id', $_GET)) {
             }
         }
     }
-    require_once __DIR__ . '/../view/garaElimina.php';
+    require_once AVCP_DIR . 'app/view/garaElimina.php';
 }

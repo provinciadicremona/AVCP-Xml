@@ -25,7 +25,7 @@ try {
     die();
 }
 
-require_once __DIR__ . '/xml/testa_xml_avcp_query.php';
+require_once AVCP_DIR . 'app/xml/testa_xml_avcp_query.php';
 
 try {
     if (!($document = simplexml_load_string($XML_TOT)))

@@ -3,23 +3,23 @@
 isset($_GET['do']) || $_GET['do'] = null;
 switch ($_GET['do']){
 case 'blocca':
-    require_once __DIR__ . '/../model/annoBlocca.php';
+    require_once AVCP_DIR . 'app/model/annoBlocca.php';
     break;
 case 'sblocca':
-    require_once __DIR__ . '/../model/annoSblocca.php';
+    require_once AVCP_DIR . 'app/model/annoSblocca.php';
     break;
 case 'avanza':
-    require_once __DIR__ . '/../model/annoAvanza.php';
+    require_once AVCP_DIR . 'app/model/annoAvanza.php';
     break;
 case 'arretra':
-    require_once __DIR__ . '/../model/annoArretra.php';
+    require_once AVCP_DIR . 'app/model/annoArretra.php';
     break;
 case 'messaggio':
-    require_once __DIR__ . '/../model/messaggio.php';
+    require_once AVCP_DIR . 'app/model/messaggio.php';
     break;
 default:
     break;
 }
 if (isset($_GET['do']) && $_GET['do'] != 'messaggio') {
-    require_once __DIR__ . '/../view/annoOp.php';
+    require_once AVCP_DIR . 'app/view/annoOp.php';
 }

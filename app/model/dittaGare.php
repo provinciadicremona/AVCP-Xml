@@ -30,4 +30,4 @@ for ($i = 0; $i < $quanti; $i++) {
         $rows[$i][$key] = mb_convert_encoding($value, "UTF-8", "ISO-8859-15, ISO-8859-1, CP1251, CP1252"); 
     }
 }
-require_once __DIR__ . '/../view/dittaGare.php';
+require_once AVCP_DIR . 'app/view/dittaGare.php';

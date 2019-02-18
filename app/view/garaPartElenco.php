@@ -7,9 +7,14 @@
                 <th>Ruolo</th>
             </tr>
 <?php
+if (!empty($rows)) {
 $oldRag = 0;
 $ultimo = count($rows) - 1;
 $maxRag = $rows[$ultimo]['raggruppamento'] + 1;
+} else {
+$oldRag = 0;
+$maxRag = 1;
+}
 if (!array_key_exists($anno, $bloccati)) : // Verifico che l'anno non sia bloccato
 ?>
 <div class="row">

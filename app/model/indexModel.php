@@ -50,12 +50,12 @@ if (empty($_GET['do']) || $_GET['do'] == 'login') {
     } else {
         $xmlLink = '<li>Inseresci almeno una gara</li>'.PHP_EOL;
     }
-    require_once __DIR__ . '/../view/index.php';
+    require_once AVCP_DIR . 'app/view/index.php';
 } else {
     switch ($_GET['do']) {
         case 'aggiorna':
-            require_once __DIR__ . '/../webServices/isUpdated.php';
-            require_once __DIR__ . '/../view/aggiornamenti.php';
+            require_once AVCP_DIR . 'app/webServices/isUpdated.php';
+            require_once AVCP_DIR . 'app/view/aggiornamenti.php';
             break;
         default:
             break;

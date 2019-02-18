@@ -59,7 +59,7 @@ switch ($_GET['do']){
         }
         $resCe->free();
         if ($ce['presente'] == 0) {
-            require_once __DIR__ . '/../functions.php';
+            require_once AVCP_DIR . 'app/functions.php';
             // Controllo che non manchino i campi principali
             try {
                 if (empty($ragioneSociale)) {
@@ -367,6 +367,6 @@ if (!empty($_GET['action'])) {
         }
     }
 }
-require_once __DIR__ . '/estraiPartecipantiGara.php';
-require_once __DIR__ . '/../view/garaPartTop.php';
-require_once __DIR__ . '/../view/garaPartElenco.php';
+require_once AVCP_DIR . 'app/model/estraiPartecipantiGara.php';
+require_once AVCP_DIR . 'app/view/garaPartTop.php';
+require_once AVCP_DIR . 'app/view/garaPartElenco.php';

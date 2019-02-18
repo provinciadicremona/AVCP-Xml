@@ -28,4 +28,4 @@ if ($messageSize > 0) {
     $contents = '';
 }
 fclose($fmh);
-require_once __DIR__ . '/../view/messaggio.php';
+require_once AVCP_DIR . 'app/view/messaggio.php';

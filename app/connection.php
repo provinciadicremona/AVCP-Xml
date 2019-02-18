@@ -34,4 +34,3 @@ if ($quantiBloccati > 0) {
 // determino gli anni su cui è ancora possibile operare
 $anniValidi = array_diff($anni, $anniBloc);
 unset($anniBloc);
-var_dump($anniValidi);

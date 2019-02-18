@@ -65,8 +65,8 @@ function dataIta($data) {
         </p>
     <hr />
 <?php 
-require_once __DIR__ . '/../model/estraiPartecipantiGara.php';
-require_once __DIR__ . '/garaPartView.php';
+require_once AVCP_DIR . 'app/model/estraiPartecipantiGara.php';
+require_once AVCP_DIR . 'app/view/garaPartView.php';
 ?>
     </div>
 </div>

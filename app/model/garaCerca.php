@@ -51,10 +51,10 @@ switch ($_GET['event']){
                 $$key = stripslashes($value);
             }
             $res->free();
-            require_once __DIR__ . '/../view/garaInsModOk.php';
+            require_once AVCP_DIR . 'app/view/garaInsModOk.php';
         }
         break;
         default:
-            require_once __DIR__ . '/../view/garaCerca.php';
+            require_once AVCP_DIR . 'app/view/garaCerca.php';
             break;
 }

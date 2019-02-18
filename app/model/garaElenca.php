@@ -72,4 +72,4 @@ if (empty($_GET['anno'])) {
     } // end for
     $res->free();
 }
-require_once __DIR__ . '/../view/garaElenca.php';
+require_once AVCP_DIR . 'app/view/garaElenca.php';

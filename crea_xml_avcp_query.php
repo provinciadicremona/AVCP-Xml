@@ -19,11 +19,10 @@
  * To contact the authors send an email to <sito@provincia.cremona.it>
  */
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
-require_once __DIR__ . '/app/config.php';
+require_once './app/config.php';
 
 $XML_FILE = null;
-// FIX ??? $anniValidi
-$anno_rif = filter_input(INPUT_GET, 'anno', FILTER_VALIDATE_INT, isset($anniValidi)?$anniValidi:'');
+$anno_rif = (int) $_GET['anno'];
 
 if (empty($anno_rif)) {
     die('Anno non corretto');
@@ -34,7 +33,6 @@ header("Content-Disposition: attachment; filename=avcp_dataset_" . $anno_rif . "
 header("Content-Type: application/force-download");
 header("content-type: application/xml");
 echo '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>' . PHP_EOL;
-// require_once ('./app/config.php');
 $date_agg = date("Y-m-d");
 $date_agg_full = date("Y-m-d H:i:s");
 $query_lotti = "SELECT * FROM avcp_lotto WHERE anno = '" . $anno_rif . "' AND sceltaContraente != '00-DA DEFINIRE'";

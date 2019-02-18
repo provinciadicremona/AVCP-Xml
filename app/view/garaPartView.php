@@ -10,10 +10,10 @@
                 <th class="span8">Ditta</th>
             </tr>
 <?php
-$oldRag = 0;
-$ultimo = count($rows) - 1;
-$maxRag = $rows[$ultimo]['raggruppamento'] + 1;
 if (!empty($rows)) :
+    $oldRag = 0;
+    $ultimo = count($rows) - 1;
+    $maxRag = $rows[$ultimo]['raggruppamento'] + 1;
     foreach ($rows as $part) :
 ?>
     <?php if ($part['raggruppamento'] > 0 && $part['raggruppamento'] > $oldRag) : ?>

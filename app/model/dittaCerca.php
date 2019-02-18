@@ -36,4 +36,4 @@ if (isset($_GET['id'])) {
         $formRuolo .= '</select>' . PHP_EOL . '</fieldset>' . PHP_EOL;
     }
 }
-require_once __DIR__ . '/../view/dittaCerca.php';
+require_once AVCP_DIR . 'app/view/dittaCerca.php';

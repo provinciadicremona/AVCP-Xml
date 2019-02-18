@@ -3,7 +3,7 @@ if (!empty($_GET['do'])) {
     foreach ($_POST as $key => $value) {
         $$key = $db->real_escape_string(trim($value));
     }
-    require_once __DIR__ . '/../functions.php';
+    require_once AVCP_DIR . 'app/functions.php';
     // Controllo che non manchino i campi principali
     try {
         if (empty($ragioneSociale)) {
@@ -105,12 +105,12 @@ switch ($_GET['do']){
                         </div>
                     </div>
                 </div>' . PHP_EOL;
-            require_once __DIR__ . '/../view/dittaInsModOk.php';
+            require_once AVCP_DIR . 'app/view/dittaInsModOk.php';
         }
         break;
     case 'modificaDitta':
         if (!empty($action) && $action = "Seleziona") {
-            require_once __DIR__ . '/../view/dittaInsModOk.php';
+            require_once AVCP_DIR . 'app/view/dittaInsModOk.php';
             continue;
         }
         if (empty($oldCodiceFiscale))
@@ -152,14 +152,14 @@ switch ($_GET['do']){
                             </div>
                         </div>
                     </div>' . PHP_EOL;
-                require_once __DIR__ . '/../view/dittaInsModOk.php';
+                require_once AVCP_DIR . 'app/view/dittaInsModOk.php';
             }
         } catch (Exception $e) {
             echo $e->getMessage();
         }
         break;
     case 'errore':
-        require_once __DIR__ . '/../../footer.php';
+        require_once AVCP_DIR . 'footer.php';
         break;
     default:
         if (!empty($_GET['codiceFiscale'])) {
@@ -191,6 +191,6 @@ switch ($_GET['do']){
             $formDo = 'inserisciDitta';
             $formButton = 'Inserisci';
         }
-        require_once __DIR__ . '/../view/dittaForm.php';
+        require_once AVCP_DIR . 'app/view/dittaForm.php';
         break;
 }

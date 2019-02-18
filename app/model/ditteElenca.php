@@ -27,4 +27,4 @@ for($x = 0; $x < $quante; $x++) {
 if ($quante > 0) {
     $res->free();
 }
-require_once __DIR__ . '/../view/ditteElenca.php';
+require_once AVCP_DIR . 'app/view/ditteElenca.php';
