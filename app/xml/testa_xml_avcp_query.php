@@ -19,7 +19,7 @@
  * To contact the authors send an email to <sito@provincia.cremona.it>
  */
 error_reporting(E_ALL ^ E_NOTICE);
-require_once '../config.php';
+require_once __DIR__ . '/../config.php';
 $anno = (int) $_GET['anno'];
 
 $XML_FILE = null;
