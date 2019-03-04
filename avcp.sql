@@ -129,7 +129,6 @@ INSERT INTO `avcp_sceltaContraenteType` (`ruolo`) VALUES
 --
 -- Struttura della tabella `bloccati`
 --
-
 CREATE TABLE `bloccati` (
     `anno` int(11) NOT NULL,
     `avanzato` enum('s','n') NOT NULL DEFAULT 'n'
@@ -139,8 +138,12 @@ CREATE TABLE `bloccati` (
 --
 -- Struttura della tabella `versioni`
 --
-
-CREATE TABLE IF NOT EXISTS `versioni` (`ver` CHAR(10) CHARACTER SET utf8 NOT NULL)  ENGINE InnoDB DEFAULT CHARSET=utf8 COMMENT='Versioni del programma installate';
+CREATE TABLE `avcp_versioni` (
+  `maj` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Major version''s number',
+  `min` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Minor version''s number',
+  `rel` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Release version''s number'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Versioni del programma installate';
+COMMIT;
 
 -- --------------------------------------------------------
 --

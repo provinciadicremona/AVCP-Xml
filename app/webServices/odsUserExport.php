@@ -1,5 +1,5 @@
 <?php
-require_once AVCP_DIR . 'app/config.php';
+require_once __DIR__ . '/../config.php';
 
 // Converte una data dal formato Y-m-d a quello d-m-Y
 function dataIta($data) {

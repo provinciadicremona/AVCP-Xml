@@ -36,10 +36,22 @@ if (!empty($_GET['do'])) {
         $importoAggiudicazione = '0.00';
     if (empty($importoSommeLiquidate))
         $importoSommeLiquidate = '0.00';
-    if (empty($dataInizio))
-        $dataInizio = '0000-00-00';
-    if (empty($dataUltimazione))
-        $dataUltimazione= '0000-00-00';
+    // Modifiche sul formato date necessarie per mysql8 che non accetta 
+    // più come valida la data '0000-00-00'
+    if (empty($dataInizio)) {
+        $dataInizioIns = 'NULL';
+        $dataInizioUpd = "`dataInizio` = NULL, ";
+    } else {
+        $dataInizioIns = "'".$dataInizio."'";
+        $dataInizioUpd = "`dataInizio` = '" . $dataInizio . "',";
+    }
+    if (empty($dataUltimazione)) {
+        $dataUltimazioneIns= 'NULL';
+        $dataUltimazioneUpd = "`dataUltimazione` = NULL, ";
+    } else {
+        $dataUltimazioneIns = "'".$dataUltimazione."'";
+        $dataUltimazioneUpd = "`dataUltimazione` = '" . $dataUltimazione . "',";
+    }
 }
 switch ($_GET['do']){
     case 'inserisciGara':
@@ -87,8 +99,8 @@ switch ($_GET['do']){
                 '" . $numAtto . "',
                 '" . $oggetto . "',
                 '" . $sceltaContraente . "',
-                '" . $dataInizio . "',
-                '" . $dataUltimazione . "',
+                " . $dataInizioIns . ",
+                " . $dataUltimazioneIns . ",
                 '" . $importoAggiudicazione . "',
                 '" . $importoSommeLiquidate . "',
                 '" . $_SESSION['user'] . "'
@@ -158,7 +170,8 @@ switch ($_GET['do']){
                 `oggetto` = '" . $oggetto . "',
                 `numAtto` = '" . $numAtto . "',
                 `sceltaContraente` = '" . $sceltaContraente . "',
-                `dataInizio` = '" . $dataInizio . "',
+                ".$dataInizioUpd."
+                ".$dataUltimazioneUpd."
                 `dataUltimazione` = '" . $dataUltimazione . "',
                 `importoAggiudicazione` = '" . $importoAggiudicazione . "',
                 `importoSommeLiquidate` = '" . $importoSommeLiquidate . "',

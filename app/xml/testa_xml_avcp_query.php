@@ -48,9 +48,7 @@ if (URL_XML_FILE_ANNUALE == 'NO') {
     $XML_TOT .= '<urlFile>' . URL_XML_FILE_ANNUALE . $anno . '.xml</urlFile>' . "\n";
 }
 
-$XML_TOT .= '
-    <licenza>' . LICENZA . '</licenza>
-    </metadata>' . PHP_EOL;
+$XML_TOT .= '<licenza>' . LICENZA . '</licenza>'."\n".'</metadata>' . PHP_EOL;
 $XML_TOT .= '<data>' . PHP_EOL;
 while ($lotto = $result_lotti->fetch_assoc()) {
     foreach ($lotto as $key => $value) {
@@ -180,10 +178,12 @@ while ($lotto = $result_lotti->fetch_assoc()) {
     // ####### importi e tempi #####
     $XML_FILE .= "<importoAggiudicazione>" . $importoAggiudicazione . "</importoAggiudicazione>\n";
     $XML_FILE .= "<tempiCompletamento>\n";
-    if ($dataInizio != '0000-00-00') {
+    // Se le date sono vuote, non le stampo
+    // Check su empty per via di mysql8 NO_ZERO_DATE etc...
+    if (!empty($dataInizio) && $dataInizio != '0000-00-00') {
         $XML_FILE .= "<dataInizio>" . $dataInizio . "</dataInizio>\n";
     }
-    if ($dataUltimazione != '0000-00-00') {
+    if (!empty($dataUltimazione) && $dataUltimazione != '0000-00-00') {
         $XML_FILE .= "<dataUltimazione>" . $dataUltimazione . "</dataUltimazione>\n";
     }
     $XML_FILE .= "</tempiCompletamento>\n";
