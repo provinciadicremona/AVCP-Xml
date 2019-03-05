@@ -172,7 +172,6 @@ switch ($_GET['do']){
                 `sceltaContraente` = '" . $sceltaContraente . "',
                 ".$dataInizioUpd."
                 ".$dataUltimazioneUpd."
-                `dataUltimazione` = '" . $dataUltimazione . "',
                 `importoAggiudicazione` = '" . $importoAggiudicazione . "',
                 `importoSommeLiquidate` = '" . $importoSommeLiquidate . "',
                 `userins` = '" . $_SESSION['user'] . "'
