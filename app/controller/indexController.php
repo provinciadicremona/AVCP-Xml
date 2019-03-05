@@ -1,7 +1,6 @@
 <?php
 // Controller principale
 // gestisce il login e smista le richieste agli altri controller
-require_once  AVCP_DIR.'app/config.php';
 if (!array_key_exists('user', $_SESSION)) {
     $_GET['mask'] = 'signin';
 }

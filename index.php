@@ -26,6 +26,10 @@ error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
 
 // Rigenero l'id di sessione per aumentare la sicurezza
 session_regenerate_id();
+
+// Imposto il formato locala della valuta
+setlocale(LC_MONETARY, 'it_IT.UTF-8');
+
 /**
  * In questa variabile memorizzo i javascript da includere nel footer
  *
@@ -43,6 +47,8 @@ $callToJqueryUI = '
     <script src="js/jquery.ui.datepicker-it.js"></script>
     ';
 
+require_once AVCP_DIR.'app/config.php';
+require_once AVCP_DIR.'app/functions.php';
 require_once AVCP_DIR.'header.php';
 require_once AVCP_DIR.'app/controller/indexController.php';
 require_once AVCP_DIR.'footer.php';

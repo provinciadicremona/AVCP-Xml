@@ -3,7 +3,6 @@ if (!empty($_GET['do'])) {
     foreach ($_POST as $key => $value) {
         $$key = $db->real_escape_string(trim($value));
     }
-    require_once AVCP_DIR . 'app/functions.php';
     // Controllo che non manchino i campi principali
     try {
         if (empty($ragioneSociale)) {
@@ -30,7 +29,7 @@ if (!empty($_GET['do'])) {
     // Controllo il Codice fiscale
     $codiceFiscale = strtoupper($codiceFiscale);
     try {
-        if (($estero != 1 && !controllaCF($codiceFiscale)) && isset($_POST['action']) && $_POST['action'] != 'Seleziona') {
+        if ($estero != 1 && !controllaCF($codiceFiscale) &&  $_POST['action'] != 'Seleziona') {
             throw new Exception('
                 <div class="row">
                 <div class="span8 offset2">
@@ -109,13 +108,13 @@ switch ($_GET['do']){
         }
         break;
     case 'modificaDitta':
-        if (!empty($action) && $action = "Seleziona") {
+        if (!empty($action) && $action == "Seleziona") {
             require_once AVCP_DIR . 'app/view/dittaInsModOk.php';
-            continue;
+            break;
         }
         if (empty($oldCodiceFiscale))
             $oldCodiceFiscale = $codiceFiscale;
-        $queryMod = "
+            $queryMod = "
             UPDATE avcp_ditta SET
                 `ragioneSociale` = '" . $ragioneSociale . "',
                 `codiceFiscale` = '" . $codiceFiscale . "',
@@ -124,7 +123,7 @@ switch ($_GET['do']){
             WHERE
                 `codiceFiscale` = '" . $oldCodiceFiscale . "'
             ";
-        $queryModLd = "
+            $queryModLd = "
             UPDATE avcp_ld SET
                 `codiceFiscale` = '" . $codiceFiscale . "'
             WHERE

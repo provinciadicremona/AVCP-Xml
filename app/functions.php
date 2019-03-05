@@ -1,4 +1,14 @@
 <?php
+
+/**
+ *
+ * @param string $importo        
+ * @return string
+ */
+function stampaValuta($val) {
+    echo strtr(money_format('%.2n', $val), 'EUR', '€');
+}
+
 /**
  *
  * @param string $c_f        
@@ -8,55 +18,31 @@ function controllaCF($c_f) {
     if (strlen($c_f) == 0) {
         // Errore, il campo è vuoto -> sbagliato
         return false;
-    } elseif (preg_match("/^[0-9]{11}$/", $c_f)) {
+    }
+    if (preg_match("/^[0-9]{11}$/", $c_f)) {
         // Il codice fiscale inserito è relativo ad una persona giuridica -> corretto;
         return true;
-    } elseif (!preg_match("/^[a-zA-Z]{6}[0-9]{2}[a-zA-Z]{1}[0-9]{2}[a-zA-Z]{1}[0-9]{3}[a-zA-Z]{1}$/", $c_f) || !preg_match("/^[A-Za-z]{6}[0-9LMNPQRSTUV]{2}[A-Za-z]{1}[0-9LMNPQRSTUV]{2}[A-Za-z]{1}[0-9LMNPQRSTUV]{3}[A-Za-z]{1}$/", $c_f)) {
+    }
+    if (!preg_match("/^[a-zA-Z]{6}[0-9]{2}[a-zA-Z]{1}[0-9]{2}[a-zA-Z]{1}[0-9]{3}[a-zA-Z]{1}$/", $c_f) || 
+        !preg_match("/^[A-Za-z]{6}[0-9LMNPQRSTUV]{2}[A-Za-z]{1}[0-9LMNPQRSTUV]{2}[A-Za-z]{1}[0-9LMNPQRSTUV]{3}[A-Za-z]{1}$/", $c_f)) {
         // Errore, il codice fiscale contiene caratteri non validi
         // o non è della lunghezza esatta -> sbagliato
         return false;
     }
-    // Altrimenti è il CF di una persona fisica, controllo la correttezza
+
+    //----------------------------------------------------------------------
+    // Il CF è di una persona fisica e procedo a controllarne la correttezza
+    //----------------------------------------------------------------------
     
     // $sumToCF è una tabella di conversione per determinare il valore
     // da aggiungere a $s per il codice di controllo
     $sumToCF = array (
-            '0' => 1,
-            '1' => 0,
-            '2' => 5,
-            '3' => 7,
-            '4' => 9,
-            '5' => 13,
-            '6' => 15,
-            '7' => 17,
-            '8' => 19,
-            '9' => 21,
-            'A' => 1,
-            'B' => 0,
-            'C' => 5,
-            'D' => 7,
-            'E' => 9,
-            'F' => 13,
-            'G' => 15,
-            'H' => 17,
-            'I' => 19,
-            'J' => 21,
-            'K' => 2,
-            'L' => 4,
-            'M' => 18,
-            'N' => 20,
-            'O' => 11,
-            'P' => 3,
-            'Q' => 6,
-            'R' => 8,
-            'S' => 12,
-            'T' => 14,
-            'U' => 16,
-            'V' => 10,
-            'W' => 22,
-            'X' => 25,
-            'Y' => 24,
-            'Z' => 23 
+            '0' => 1, '1' => 0, '2' => 5, '3' => 7, '4' => 9, '5' => 13,
+            '6' => 15, '7' => 17, '8' => 19, '9' => 21, 'A' => 1, 'B' => 0,
+            'C' => 5, 'D' => 7, 'E' => 9, 'F' => 13, 'G' => 15, 'H' => 17,
+            'I' => 19, 'J' => 21, 'K' => 2, 'L' => 4, 'M' => 18, 'N' => 20,
+            'O' => 11, 'P' => 3, 'Q' => 6, 'R' => 8, 'S' => 12, 'T' => 14,
+            'U' => 16, 'V' => 10, 'W' => 22, 'X' => 25, 'Y' => 24, 'Z' => 23 
     );
     // Il CF deve essere in lettere maiuscole o il controllo fallisce
     $c_f = strtoupper($c_f);

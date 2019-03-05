@@ -143,8 +143,8 @@ foreach ($userList as $u) :
 ?>
                     </td>
                     <td><?php echo $out[$x]['oggetto'];?><br /> <strong>C.I.G.:</strong> <?php echo $out[$x]['cig'];?></td>
-                    <td>&euro; <?php echo $out[$x]['importoAggiudicazione'];?></td>
-                    <td>&euro; <?php echo $out[$x]['importoSommeLiquidate'];?></td>
+                    <td><?php stampaValuta($out[$x]['importoAggiudicazione']);?></td>
+                    <td><?php stampaValuta($out[$x]['importoSommeLiquidate']);?></td>
                     <td>
 <?php
 if ($out[$x]['partecipanti'] > 0) {

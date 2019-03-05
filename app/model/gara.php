@@ -32,10 +32,16 @@ if (!empty($_GET['do'])) {
     // Imposto i campi vuoti con valori di default
     if (empty($cig) || $cig == '')
         $cig = '0000000000';
-    if (empty($importoAggiudicazione))
+    if (empty($importoAggiudicazione)) {
         $importoAggiudicazione = '0.00';
-    if (empty($importoSommeLiquidate))
+    } else {
+        $importoAggiudicazione = strtr($importoAggiudicazione, ',', '.');
+    }
+    if (empty($importoSommeLiquidate)) {
         $importoSommeLiquidate = '0.00';
+    } else {
+        $importoSommeLiquidate = strtr($importoSommeLiquidate, ',', '.');
+    }
     // Modifiche sul formato date necessarie per mysql8 che non accetta 
     // più come valida la data '0000-00-00'
     if (empty($dataInizio)) {

@@ -57,8 +57,8 @@ function dataIta($data) {
             <strong>Numero atto: </strong> <?php echo stripslashes($numAtto);?><br />
             <strong>Inizio: </strong> <?php echo stripslashes(dataIta($dataInizio));?>&nbsp;-&nbsp;
             <strong>Fine: </strong> <?php echo stripslashes(dataIta($dataUltimazione));?><br />
-            <strong>Somme aggiudicate: </strong> <?php echo stripslashes($importoAggiudicazione);?>&nbsp;-&nbsp;
-            <strong>Somme liquidate: </strong> <?php echo stripslashes($importoSommeLiquidate);?>
+            <strong>Somme aggiudicate: </strong> <?php stampaValuta($importoAggiudicazione);?>&nbsp;-&nbsp;
+            <strong>Somme liquidate: </strong> <?php stampaValuta($importoSommeLiquidate);?>
 <?php if ($chiuso == 1) : ?>
             <br /><strong class="text-success">Pagamenti conclusi</strong> (la gara non verrà portata all'anno successivo durante l'operazione di avanzamento lotti)
 <?php endif; ?>

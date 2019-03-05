@@ -19,7 +19,7 @@ $queryBloccati = "SELECT anno, avanzato FROM bloccati ORDER BY anno ASC";
 $resBloccati = $db->query($queryBloccati);
 $quantiBloccati = $resBloccati->num_rows;
 
-// $bloccati serve per funzioni admin (avanza, arretra, blocca, sblocca)  
+// NB: $bloccati serve per funzioni admin (avanza, arretra, blocca, sblocca)  
 $bloccati = array ('0000' => 'n');
 // $anniBloccati viene sottratto a $anni per stabilire in quali annualità
 // è ancora possibile effettuare modifiche/inserimenti/cancellazioni
@@ -31,6 +31,6 @@ if ($quantiBloccati > 0) {
         $bloccati[$tmp['anno']] = $tmp['avanzato'];
     }
 }
-// determino gli anni su cui è ancora possibile operare
+// NB: $anniValidi contiene gli anni su cui è ancora possibile operare
 $anniValidi = array_diff($anni, $anniBloc);
 unset($anniBloc);

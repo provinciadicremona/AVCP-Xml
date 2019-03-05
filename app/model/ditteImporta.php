@@ -8,7 +8,6 @@ if (is_null($_POST['action'])) {
         require_once AVCP_DIR . 'app/view/ditteImportaError.php';
     } else {
         if (($fh = fopen($_FILES['csv']['tmp_name'], 'r')) !== false) {
-            require_once AVCP_DIR . 'app/functions.php';
             // in $fn metto i nomi delle colonne che sono la prima riga del csv
             $fn = fgetcsv($fh, 600, ',', '"');
             $n = 0;

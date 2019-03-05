@@ -59,7 +59,6 @@ switch ($_GET['do']){
         }
         $resCe->free();
         if ($ce['presente'] == 0) {
-            require_once AVCP_DIR . 'app/functions.php';
             // Controllo che non manchino i campi principali
             try {
                 if (empty($ragioneSociale)) {

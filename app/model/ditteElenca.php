@@ -1,8 +1,6 @@
 <?php
 $query = "SELECT * FROM `avcp_vista_ditte` ORDER BY `ragioneSociale`";
 $res = $db->query($query);
-// $quante = $db->affected_rows;
-// mysqli affected_rows fail under x-debug, use $res->num_rows
 $quante = $res->num_rows;
 $outElenco = null;
 $contraente = null;
