@@ -1,12 +1,32 @@
 <?php
-/*
- * Creo la tabella delle versioni, se non esiste, e vado a leggere il valore
+/* ----------------------------------------------
+ * VERSIONE 0.8
+ * ----------------------------------------------
+ * Se non esiste la tabella avcp_versioni presumo
+ * che l'aggiornamento venga fatto dalla versione 7.1
+ * e faccio partire tutti gli aggiornamenti.
+ *
+ * Controllo comunque la presenza di ogni variazione per
+ * non fare danni a chi viene dalla 0.7.2
+*/
+
+/* Creo la tabella delle versioni, se non esiste, e vado a leggere il valore
  * massimo per confrontarlo con quello del file version.txt Se è minore, allora
  * procedo a lanciare le query di aggiornamento.
  *
  * Query di creazione: 
  * CREATE TABLE IF NOT EXISTS `versioni` (`ver`CHAR(10) CHARACTER SET utf8 NOT NULL) ENGINE InnoDB DEFAULT CHARSET=utf8 COMMENT='Versioni del programma installate';
  */
+$fname = AVCP_DIR."version.txt";
+$fvh = fopen($fname, "r");
+$currentVersion = strtr(fread($fvh, 1024), '_', '.');
+fclose($fvh);
+$msgUpdate = '';
+$toUpdate = false;
+if (checkTable($db, 'avp_versioni') === false) {
+    $toUpdate = true;
+    $msgUpdate  .= "<h3>Aggiornamento alla versione ".$currentVersion." del programma:</h3>".PHP_EOL;
+}
 
 // Controllo la presenza del campo 'aggiudica' nella vista
 // 'avcp_vista_ditte' per capire se il db ha bisogno di 
@@ -17,7 +37,7 @@ $queryUp = "SHOW COLUMNS FROM `avcp_vista_ditte` LIKE 'aggiudica'";
 $res = $db->query($queryUp);
 $isUpdated= $res->num_rows;
 if ($isUpdated === 0) {
-    $msgUpdate  = "<strong>Devo preparare il database per la nuova versione del programma</strong><br />".PHP_EOL;
+    $msgUpdate  .= "<strong>Devo preparare il database per la nuova versione del programma</strong><br />".PHP_EOL;
     try {
         // Se manca il campo 'chiuso', aggiorno  'avcp_lotto'
         $queryCheckLotto = "SHOW COLUMNS FROM `avcp_lotto` LIKE 'chiuso'";
@@ -138,11 +158,31 @@ if ($isUpdated === 0) {
         echo $e->getMessage();
     } 
     $msgUpdate .= "<h4>Aggiornamento db terminato</h4>".PHP_EOL;
+}
+if ($toUpdate === true) {
     echo '
     <div class="row">
-        <div class="span5 offset3">
+        <div class="span8 offset2">
         '.$msgUpdate.'
         </div>
     </div>
     <br />';
 }
+
+/*
+ * Controllo che esista la tabella `avcp_versioni`
+ *
+ * @param object $db Database connection handler
+ * @param string $tableName Il nome della tabella da cercare
+ *
+ * @return bool 
+ */
+function checkTable($db, $tableName) {
+    $db->real_escape_string(trim($tableName));
+    $query = "SHOW TABLES LIKE '".$tableName."'";
+    $res = $db->query($query);
+    if ($res->num_rows === 0) 
+        return false;
+    return true;
+}
+
