@@ -216,14 +216,24 @@ function createViewExportOds($db) {
 
 /*
  * Aggiorno la tabella `avcp_lotto`
- * aggiungendo la colonna "chiuso"
+ * controllo se manca la colonna "chiuso" e nel caso la aggiungo
  *
  * @param object $db Database connection handler
  *
  * @return bool 
  */
 function updateTableAvcpLotto($db) {
-    ;
+    $query = "SHOW COLUMNS FROM `avcp_lotto` LIKE 'chiuso'";
+    $res = $db->query($query);
+    $isUpdated= $res->num_rows;
+    if ($isUpdated === 1) {
+        return true;
+    }
+    $queryLotto = "ALTER TABLE `avcp_lotto` ADD `chiuso` BOOLEAN NOT NULL DEFAULT FALSE AFTER `flag`";
+    if ($resLotto = $db->query($queryLotto)) {
+        return true;
+    }
+    return false;
 }
 
 /*
