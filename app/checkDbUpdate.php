@@ -159,6 +159,12 @@ if ($isUpdated === 0) {
     } 
     $msgUpdate .= "<h4>Aggiornamento db terminato</h4>".PHP_EOL;
 }
+
+/* 
+ * Se è stato effettuato un aggiornamento,
+ * visualizzo i messaggi relativi alle singole 
+ * fasi del processo.
+ */
 if ($toUpdate === true) {
     echo '
     <div class="row">
@@ -186,3 +192,48 @@ function checkTable($db, $tableName) {
     return true;
 }
 
+/*
+ * Aggiorno la vista `avcp_vista_ditte`
+ *
+ * @param object $db Database connection handler
+ *
+ * @return bool 
+ */
+function updateViewDitte($db) {
+    ;
+}
+
+/*
+ * Creo la vista `avcp_export_ods`
+ *
+ * @param object $db Database connection handler
+ *
+ * @return bool 
+ */
+function createViewExportOds($db) {
+    ;
+}
+
+/*
+ * Aggiorno la tabella `avcp_lotto`
+ * aggiungendo la colonna "chiuso"
+ *
+ * @param object $db Database connection handler
+ *
+ * @return bool 
+ */
+function updateTableAvcpLotto($db) {
+    ;
+}
+
+/*
+ * Aggiorno la tabella `avcp_sceltaContraenteType`
+ * aggiungendo i codici 29,30,31
+ *
+ * @param object $db Database connection handler
+ *
+ * @return bool 
+ */
+function updateTableSceltaContraente($db) {
+    ;
+}
