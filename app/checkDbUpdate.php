@@ -200,7 +200,62 @@ function checkTable($db, $tableName) {
  * @return bool 
  */
 function updateViewDitte($db) {
-    ;
+    $queryDeletw = "DROP VIEW IF EXISTS `avcp_vista_ditte";
+    if (!$db->query($queryDelDitte)) {
+        return false;
+    }
+    $query= "
+        CREATE VIEW `avcp_vista_ditte` AS
+        SELECT
+            `d`.`codiceFiscale` AS `codiceFiscale`,
+            `d`.`ragioneSociale` AS `ragioneSociale`,
+            `d`.`estero` AS `estero`,
+            `d`.`flag` AS `flag`,
+            `d`.`userins` AS `userins`,
+            (
+            SELECT
+                COUNT(0)
+            FROM
+                `avcp_ld` `ldl`
+            WHERE
+                (
+                    `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
+                ) AND(
+                    `ldl`.`funzione` LIKE '01-PARTECIPANTE'
+                )
+        ) AS `partecipa`,
+        (
+        SELECT
+            COUNT(0)
+        FROM
+            `avcp_ld` `ldl`
+        WHERE
+            (
+                `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
+            ) AND(
+                `ldl`.`funzione` LIKE '02-AGGIUDICATARIO'
+            )
+        ) AS `aggiudica`
+        FROM
+            (
+                `avcp_ditta` `d`
+            LEFT JOIN
+                `avcp_ld` `ld`
+            ON
+                (
+                    `d`.`codiceFiscale` = `ld`.`codiceFiscale`
+                ) AND(
+                    `ld`.`funzione` LIKE '01-PARTECIPANTE'
+                )
+            )
+        GROUP BY
+            `d`.`codiceFiscale`
+        ORDER BY
+            `d`.`ragioneSociale`";
+    if (!$db->query($query)) {
+        return false;
+    }
+    return true;
 }
 
 /*
