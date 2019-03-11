@@ -10,13 +10,30 @@
  * non fare danni a chi viene dalla 0.7.2
 */
 
-/* Creo la tabella delle versioni, se non esiste, e vado a leggere il valore
- * massimo per confrontarlo con quello del file version.txt Se è minore, allora
- * procedo a lanciare le query di aggiornamento.
+ /* 
+ * FLUSSO:
+ * - acquisisco il la versione da installare leggendo il file vesrion.txt
+ * - controllo che esista la tabella avcp_versioni
+ *   Se non esiste:
+ *    - Creo la tabella
+ *    - Inserisco il numero di versione
+ *    - Procedo ad aggiornare come da 0.7.1
  *
- * Query di creazione: 
- * CREATE TABLE IF NOT EXISTS `versioni` (`ver`CHAR(10) CHARACTER SET utf8 NOT NULL) ENGINE InnoDB DEFAULT CHARSET=utf8 COMMENT='Versioni del programma installate';
+ *   Se esiste:
+ *    - leggo il numero di versione
+ *    - lo confronto con quello del file
+ *    
+ *      Se è minore:
+ *       - Verifico gli aggiornamenti mancanti
+ *       - Lancio in sequenza gli aggiornamenti
+ *
+ *      Altrimenti:
+ *       - Tutto ok, non devo aggiornare
+ *
+ * - Esco dalla fase di aggiornamento e torno al login
+ *
  */
+
 $fname = AVCP_DIR."version.txt";
 $fvh = fopen($fname, "r");
 $currentVersion = strtr(fread($fvh, 1024), '_', '.');
@@ -24,6 +41,8 @@ fclose($fvh);
 $msgUpdate = '';
 $toUpdate = false;
 if (checkTable($db, 'avp_versioni') === false) {
+    createVersionTable($db);
+    updateVersionTable($db, $currentVersion);
     $toUpdate = true;
     $msgUpdate  .= "<h3>Aggiornamento alla versione ".$currentVersion." del programma:</h3>".PHP_EOL;
 }
@@ -179,19 +198,36 @@ if ($toUpdate === true) {
  * Controllo che esista la tabella `avcp_versioni`
  *
  * @param object $db Database connection handler
- * @param string $tableName Il nome della tabella da cercare
+ * @param string $tName Name of the table to check
  *
  * @return bool 
  */
-function checkTable($db, $tableName) {
-    $db->real_escape_string(trim($tableName));
-    $query = "SHOW TABLES LIKE '".$tableName."'";
+function checkTable($db, $tName) {
+    $db->real_escape_string(trim($tName));
+    $query = "SHOW TABLES LIKE '".$tName."'";
     $res = $db->query($query);
     if ($res->num_rows === 0) 
         return false;
     return true;
 }
 
+/*
+ * Creo la tabella `avcp_versioni`
+ *
+ * @param object $db Database connection handler
+ *
+ * @return bool 
+ */
+function createVersionTable($db) {
+    $query = "CREATE TABLE `avcp_versioni` (
+        `major` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Major version''s number',
+        `minor` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Minor version''s number',
+        `release` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Release version''s number'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Versioni del programma installate'";
+    if (!$db->query($query))
+        return false;
+    return true;
+}
 /*
  * Aggiorno la vista `avcp_vista_ditte`
  *
