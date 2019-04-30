@@ -10,7 +10,7 @@ case 'logout':
     break;
 default:
     $failedLogin = false;
-    require_once AVCP_DIR . 'app/checkDbUpdate.php';
+//    require_once AVCP_DIR . 'app/checkDbUpdate.php';
     require_once AVCP_DIR . 'app/view/signinForm.php';
     break;
 }

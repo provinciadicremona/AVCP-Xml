@@ -96,6 +96,9 @@ if ($anno > 2011 && $anno <= date('Y')) {
 
     // content.xml - righe
     foreach ($rows as $row) {
+        foreach ($row as $key => $value) {
+            $row[$key] = mb_convert_encoding($value, "UTF-8", "ISO-8859-15, ISO-8859-1, CP1251, CP1252");
+        }
         if (($row['importoAggiudicazione'] > 0 && $row['importoSommeLiquidate'] >= $row['importoAggiudicazione']) || $row['chiuso'] == 1) {
             $row['stato'] = 'conclusa';
         } else {
