@@ -1,11 +1,11 @@
 # AVCP-Xml - Repository di sviluppo
 Generatore di dataset XML per l'Autorità per la Vigilanza sui Contratti Pubblici - art.32 L. 190/2012
 
-
 ## Upgrade dalla versione 0.7.1
+Per aggiornare il programma, [scaricare la release più recente](https://github.com/provinciadicremona/AVCP-Xml/releases/latest) e seguire le istruzioni che trovate in quella pagina.
 
-Query SQL da lanciare in phpMyAdmin per preparare il database alla nuova versione.
-
+## API per l'ultima versione disponibile
+`https://api.github.com/repos/provinciadicremona/AVCP-Xml/releases/latest`
 
 ### Aggiunta campo a tabella lotti
 
