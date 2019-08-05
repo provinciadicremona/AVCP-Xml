@@ -33,6 +33,8 @@ localisation:
   availableLanguages:
     - it
 it:
+  riuso:
+    codiceIPA: p_cr
 description:
   it:
     genericName: Web Application
