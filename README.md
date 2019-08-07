@@ -50,3 +50,4 @@ ALTER TABLE `avcp_sceltaContraenteType`
   ADD UNIQUE KEY `ruolo` (`ruolo`);
 
 ```
+Una volta fatto questo, sostituire il file app/xml/TypesL190.xsd con [quello nuovo fornito da ANAC](http://dati.anticorruzione.it/schema/TypesL190.xsd)
