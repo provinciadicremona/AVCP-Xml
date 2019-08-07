@@ -1,23 +1,15 @@
 <?php
-/**
- * APVC Xml - Generatore dataset per art.
- * 32 L. 190/2012
- * Copyright (C) 2013 Claudio Roncaglio e Gianni Bassini
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
- * To contact the authors send an email to <sito@provincia.cremona.it>
- */
+/*
+ * This file is part of project AVCP-Xml that can be found at:
+ * https://github.com/provinciadicremona/AVCP-Xml
+ * 
+ * © 2013 Claudio Roncaglio <claudio.roncaglio@provincia.cremona.it>
+ * © 2013 Gianni Bassini <gianni.bassini@provincia.cremona.it>
+ * © 2013 Provincia di Cremona <sito@provincia.cremona.it>
+ * 
+ * SPDX-License-Identifier: GPL-3.0-only
+*/
+
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
 require_once './app/config.php';
 
