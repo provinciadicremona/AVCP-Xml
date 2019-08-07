@@ -40,6 +40,9 @@
 			<xsd:enumeration value="26-AFFIDAMENTO DIRETTO IN ADESIONE AD ACCORDO QUADRO/CONVENZIONE"/>
 			<xsd:enumeration value="27-CONFRONTO COMPETITIVO IN ADESIONE AD ACCORDO QUADRO/CONVENZIONE"/>
 			<xsd:enumeration value="28-PROCEDURA AI SENSI DEI REGOLAMENTI DEGLI ORGANI COSTITUZIONALI"/>
+			<xsd:enumeration value="29-PROCEDURA RISTRETTA SEMPLIFICATA"/>
+			<xsd:enumeration value="30-PROCEDURA DERIVANTE DA LEGGE REGIONALE"/>
+			<xsd:enumeration value="31-AFFIDAMENTO DIRETTO PER VARIANTE SUPERIORE AL 20% DELL'IMPORTO CONTRATTUALE"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="denominazioneType">
@@ -62,4 +65,3 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 </xsd:schema>
-
