@@ -28,21 +28,21 @@
  * - acquisisco il la versione da installare leggendo il file vesrion.txt
  * - controllo che esista la tabella avcp_versioni
  *   Se non esiste:
- *    - Creo la tabella
- *    - Inserisco il numero di versione
- *    - Procedo ad aggiornare come da 0.7.1
- *
+ *      - Creo la tabella
+ *      - Inserisco il numero di versione
+ *      - Verifico che sia una nuova installazione
+ *        Se è nuova installazione.
+ *          - Tutto ok, non devo aggiornare
+ *        Altrimenti:
+ *          - Procedo ad aggiornare come da 0.7.1
  *   Se esiste:
- *    - leggo il numero di versione
- *    - lo confronto con quello del file
- *    
- *      Se è minore:
- *       - Verifico gli aggiornamenti mancanti
- *       - Lancio in sequenza gli aggiornamenti
- *
- *      Altrimenti:
- *       - Tutto ok, non devo aggiornare
- *
+ *      - leggo il numero di versione
+ *      - lo confronto con quello del file
+ *          Se è minore:
+ *             - Verifico gli aggiornamenti mancanti
+ *             - Lancio in sequenza gli aggiornamenti
+ *          Altrimenti:
+ *             - Tutto ok, non devo aggiornare
  * - Esco dalla fase di aggiornamento e torno al login
  *
  */
