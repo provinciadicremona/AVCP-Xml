@@ -10,9 +10,11 @@ Per aggiornare il programma, [scaricare la release più recente](https://github.
 `https://api.github.com/repos/provinciadicremona/AVCP-Xml/releases/latest`
 
 ## Aggiungere le nuove modalità di scelta del contraente
-Indipendentemente dalla versione del programma che state utilizzando, è possibile aggiungere le nuove modalità di scelta del contraente individuate da ANAC per l'anno 2019.
+Il 21 gennaio 2019, l'ANAC ha [modificato le modalità di scelta del contraente]( http://www.anticorruzione.it/portal/public/classic/Comunicazione/News/_news?id=7102507a0a778042193e31c2da0782b7) introducendo 3 nuove tipologie.
 
-È sufficiente aprire il vostro gestore di database, solitamente phpMyAdmin, selezionare il database avcp e nella tab 'SQL' lanciare le seguenti query:
+Indipendentemente dalla versione del programma utilizzata, è possibile aggiungerle seguendo la procedura descritta di seguito.
+
+Aprite il vostro gestore di database, solitamente phpMyAdmin, selezionare il database avcp e nella tab 'SQL' lanciate le seguenti query:
 
 ```sql
 
@@ -50,4 +52,4 @@ ALTER TABLE `avcp_sceltaContraenteType`
   ADD UNIQUE KEY `ruolo` (`ruolo`);
 
 ```
-Una volta fatto questo, sostituire il file app/xml/TypesL190.xsd con [quello nuovo fornito da ANAC](http://dati.anticorruzione.it/schema/TypesL190.xsd)
+Una volta fatto questo, sostituite il file `app/xml/TypesL190.xsd` con [quello nuovo fornito da ANAC](http://dati.anticorruzione.it/schema/TypesL190.xsd)
