@@ -90,10 +90,11 @@ define('LICENZA', 'IODL 2.0');
  * IMPOSTARE L'INDIRIZZO INTERNET COMUNICATO ALL'AVCP PER SCARICARE IL FILE.
  *
  * IMPORTANTE! Il programma è fatto per generare file diversi per ogni anno
- * utilizzando la costante URL_XML_FILE_ANNUALE e aggiungendovi alla fine
- * l'anno di riferimento e l'estensione .xml
+ * utilizzando la costante URL_XML_FILE_ANNUALE. Ogni occorrenza di {{anno}}
+ * viene sostituita con l'anno di riferimento e alla fine viene aggiunta
+ * l'estensione .xml
  *
- * Ad es. impostando URL_XML_FILE_ANNUALE col valore 'http://ente.it/trasp_'
+ * Ad es. impostando URL_XML_FILE_ANNUALE col valore 'http://ente.it/trasp_{{anno}}'
  * per l'anno 2012, si genererà un file con indirizzo: 'http://ente.it/trasp_2012.xml'
  *
  * Nel caso si preferisse fare diversamente, è possibile specificare l'indirizzo
@@ -114,7 +115,7 @@ define('LICENZA', 'IODL 2.0');
  */
 
 // Uso il file xml annuale:
-define('URL_XML_FILE_ANNUALE', 'http://www.sito.ente.it/trasparenza/avcp_dataset_');
+define('URL_XML_FILE_ANNUALE', 'http://www.sito.ente.it/trasparenza/avcp_dataset_{{anno}}');
 // oppure commentare la linea precedente e decommentare le due linee successive:
 // define('URL_XML_FILE_ANNUALE', 'NO');
 // define('URL_XML_FILE', 'http://www.sito.ente.it/trasparenza/avcp_dataset.xml');
