@@ -103,7 +103,7 @@ define('LICENZA', 'IODL 2.0');
  */
 
 // Uso il file xml annuale:
-define('URL_XML_FILE_ANNUALE', 'http://www.sito.ente.it/trasparenza/avcp_dataset_');
+define('URL_XML_FILE_ANNUALE', 'http://www.sito.ente.it/trasparenza/avcp_dataset_{{anno}}');
 // oppure commentare la linea precedente e decommentare le due linee successive:
 // define('URL_XML_FILE_ANNUALE', 'NO');
 // define('URL_XML_FILE', 'http://www.sito.ente.it/trasparenza/avcp_dataset.xml');

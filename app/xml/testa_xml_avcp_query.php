@@ -58,7 +58,11 @@ $XML_TOT .= '<legge190:pubblicazione xsi:schemaLocation="legge190_1_0 datasetApp
 if (URL_XML_FILE_ANNUALE == 'NO') {
     $XML_TOT .= '<urlFile>' . URL_XML_FILE . '</urlFile>' . "\n";
 } else {
-    $XML_TOT .= '<urlFile>' . URL_XML_FILE_ANNUALE . $anno . '.xml</urlFile>' . "\n";
+    $url = strpos(URL_XML_FILE_ANNUALE, '{{anno}}') === false
+        ? URL_XML_FILE_ANNUALE . $anno_rif // Per la retrocompatibilità.
+        : str_replace('{{anno}}', $anno_rif, URL_XML_FILE_ANNUALE);
+
+    $XML_TOT .= '<urlFile>' . $url . '.xml</urlFile>' . "\n";
 }
 
 $XML_TOT .= '<licenza>' . LICENZA . '</licenza>'."\n".'</metadata>' . PHP_EOL;
