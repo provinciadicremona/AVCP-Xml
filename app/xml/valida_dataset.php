@@ -9,9 +9,7 @@
  * 
  * SPDX-License-Identifier: GPL-3.0-only
 */
-?>
 
-<?php
 // Funzione che formatta i messaggi di errore nella
 // validazione del file XML
 function libxml_display_error($error) {

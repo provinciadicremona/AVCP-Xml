@@ -36,12 +36,11 @@ if (URL_XML_FILE_ANNUALE == 'NO') {
     $XML_TOT .= '<urlFile>' . URL_XML_FILE . '</urlFile>' . "\n";
 } else {
     $url = strpos(URL_XML_FILE_ANNUALE, '{{anno}}') === false
-        ? URL_XML_FILE_ANNUALE . $anno_rif // Per la retrocompatibilità.
-        : str_replace('{{anno}}', $anno_rif, URL_XML_FILE_ANNUALE);
+        ? URL_XML_FILE_ANNUALE . $anno // Per la retrocompatibilità.
+        : str_replace('{{anno}}', $anno, URL_XML_FILE_ANNUALE);
 
     $XML_TOT .= "\t".'<urlFile>' . $url . '.xml</urlFile>' . "\n";
 }
-
 $XML_TOT .= "\t".'<licenza>' . LICENZA . '</licenza>'."\n".'</metadata>' . PHP_EOL;
 $XML_TOT .= '<data>' . PHP_EOL;
 while ($lotto = $result_lotti->fetch_assoc()) {

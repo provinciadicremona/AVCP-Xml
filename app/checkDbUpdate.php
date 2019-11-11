@@ -9,9 +9,6 @@
  * 
  * SPDX-License-Identifier: GPL-3.0-only
 */
-?>
-
-<?php
 /* ----------------------------------------------
  * VERSIONE 0.8
  * ----------------------------------------------
@@ -53,7 +50,7 @@ $currentVersion = strtr(fread($fvh, 1024), '_', '.');
 fclose($fvh);
 $msgUpdate = '';
 $toUpdate = false;
-if (checkTable($db, 'avp_versioni') === false) {
+if (checkTable($db, 'avcp_versioni') === false) {
     createVersionTable($db);
     updateVersionTable($db, $currentVersion);
     $toUpdate = true;
@@ -349,5 +346,30 @@ function updateTableAvcpLotto($db) {
  * @return bool 
  */
 function updateTableSceltaContraente($db) {
-    ;
+/* DROP TABLE IF EXISTS `avcp_sceltaContraenteType`; */
+
+/* CREATE TABLE `avcp_sceltaContraenteType` ( */
+  /* `ruolo` varchar(255) NOT NULL COMMENT 'tipo scelta contraente' */
+/* ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tipo scelta contraente'; */
+}
+
+
+/*
+ * Aggiorno i dati della abella `avcp_lotti con le nuove 
+ * tipologie di scelta del contraente aggiornate il 4/11/2019
+ * Modificano i codici 3, 4, 6, 17, 22 e 23
+ *
+ * @param object $db Database connection handler
+ *
+ * @return bool 
+ */
+function updateTableSceltaContraente($db) {
+
+/* UPDATE `avcp_lotto` SET `sceltaContraente` = "03-PROCEDURA NEGOZIATA PREVIA PUBBLICAZIONE" WHERE `sceltaContraente` LIKE "03-%"; */ 
+/* UPDATE `avcp_lotto` SET `sceltaContraente` = "04-PROCEDURA NEGOZIATA SENZA PREVIA PUBBLICAZIONE" WHERE `sceltaContraente` LIKE "04-%"; */ 
+/* UPDATE `avcp_lotto` SET `sceltaContraente` = "06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI GARA (SETTORI SPECIALI)" WHERE `sceltaContraente` LIKE "06-%"; */ 
+/* UPDATE `avcp_lotto` SET `sceltaContraente` = "17-AFFIDAMENTO DIRETTO EX ART. 5 DELLA LEGGE 381/91" WHERE `sceltaContraente` LIKE "17-%"; */ 
+/* UPDATE `avcp_lotto` SET `sceltaContraente` = "22-PROCEDURA NEGOZIATA CON PREVIA INDIZIONE DI GARA (SETTORI SPECIALI)" WHERE `sceltaContraente` LIKE "22-%"; */ 
+/* UPDATE `avcp_lotto` SET `sceltaContraente` = "23-AFFIDAMENTO DIRETTO" WHERE `sceltaContraente` LIKE "23-%"; */ 
+/* UPDATE `avcp_lotto` SET `sceltaContraente` = "27-CONFRONTO COMPETITIVO IN ADESIONE AD ACCORDO QUADRO/CONVENZIONE" WHERE `sceltaContraente` LIKE "27-%"; */ 
 }
