@@ -52,7 +52,11 @@ echo '<legge190:pubblicazione xsi:schemaLocation="legge190_1_0 datasetAppaltiL19
 if (URL_XML_FILE_ANNUALE == 'NO') {
     echo '<urlFile>' . URL_XML_FILE . '</urlFile>' . PHP_EOL;
 } else {
-    echo '<urlFile>' . URL_XML_FILE_ANNUALE . $anno_rif . '.xml</urlFile>' . PHP_EOL;
+    $url = strpos(URL_XML_FILE_ANNUALE, '{{anno}}') === false
+        ? URL_XML_FILE_ANNUALE . $anno_rif // Per la retrocompatibilità.
+        : str_replace('{{anno}}', $anno_rif, URL_XML_FILE_ANNUALE);
+
+    echo '<urlFile>' . $url . '.xml</urlFile>' . PHP_EOL;
 }
 
 echo '
