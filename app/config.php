@@ -88,6 +88,9 @@ define('LICENZA', 'IODL 2.0');
  * Nel caso si preferisse fare diversamente, è possibile specificare l'indirizzo
  * completo del file nella costante URL_XML_FILE.
  * Ad es. http://ente.it/trasparenza.xml
+ * 
+ * È stato aggiunto il segnaposto {{anno}} per stabilire la posizione dell'anno 
+ * all'interno dell'URL da comunicare all'ANAC
  *
  * E' PREFERIBILE L'USO DELL'URL_XML_FILE_ANNUALE
  *
