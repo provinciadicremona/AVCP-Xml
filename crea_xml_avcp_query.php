@@ -9,17 +9,13 @@
  * 
  * SPDX-License-Identifier: GPL-3.0-only
 */
-
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
 require_once './app/config.php';
-
 $XML_FILE = null;
 $anno_rif = (int) $_GET['anno'];
-
 if (empty($anno_rif)) {
     die('Anno non corretto');
 }
-
 $dataPubb = $anno_rif + 1 . "-01-31";
 header("Content-Disposition: attachment; filename=avcp_dataset_" . $anno_rif . ".xml");
 header("Content-Type: application/force-download");
@@ -35,7 +31,7 @@ echo '<legge190:pubblicazione xsi:schemaLocation="legge190_1_0 datasetAppaltiL19
 <metadata>
 <titolo> Pubblicazione 1 legge 190</titolo>
 <abstract> Pubblicazione 1 legge 190 anno 1 rif. 2010' . ' aggiornamento del ' . $date_agg_full . '</abstract>
-<dataPubbicazioneDataset>' . $dataPubb . '</dataPubbicazioneDataset>
+<dataPubblicazioneDataset>' . $dataPubb . '</dataPubblicazioneDataset>
 <entePubblicatore>' . stripslashes(ENTE_PROPONENTE) . '</entePubblicatore>
 <dataUltimoAggiornamentoDataset>' . $date_agg . '</dataUltimoAggiornamentoDataset>
 <annoRiferimento>' . $anno_rif . '</annoRiferimento>';
@@ -63,9 +59,6 @@ while ($lotto = $result_lotti->fetch_assoc()) {
     $XML_FILE .= "<denominazione>" . stripslashes($denominazione) . "</denominazione>\n";
     $XML_FILE .= "</strutturaProponente>\n";
     $XML_FILE .= "<oggetto>" . $oggetto . "</oggetto>\n";
-    if ($sceltaContraente == '06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI GARA ART. 221 D.LGS. 163/2006') {
-        $sceltaContraente = '06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI  GARA ART. 221 D.LGS. 163/2006';
-    }
     $XML_FILE .= "<sceltaContraente>" . $sceltaContraente . "</sceltaContraente>\n";
 
     // ### PARTECIPANTI ######

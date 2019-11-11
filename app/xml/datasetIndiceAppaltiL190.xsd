@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- VERSIONE 1.0 -->
+	<xsd:include schemaLocation="TypesL190.xsd"/>	
+	<xsd:element name="indici">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="metadata">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="titolo" type="xsd:string"/>
+							<xsd:element name="abstract" type="xsd:string"/>
+							<xsd:element name="dataPubblicazioneIndice" type="xsd:date" nillable="false"/>
+							<xsd:element name="entePubblicatore" type="xsd:string" nillable="false"/>
+							<xsd:element name="dataUltimoAggiornamentoIndice" type="xsd:date"/>
+							<xsd:element name="annoRiferimento" type="xsd:int" nillable="false"/>
+							<xsd:element name="urlFile" type="xsd:anyURI" nillable="false"/>
+							<!--riferimento al file stesso-->
+							<xsd:element name="licenza" type="xsd:string"/>
+							<!--licenza opendata-->
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="indice">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="dataset" minOccurs="1" maxOccurs="unbounded">
+								<!--id progressivo-->
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="linkDataset" type="xsd:anyURI" nillable="false"/>
+										<xsd:element name="dataUltimoAggiornamento" type="xsd:date" nillable="false"/>
+									</xsd:sequence>
+									<xsd:attribute name="id" type="xsd:ID" use="required"/>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>			
+	</xsd:element>	
+</xsd:schema>

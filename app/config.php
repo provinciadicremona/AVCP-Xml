@@ -122,5 +122,4 @@ define('URL_XML_FILE_ANNUALE', 'http://www.sito.ente.it/trasparenza/avcp_dataset
  * NON MODIFICARE NIENTE AL DI SOTTO DI QUESTA LINEA!
  * --------------------------------------------------
  */
-
 require_once 'connection.php';

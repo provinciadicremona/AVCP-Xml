@@ -8,36 +8,13 @@
  * © 2013 Provincia di Cremona <sito@provincia.cremona.it>
  * 
  * SPDX-License-Identifier: GPL-3.0-only
-*/
-?>
-
-<?php
-/**
- * APVC Xml - Generatore dataset per art.
- * 32 L. 190/2012
- * Copyright (C) 2013 Claudio Roncaglio e Gianni Bassini
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
- * To contact the authors send an email to <sito@provincia.cremona.it>
  */
 error_reporting(E_ALL ^ E_NOTICE);
 require_once __DIR__ . '/../config.php';
 $anno = (int) $_GET['anno'];
-
 $XML_FILE = null;
 $XML_TOT = null;
-$XML_TOT .= '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>' . "\n";
+$XML_TOT .= '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>' . PHP_EOL;
 $XML_TOT .= '<!DOCTYPE legge190:pubblicazione>' . PHP_EOL;
 $date_agg = date("Y-m-d");
 $date_agg_full = date("Y-m-d H:i:s");
@@ -51,7 +28,7 @@ $XML_TOT .= '<legge190:pubblicazione xsi:schemaLocation="legge190_1_0 datasetApp
     <metadata>
     <titolo> Pubblicazione 1 legge 190</titolo>
     <abstract> Pubblicazione 1 legge 190 anno 1 rif. 2010' . ' aggiornamento del ' . $date_agg_full . '</abstract>
-    <dataPubbicazioneDataset>' . $dataPubb . '</dataPubbicazioneDataset>
+    <dataPubblicazioneDataset>' . $dataPubb . '</dataPubblicazioneDataset>
     <entePubblicatore>' . stripslashes(ENTE_PROPONENTE) . '</entePubblicatore>
     <dataUltimoAggiornamentoDataset>' . $date_agg . '</dataUltimoAggiornamentoDataset>
     <annoRiferimento>' . $anno . '</annoRiferimento>' . "\n";
@@ -80,9 +57,6 @@ while ($lotto = $result_lotti->fetch_assoc()) {
     $XML_FILE .= "<denominazione>" . stripslashes($denominazione) . "</denominazione>\n";
     $XML_FILE .= "</strutturaProponente>\n";
     $XML_FILE .= "<oggetto>" . $oggetto . "</oggetto>\n";
-    if ($sceltaContraente == '06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI GARA ART. 221 D.LGS. 163/2006') {
-        $sceltaContraente = '06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI  GARA ART. 221 D.LGS. 163/2006';
-    }
     $XML_FILE .= "<sceltaContraente>" . $sceltaContraente . "</sceltaContraente>\n";
 
     // ### PARTECIPANTI ######

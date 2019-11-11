@@ -9,9 +9,6 @@
  * 
  * SPDX-License-Identifier: GPL-3.0-only
 */
-?>
-
-<?php
 /**
  * --------------------------------------------------
  * NUOVA CONNESSIONE CON MYSQLI

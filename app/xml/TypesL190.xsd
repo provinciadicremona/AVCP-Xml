@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema xmlns:legge190="legge190_1_0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="qualified">
+	<!-- VERSIONE 1.2 -->
 	<xsd:simpleType name="CigType">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="10"/>
@@ -24,25 +25,32 @@
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="01-PROCEDURA APERTA"/>
 			<xsd:enumeration value="02-PROCEDURA RISTRETTA"/>
-			<xsd:enumeration value="03-PROCEDURA NEGOZIATA PREVIA PUBBLICAZIONE DEL BANDO"/>
-			<xsd:enumeration value="04-PROCEDURA NEGOZIATA SENZA PREVIA PUBBLICAZIONE DEL BANDO"/>
+			<xsd:enumeration value="03-PROCEDURA NEGOZIATA PREVIA PUBBLICAZIONE"/>
+			<xsd:enumeration value="04-PROCEDURA NEGOZIATA SENZA PREVIA PUBBLICAZIONE"/>
 			<xsd:enumeration value="05-DIALOGO COMPETITIVO"/>
-			<xsd:enumeration value="06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI  GARA ART. 221 D.LGS. 163/2006"/>
+			<xsd:enumeration value="06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI GARA (SETTORI SPECIALI)"/>
 			<xsd:enumeration value="07-SISTEMA DINAMICO DI ACQUISIZIONE"/>
 			<xsd:enumeration value="08-AFFIDAMENTO IN ECONOMIA - COTTIMO FIDUCIARIO"/>
 			<xsd:enumeration value="14-PROCEDURA SELETTIVA EX ART 238 C.7, D.LGS. 163/2006"/>
-			<xsd:enumeration value="17-AFFIDAMENTO DIRETTO EX ART. 5 DELLA LEGGE N.381/91"/>
+			<xsd:enumeration value="17-AFFIDAMENTO DIRETTO EX ART. 5 DELLA LEGGE 381/91"/>
 			<xsd:enumeration value="21-PROCEDURA RISTRETTA DERIVANTE DA AVVISI CON CUI SI INDICE LA GARA"/>
-			<xsd:enumeration value="22-PROCEDURA NEGOZIATA DERIVANTE DA AVVISI CON CUI SI INDICE LA GARA"/>
-			<xsd:enumeration value="23-AFFIDAMENTO IN ECONOMIA - AFFIDAMENTO DIRETTO"/>
+			<xsd:enumeration value="22-PROCEDURA NEGOZIATA CON PREVIA INDIZIONE DI GARA (SETTORI SPECIALI)"/>
+			<xsd:enumeration value="23-AFFIDAMENTO DIRETTO"/>
 			<xsd:enumeration value="24-AFFIDAMENTO DIRETTO A SOCIETA' IN HOUSE"/>
-			<xsd:enumeration value="25-AFFIDAMENTO DIRETTO A SOCIETA' RAGGRUPPATE/CONSORZIATE O CONTROLLATE NELLE CONCESSIONI DI LL.PP"/>
+			<xsd:enumeration value="25-AFFIDAMENTO DIRETTO A SOCIETA' RAGGRUPPATE/CONSORZIATE O CONTROLLATE NELLE CONCESSIONI E NEI PARTENARIATI"/>
 			<xsd:enumeration value="26-AFFIDAMENTO DIRETTO IN ADESIONE AD ACCORDO QUADRO/CONVENZIONE"/>
 			<xsd:enumeration value="27-CONFRONTO COMPETITIVO IN ADESIONE AD ACCORDO QUADRO/CONVENZIONE"/>
 			<xsd:enumeration value="28-PROCEDURA AI SENSI DEI REGOLAMENTI DEGLI ORGANI COSTITUZIONALI"/>
 			<xsd:enumeration value="29-PROCEDURA RISTRETTA SEMPLIFICATA"/>
 			<xsd:enumeration value="30-PROCEDURA DERIVANTE DA LEGGE REGIONALE"/>
 			<xsd:enumeration value="31-AFFIDAMENTO DIRETTO PER VARIANTE SUPERIORE AL 20% DELL'IMPORTO CONTRATTUALE"/>
+			<xsd:enumeration value="32-AFFIDAMENTO RISERVATO"/>
+			<xsd:enumeration value="33-PROCEDURA NEGOZIATA PER AFFIDAMENTI SOTTO SOGLIA"/>
+			<xsd:enumeration value="34-PROCEDURA ART.16 COMMA 2-BIS DPR 380/2001 PER OPERE URBANIZZAZIONE A SCOMPUTO PRIMARIE SOTTO SOGLIA COMUNITARIA"/>
+			<xsd:enumeration value="35-PARTERNARIATO PER L’INNOVAZIONE"/>
+			<xsd:enumeration value="36-AFFIDAMENTO DIRETTO PER LAVORI, SERVIZI O FORNITURE SUPPLEMENTARI"/>
+			<xsd:enumeration value="37-PROCEDURA COMPETITIVA CON NEGOZIAZIONE"/>
+			<xsd:enumeration value="38-PROCEDURA DISCIPLINATA DA REGOLAMENTO INTERNO PER SETTORI SPECIALI"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="denominazioneType">
