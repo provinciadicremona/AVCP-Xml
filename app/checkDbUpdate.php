@@ -50,11 +50,21 @@ $currentVersion = strtr(fread($fvh, 1024), '_', '.');
 fclose($fvh);
 $msgUpdate = '';
 $toUpdate = false;
-if (checkTable($db, 'avcp_versioni') === false) {
+if (checkVersionTable($db, 'avcp_versioni') === false) {
     createVersionTable($db);
     updateVersionTable($db, $currentVersion);
     $toUpdate = true;
-    $msgUpdate  .= "<h3>Aggiornamento alla versione ".$currentVersion." del programma:</h3>".PHP_EOL;
+    $msgUpdate  .= "<h3>Aggiornamento dalla versione 0.7.1 alla versione ".$currentVersion." del programma:</h3>".PHP_EOL;
+} else {
+    // Leggo l'ultima versione installata e decido cosa fare
+    $query = "SELECT `numero` FROM `avcp_versioni` ORDER BY `data` DESC LIMIT 0,1";
+    $res = $db->query($query);
+    $row = $res->fetch_assoc($res);
+    if ($row['numero'] > $currentVersion) {
+        updateVersionTable($db, $currentVersion);
+        $toUpdate = true;
+        $msgUpdate  .= "<h3>Aggiornamento dalla versione ".$row['numero']." alla versione ".$currentVersion." del programma:</h3>".PHP_EOL;
+    }
 }
 
 // Controllo la presenza del campo 'aggiudica' nella vista
@@ -212,7 +222,7 @@ if ($toUpdate === true) {
  *
  * @return bool 
  */
-function checkTable($db, $tName) {
+function checkVersionTable($db, $tName) {
     $db->real_escape_string(trim($tName));
     $query = "SHOW TABLES LIKE '".$tName."'";
     $res = $db->query($query);
@@ -229,11 +239,11 @@ function checkTable($db, $tName) {
  * @return bool 
  */
 function createVersionTable($db) {
-    $query = "CREATE TABLE `avcp_versioni` (
-        `major` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Major version''s number',
-        `minor` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Minor version''s number',
-        `release` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Release version''s number'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Versioni del programma installate'";
+    $query = "CREATE TABLE `avcp_versioni` ( 
+            `numero` VARCHAR(10) NOT NULL COMMENT 'Numero della versione' , 
+            `data` DATE NOT NULL COMMENT 'Data di aggiornamento', 
+            PRIMARY KEY (`numero`)
+        ) ENGINE = InnoDB COMMENT = 'Versioni del programma installate'";
     if (!$db->query($query))
         return false;
     return true;
@@ -309,10 +319,46 @@ function updateViewDitte($db) {
  *
  * @param object $db Database connection handler
  *
- * @return bool 
+ * @return bool, string 
  */
 function createViewExportOds($db) {
-    ;
+    $query = "DROP TABLE IF EXISTS `avcp_export_ods`"
+    if (!$db->query($query)) {
+        return "Fallito il DROP sulla vista avcp_export_ods. Aggiornamento vista abortito!";
+    }
+    $query = " CREATE VIEW `avcp_export_ods` AS select 
+    `l`.`id` AS `id`,
+    `l`.`anno` AS `anno`,
+    `l`.`numAtto` AS `numAtto`,
+    `l`.`cig` AS `cig`,
+    `l`.`oggetto` AS `oggetto`,
+    `l`.`sceltaContraente` AS `sceltaContraente`,
+    `l`.`dataInizio` AS `dataInizio`,
+    `l`.`dataUltimazione` AS `dataUltimazione`,
+    `l`.`importoAggiudicazione` AS `importoAggiudicazione`,
+    `l`.`importoSommeLiquidate` AS `importoSommeLiquidate`,
+    `l`.`chiuso` AS `chiuso`,
+    (SELECT COUNT(0) 
+        FROM `avcp_ld` `ldl` 
+        WHERE ((`l`.`id` = `ldl`.`id`) 
+            AND (`ldl`.`funzione` = '01-PARTECIPANTE'))) AS `partecipanti`,
+    (SELECT COUNT(0) FROM `avcp_ld` `ldl` 
+        WHERE ((`l`.`id` = `ldl`.`id`) 
+            AND (`ldl`.`funzione` = '02-AGGIUDICATARIO'))) AS `aggiudicatari`,
+    `l`.`userins` AS `userins`,
+    group_concat(`ditta`.`ragioneSociale` separator 'xxxxx') AS `nome_aggiudicatari` 
+    FROM ((`avcp_lotto` `l` 
+            LEFT JOIN `avcp_ld` `ld` 
+            ON(((`l`.`id` = `ld`.`id`) 
+                    and (`ld`.`funzione` = '02-AGGIUDICATARIO')))) 
+        LEFT JOIN `avcp_ditta` `ditta` 
+        ON(`ld`.`codiceFiscale` = `ditta`.`codiceFiscale`)) 
+    GROUP BY `l`.`id` 
+    ORDER BY `l`.`anno`,
+    `l`.`id`";
+    if (!$db->query($query)) {
+        return "Fallita la creazione della vista avcp_export_ods. Aggiornamento vista abortito!";
+    }
 }
 
 /*
@@ -321,7 +367,7 @@ function createViewExportOds($db) {
  *
  * @param object $db Database connection handler
  *
- * @return bool 
+ * @return bool, string 
  */
 function updateTableAvcpLotto($db) {
     $query = "SHOW COLUMNS FROM `avcp_lotto` LIKE 'chiuso'";
@@ -334,7 +380,7 @@ function updateTableAvcpLotto($db) {
     if ($resLotto = $db->query($queryLotto)) {
         return true;
     }
-    return false;
+    return "Fallito aggiornamento della tabella avcp_lotto.";
 }
 
 /*

@@ -9,9 +9,6 @@
  * 
  * SPDX-License-Identifier: GPL-3.0-only
 */
-?>
-
-<?php
 if (empty($_GET['do']) || $_GET['do'] == 'login') {
     // Determino la versione attuale del programma:
     $fh = fopen('version.txt', 'r');

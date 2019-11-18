@@ -157,11 +157,11 @@ CREATE TABLE `bloccati` (
 --
 -- Struttura della tabella `versioni`
 --
-CREATE TABLE `avcp_versioni` (
-  `major` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Major version''s number',
-  `minor` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Minor version''s number',
-  `release` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Release version''s number'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Versioni del programma installate';
+CREATE TABLE `avcp_versioni` ( 
+            `numero` VARCHAR(10) NOT NULL COMMENT 'Numero della versione' , 
+            `data` DATE NOT NULL COMMENT 'Data di aggiornamento', 
+            PRIMARY KEY (`numero`)
+        ) ENGINE = InnoDB COMMENT = 'Versioni del programma installate'
 
 -- --------------------------------------------------------
 --
