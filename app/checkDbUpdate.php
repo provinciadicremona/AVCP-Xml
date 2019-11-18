@@ -346,11 +346,48 @@ function updateTableAvcpLotto($db) {
  * @return bool 
  */
 function updateTableSceltaContraente($db) {
-/* DROP TABLE IF EXISTS `avcp_sceltaContraenteType`; */
-
-/* CREATE TABLE `avcp_sceltaContraenteType` ( */
-  /* `ruolo` varchar(255) NOT NULL COMMENT 'tipo scelta contraente' */
-/* ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tipo scelta contraente'; */
+    $query = "DROP TABLE IF EXISTS `avcp_sceltaContraenteType`";
+    if (!$db->query($query)) {
+        return "Fallito il DROP sulla tabella avcp_sceltaContraenteType. Aggiornamento tabella abortito!";
+    }
+    $query = " CREATE TABLE `avcp_sceltaContraenteType` 
+        (`ruolo` varchar(255) NOT NULL COMMENT 'tipo scelta contraente') 
+        ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tipo scelta contraente'";
+    if (!$db->query($query)) {
+        return "Fallita la creazione della tabella avcp_sceltaContraenteType. Aggiornamento tabella abortito!";
+    }
+    $query = 'INSERT INTO `avcp_sceltaContraenteType` (`ruolo`) VALUES
+        ("01-PROCEDURA APERTA"),
+        ("02-PROCEDURA RISTRETTA"),
+        ("03-PROCEDURA NEGOZIATA PREVIA PUBBLICAZIONE"),
+        ("04-PROCEDURA NEGOZIATA SENZA PREVIA PUBBLICAZIONE"),
+        ("05-DIALOGO COMPETITIVO"),
+        ("06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI GARA (SETTORI SPECIALI)"),
+        ("07-SISTEMA DINAMICO DI ACQUISIZIONE"),
+        ("08-AFFIDAMENTO IN ECONOMIA - COTTIMO FIDUCIARIO"),
+        ("14-PROCEDURA SELETTIVA EX ART 238 C.7, D.LGS. 163/2006"),
+        ("17-AFFIDAMENTO DIRETTO EX ART. 5 DELLA LEGGE 381/91"),
+        ("21-PROCEDURA RISTRETTA DERIVANTE DA AVVISI CON CUI SI INDICE LA GARA"),
+        ("22-PROCEDURA NEGOZIATA CON PREVIA INDIZIONE DI GARA (SETTORI SPECIALI)"),
+        ("23-AFFIDAMENTO DIRETTO"),
+        ("24-AFFIDAMENTO DIRETTO A SOCIETA\' IN HOUSE"),
+        ("25-AFFIDAMENTO DIRETTO A SOCIETA\' RAGGRUPPATE/CONSORZIATE O CONTROLLATE NELLE CONCESSIONI E NEI PARTENARIATI"),
+        ("26-AFFIDAMENTO DIRETTO IN ADESIONE AD ACCORDO QUADRO/CONVENZIONE"),
+        ("27-CONFRONTO COMPETITIVO IN ADESIONE AD ACCORDO QUADRO/CONVENZIONE"),
+        ("28-PROCEDURA AI SENSI DEI REGOLAMENTI DEGLI ORGANI COSTITUZIONALI"),
+        ("29-PROCEDURA RISTRETTA SEMPLIFICATA"),
+        ("30-PROCEDURA DERIVANTE DA LEGGE REGIONALE"),
+        ("31-AFFIDAMENTO DIRETTO PER VARIANTE SUPERIORE AL 20% DELL\'IMPORTO CONTRATTUALE"),
+        ("32-AFFIDAMENTO RISERVATO"),
+        ("33-PROCEDURA NEGOZIATA PER AFFIDAMENTI SOTTO SOGLIA"),
+        ("34-PROCEDURA ART.16 COMMA 2-BIS DPR 380/2001 PER OPERE URBANIZZAZIONE A SCOMPUTO PRIMARIE SOTTO SOGLIA COMUNITARIA"),
+        ("35-PARTERNARIATO PER L’INNOVAZIONE"),
+        ("36-AFFIDAMENTO DIRETTO PER LAVORI, SERVIZI O FORNITURE SUPPLEMENTARI"),
+        ("37-PROCEDURA COMPETITIVA CON NEGOZIAZIONE"),
+        ("38-PROCEDURA DISCIPLINATA DA REGOLAMENTO INTERNO PER SETTORI SPECIALI")';
+    if (!$db->query($query)) {
+        return "Fallito l'inserimento nella tabella avcp_sceltaContraenteType. Aggiornamento tabella abortito!";
+    }
 }
 
 
