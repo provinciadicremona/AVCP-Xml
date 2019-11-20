@@ -72,6 +72,7 @@ if (checkVersionTable($db, 'avcp_versioni') === false) {
 // essere aggiornato.
 // Questa è l'ultima modifica fatta e mi dice con certezza
 // lo stato di aggiornamento del db.
+// TODO: verificare che questo mi distingua tra 0.7.1 e 0.7.2
 $queryUp = "SHOW COLUMNS FROM `avcp_vista_ditte` LIKE 'aggiudica'";
 $res = $db->query($queryUp);
 $isUpdated= $res->num_rows;
@@ -253,12 +254,12 @@ function createVersionTable($db) {
  *
  * @param object $db Database connection handler
  *
- * @return bool 
+ * @return bool, string
  */
 function updateViewDitte($db) {
     $queryDeletw = "DROP VIEW IF EXISTS `avcp_vista_ditte";
     if (!$db->query($queryDelDitte)) {
-        return false;
+        return "Fallito il DROP sulla vista avcp_vista_ditte. Aggiornamento vista abortito!";
     }
     $query= "
         CREATE VIEW `avcp_vista_ditte` AS
@@ -309,7 +310,7 @@ function updateViewDitte($db) {
         ORDER BY
             `d`.`ragioneSociale`";
     if (!$db->query($query)) {
-        return false;
+        return "Aggiornamento vista avcp_vista_ditte fallito.";
     }
     return true;
 }
@@ -380,7 +381,7 @@ function updateTableAvcpLotto($db) {
     if ($resLotto = $db->query($queryLotto)) {
         return true;
     }
-    return "Fallito aggiornamento della tabella avcp_lotto.";
+    return "Fallita aggiunta campo 'chiuso' alla tabella avcp_lotto.";
 }
 
 /*
