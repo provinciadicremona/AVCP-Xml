@@ -13,15 +13,20 @@
  * VERSIONE 0.8
  * ----------------------------------------------
  * Se non esiste la tabella avcp_versioni presumo
- * che l'aggiornamento venga fatto dalla versione 7.1
- * e faccio partire tutti gli aggiornamenti.
+ * che l'applicazione debba essere aggiornata.
  *
- * Controllo comunque la presenza di ogni variazione per
- * non fare danni a chi viene dalla 0.7.2
-*/
-
- /* 
- * FLUSSO:
+ * Stabilisco dalla struttura del db quale sia la
+ * versione di partenza e faccio partire gli
+ * aggiornamenti necessari.
+ *
+ * CRITERI PER DISTINGUERE LE VECCHIE VERSIONI:
+ * ============================================
+ *   - Se non ha la vista avcp_export_ods -> 0.7.1
+ *   - Se la vista avcp_vista_ditte non ha il campo "aggiudica" -> 0.7.2
+ *
+ *
+ * FLUSSO DELLO SCRIPT DI AGGIORNAMENTO:
+ * ======================================
  * - acquisisco il la versione da installare leggendo il file vesrion.txt
  * - controllo che esista la tabella avcp_versioni
  *   Se non esiste:
@@ -31,7 +36,8 @@
  *        Se è nuova installazione.
  *          - Tutto ok, non devo aggiornare
  *        Altrimenti:
- *          - Procedo ad aggiornare come da 0.7.1
+ *          - Valuto da che versione
+ *          - Procedo con gli aggiornamenti necessari
  *   Se esiste:
  *      - leggo il numero di versione
  *      - lo confronto con quello del file
