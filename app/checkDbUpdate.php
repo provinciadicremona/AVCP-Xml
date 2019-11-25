@@ -49,29 +49,37 @@
  * - Esco dalla fase di aggiornamento e torno al login
  *
  */
-
-$fname = AVCP_DIR."version.txt";
-$fvh = fopen($fname, "r");
-$currentVersion = strtr(fread($fvh, 1024), '_', '.');
-fclose($fvh);
-$msgUpdate = '';
-$toUpdate = false;
+$msgUpdate  = null;
+$toUpdate   = false;
+$updateFrom = null;
+// Leggo il file version.txt per stabilire a che versione aggiornare
+if ($currentVersion = getCurrentVersion() == false) {
+    echo "Non riesco a leggere il file version.txt. Aggiornamento fallito!";
+    exit;
+}
+// Controllo che esista la tabella delle versioni e se non c'è la creo
+// e poi stabilisco se aggiornare dalla 0.7.1 o dalla 0.7.2
 if (checkVersionTable($db, 'avcp_versioni') === false) {
     createVersionTable($db);
     updateVersionTable($db, $currentVersion);
+    $updateFrom = fromWhichOldVersion($db);
     $toUpdate = true;
-    $msgUpdate  .= "<h3>Aggiornamento dalla versione 0.7.1 alla versione ".$currentVersion." del programma:</h3>".PHP_EOL;
 } else {
     // Leggo l'ultima versione installata e decido cosa fare
     $query = "SELECT `numero` FROM `avcp_versioni` ORDER BY `data` DESC LIMIT 0,1";
     $res = $db->query($query);
     $row = $res->fetch_assoc($res);
-    if ($row['numero'] > $currentVersion) {
-        updateVersionTable($db, $currentVersion);
+    if ($row['numero'] < $currentVersion) {
+        $updateFrom = $row['numero'];
         $toUpdate = true;
-        $msgUpdate  .= "<h3>Aggiornamento dalla versione ".$row['numero']." alla versione ".$currentVersion." del programma:</h3>".PHP_EOL;
+        updateVersionTable($db, $currentVersion);
     }
 }
+
+if ($toUpdate === true) {
+    $msgUpdate  .= "<h3>Aggiornamento dalla versione ".$updateFrom." alla versione ".$currentVersion." del programma:</h3>".PHP_EOL;
+}
+
 
 // Controllo la presenza del campo 'aggiudica' nella vista
 // 'avcp_vista_ditte' per capire se il db ha bisogno di 
@@ -483,4 +491,42 @@ function updateLottiSceltaContraente($db) {
         return "Fallito UPDATE scelta contraente codice 27. Aggiornamento lotti esistenti abortito!";
     }
     return true;
+}
+
+/*
+ * Leggo il file version.txt per determinare la 
+ * versione corrente del programma.
+ *
+ * Se non riesco a leggerla, restituisco false
+ *
+ * @param object $db Database connection handler
+ *
+ * @return bool, string 
+ */
+function getCurrentVersion() {
+    $fname = AVCP_DIR."version.txt";
+    if ($fvh = fopen($fname, "r") == false) {
+        return false;
+    }
+    $currentVersion = strtr(fread($fvh, 1024), '_', '.');
+    fclose($fvh);
+    return $currentVersion;
+}
+
+function updateVersionTable($db, $currentVersion) {
+    $query = "INSERT INTO `avcp_versioni` (`numero`, `data`) VALUES ('".$currentVersion."', NOW())";
+    if (!($db->query($query)) {
+        return false;
+    }
+    return true;
+}
+
+function updateFrom071To072($db) {
+    // campo chiuso in avcp_lotto
+    // vista avcp_export_ods
+}
+
+function updateFrom072To080($db) {
+    // campo aggiudica in avcp_vista_ditte
+    // nuove scelte del contraente
 }
