@@ -161,7 +161,7 @@ CREATE TABLE `avcp_versioni` (
             `numero` VARCHAR(10) NOT NULL COMMENT 'Numero della versione' , 
             `data` DATE NOT NULL COMMENT 'Data di aggiornamento', 
             PRIMARY KEY (`numero`)
-        ) ENGINE = InnoDB COMMENT = 'Versioni del programma installate'
+        ) ENGINE = InnoDB COMMENT = 'Versioni del programma installate';
 
 -- --------------------------------------------------------
 --
