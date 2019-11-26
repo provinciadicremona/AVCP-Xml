@@ -80,6 +80,24 @@ if ($toUpdate === true) {
     $msgUpdate  .= "<h3>Aggiornamento dalla versione ".$updateFrom." alla versione ".$currentVersion." del programma:</h3>".PHP_EOL;
 }
 
+switch $updateFrom {
+    case '0.7.1':
+        // aggiungo avcp_export_ods
+        // aggiungo campo chiuso ad avcp_lotti
+        // rifaccio la avcp_vista_ditte
+        // aggiornamenti scelta contraente
+        break;
+    case '0.7.2':
+        // rifaccio la avcp_vista_ditte
+        // aggiornamenti scelta contraente
+        break;
+    case '0.7.4':
+        // solo aggiornamenti scelta contraente
+        break;
+    default:
+        // errore
+        break;
+}
 
 // Controllo la presenza del campo 'aggiudica' nella vista
 // 'avcp_vista_ditte' per capire se il db ha bisogno di 
@@ -529,4 +547,19 @@ function updateFrom071To072($db) {
 function updateFrom072To080($db) {
     // campo aggiudica in avcp_vista_ditte
     // nuove scelte del contraente
+}
+
+// determino se vengo da 0.7.1 o 0.7.2
+function fromWhichOldVersion($db) {
+    $queryCheckOds = "SHOW TABLES LIKE 'avcp_export_ods";
+    $resCheckOds = $db->query($queryCheckOds);
+    if ($resCheckOds->num_rows !== 1) {
+        return '0.7.1';
+    }
+    $query = "SHOW COLUMNS FROM `avcp_vista_ditte` LIKE 'aggiudica'";
+    $res = $db->query($query);
+    if ($res->num_rows === 0) {
+        return '0.7.2';
+    }
+    return '0.7.4';
 }
