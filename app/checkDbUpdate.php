@@ -53,8 +53,8 @@ $msgUpdate  = null;
 $toUpdate   = false;
 $updateFrom = null;
 // Leggo il file version.txt per stabilire a che versione aggiornare
-if ($currentVersion = getCurrentVersion() == false) {
-    die "Non riesco a leggere il file version.txt. Aggiornamento fallito!";
+if ($currentVersion = getCurrentVersion() === false) {
+    die ("Non riesco a leggere il file version.txt. Aggiornamento fallito!");
 }
 // Controllo che esista la tabella delle versioni e se non c'è la creo
 // e poi stabilisco se aggiornare dalla 0.7.1 o dalla 0.7.2
@@ -80,42 +80,42 @@ if ($toUpdate === true) {
     switch $updateFrom {
     case '0.7.1':
         if (false === updateTableAvcpLotto($db)) {
-            die "Non posso aggiungere campo chiuso ad avcp_lotti. Aggiornamento fallito!";
+            die("Non posso aggiungere campo chiuso ad avcp_lotti. Aggiornamento fallito!");
         }
         if (false === addExportOds($db)) {
-            die "Errore in addExportOds. Aggiornamento fallito!";
+            die("Errore in addExportOds. Aggiornamento fallito!");
         }
         if (false === updateVistaDitte($db)) {
-            die "Errore in updateVistaDitte. Aggiornamento fallito!";
+            die("Errore in updateVistaDitte. Aggiornamento fallito!");
         }
         if (false === updateTableSceltaContraente($db)) {
-            die "Errore in updateTableSceltaContraente. Aggiornamento fallito!";
+            die("Errore in updateTableSceltaContraente. Aggiornamento fallito!");
         }
         if (false === updateLottiSceltaContraente($db)) {
-            die "Errore in updateLottiSceltaContraente. Aggiornamento fallito!";
+            die("Errore in updateLottiSceltaContraente. Aggiornamento fallito!");
         }
         break;
     case '0.7.2':
         if (false === updateVistaDitte($db) == false) {
-            die "Errore in updateVistaDitte. Aggiornamento fallito!";
+            die("Errore in updateVistaDitte. Aggiornamento fallito!");
         }
         if (false === updateTableSceltaContraente($db)) {
-            die "Errore in updateTableSceltaContraente. Aggiornamento fallito!";
+            die("Errore in updateTableSceltaContraente. Aggiornamento fallito!");
         }
         if (false === updateLottiSceltaContraente($db)) {
-            die "Errore in updateLottiSceltaContraente. Aggiornamento fallito!";
+            die("Errore in updateLottiSceltaContraente. Aggiornamento fallito!");
         }
         break;
     case '0.7.4':
         if (false === updateTableSceltaContraente($db)) {
-            die "Errore in updateTableSceltaContraente. Aggiornamento fallito!";
+            die("Errore in updateTableSceltaContraente. Aggiornamento fallito!");
         }
         if (false === updateLottiSceltaContraente($db)) {
-            die "Errore in updateLottiSceltaContraente. Aggiornamento fallito!";
+            die("Errore in updateLottiSceltaContraente. Aggiornamento fallito!");
         }
         break;
     default:
-        die "Non riesco a capire da che versione aggiornare. Aggiornamento fallito!";
+        die("Non riesco a capire da che versione aggiornare. Aggiornamento fallito!");
         break;
     }
     $msgUpdate .= "<h4>Aggiornamento da versione ".$updateFrom." terminato!</h4>".PHP_EOL;
@@ -148,7 +148,7 @@ function checkIfExistsTable($db, $tName) {
     $db->real_escape_string(trim($tName));
     $query = "SHOW TABLES LIKE '".$tName."'";
     if (false === $res = $db->query($query)) {
-        die "Non riesco a verificare l'esistenza della tabella ".$tName.". Aggiornamento fallito!";
+        die("Non riesco a verificare l'esistenza della tabella ".$tName.". Aggiornamento fallito!");
     }
     if ($res->num_rows === 0) 
         return false;
