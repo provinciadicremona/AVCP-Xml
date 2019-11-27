@@ -53,7 +53,7 @@ $msgUpdate  = null;
 $toUpdate   = false;
 $updateFrom = null;
 // Leggo il file version.txt per stabilire a che versione aggiornare
-if ($currentVersion = getCurrentVersion() === false) {
+if (($currentVersion = getCurrentVersion()) === false) {
     die ("Non riesco a leggere il file version.txt. Aggiornamento fallito!");
 }
 // Controllo che esista la tabella delle versioni e se non c'è la creo

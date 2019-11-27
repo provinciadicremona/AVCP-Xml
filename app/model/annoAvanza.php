@@ -9,9 +9,7 @@
  * 
  * SPDX-License-Identifier: GPL-3.0-only
 */
-?>
 
-<?php
 $annoStart = (int) $_GET['anno'];
 $annoEnd = $annoStart + 1;
 $messOk = false;
@@ -55,17 +53,17 @@ if ($_SESSION['user'] == 'admin' && $bloccati[$annoStart] == 'n') {
                 VALUES
                 (
                     '${annoEnd}',
-                    '${oldLotto[cig]}',
-                    '${oldLotto[numAtto]}',
-                    '${oldLotto[codiceFiscaleProp]}',
-                    '${oldLotto[denominazione]}',
-                    '${oldLotto[oggetto]}',
-                    '${oldLotto[sceltaContraente]}',
-                    '${oldLotto[importoAggiudicazione]}',
-                    '${oldLotto[dataInizio]}',
-                    '${oldLotto[dataUltimazione]}',
-                    '${oldLotto[importoSommeLiquidate]}',
-                    '${oldLotto[userins]}',
+                    '${oldLotto['cig']}',
+                    '${oldLotto['numAtto']}',
+                    '${oldLotto['codiceFiscaleProp']}',
+                    '${oldLotto['denominazione']}',
+                    '${oldLotto['oggetto']}',
+                    '${oldLotto['sceltaContraente']}',
+                    '${oldLotto['importoAggiudicazione']}',
+                    '${oldLotto['dataInizio']}',
+                    '${oldLotto['dataUltimazione']}',
+                    '${oldLotto['importoSommeLiquidate']}',
+                    '${oldLotto['userins']}',
                     'da${annoStart}'
                 )";
         $db->query($qdLotto);
@@ -94,12 +92,12 @@ if ($_SESSION['user'] == 'admin' && $bloccati[$annoStart] == 'n') {
                     `flag`
                 ) VALUES
                 (
-                    '${oldLotto[newId]}',
-                    '${ld[cig]}',
-                    '${ld[codiceFiscale]}',
-                    '${ld[ruolo]}',
-                    '${ld[funzione]}',
-                    '${ld[raggruppamento]}',
+                    '${oldLotto['newId']}',
+                    '${ld['cig']}',
+                    '${ld['codiceFiscale']}',
+                    '${ld['ruolo']}',
+                    '${ld['funzione']}',
+                    '${ld['raggruppamento']}',
                     'da${annoStart}'
                 )";
             $resnld = $db->query($qnld);
