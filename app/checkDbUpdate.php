@@ -54,12 +54,11 @@ $toUpdate   = false;
 $updateFrom = null;
 // Leggo il file version.txt per stabilire a che versione aggiornare
 if ($currentVersion = getCurrentVersion() == false) {
-    echo "Non riesco a leggere il file version.txt. Aggiornamento fallito!";
-    exit;
+    die "Non riesco a leggere il file version.txt. Aggiornamento fallito!";
 }
 // Controllo che esista la tabella delle versioni e se non c'è la creo
 // e poi stabilisco se aggiornare dalla 0.7.1 o dalla 0.7.2
-if (checkVersionTable($db, 'avcp_versioni') === false) {
+if (checkIfExistsTable($db, 'avcp_versioni') === false) {
     createVersionTable($db);
     updateVersionTable($db, $currentVersion);
     $updateFrom = fromWhichOldVersion($db);
@@ -78,158 +77,48 @@ if (checkVersionTable($db, 'avcp_versioni') === false) {
 
 if ($toUpdate === true) {
     $msgUpdate  .= "<h3>Aggiornamento dalla versione ".$updateFrom." alla versione ".$currentVersion." del programma:</h3>".PHP_EOL;
-}
-
-switch $updateFrom {
+    switch $updateFrom {
     case '0.7.1':
-        // aggiungo avcp_export_ods
-        // aggiungo campo chiuso ad avcp_lotti
-        // rifaccio la avcp_vista_ditte
-        // aggiornamenti scelta contraente
+        if (false === updateTableAvcpLotto($db)) {
+            die "Non posso aggiungere campo chiuso ad avcp_lotti. Aggiornamento fallito!";
+        }
+        if (false === addExportOds($db)) {
+            die "Errore in addExportOds. Aggiornamento fallito!";
+        }
+        if (false === updateVistaDitte($db)) {
+            die "Errore in updateVistaDitte. Aggiornamento fallito!";
+        }
+        if (false === updateTableSceltaContraente($db)) {
+            die "Errore in updateTableSceltaContraente. Aggiornamento fallito!";
+        }
+        if (false === updateLottiSceltaContraente($db)) {
+            die "Errore in updateLottiSceltaContraente. Aggiornamento fallito!";
+        }
         break;
     case '0.7.2':
-        // rifaccio la avcp_vista_ditte
-        // aggiornamenti scelta contraente
+        if (false === updateVistaDitte($db) == false) {
+            die "Errore in updateVistaDitte. Aggiornamento fallito!";
+        }
+        if (false === updateTableSceltaContraente($db)) {
+            die "Errore in updateTableSceltaContraente. Aggiornamento fallito!";
+        }
+        if (false === updateLottiSceltaContraente($db)) {
+            die "Errore in updateLottiSceltaContraente. Aggiornamento fallito!";
+        }
         break;
     case '0.7.4':
-        // solo aggiornamenti scelta contraente
+        if (false === updateTableSceltaContraente($db)) {
+            die "Errore in updateTableSceltaContraente. Aggiornamento fallito!";
+        }
+        if (false === updateLottiSceltaContraente($db)) {
+            die "Errore in updateLottiSceltaContraente. Aggiornamento fallito!";
+        }
         break;
     default:
-        // errore
+        die "Non riesco a capire da che versione aggiornare. Aggiornamento fallito!";
         break;
-}
-
-// Controllo la presenza del campo 'aggiudica' nella vista
-// 'avcp_vista_ditte' per capire se il db ha bisogno di 
-// essere aggiornato.
-// Questa è l'ultima modifica fatta e mi dice con certezza
-// lo stato di aggiornamento del db.
-// TODO: verificare che questo mi distingua tra 0.7.1 e 0.7.2
-$queryUp = "SHOW COLUMNS FROM `avcp_vista_ditte` LIKE 'aggiudica'";
-$res = $db->query($queryUp);
-$isUpdated= $res->num_rows;
-if ($isUpdated === 0) {
-    $msgUpdate  .= "<strong>Devo preparare il database per la nuova versione del programma</strong><br />".PHP_EOL;
-    try {
-        // Se manca il campo 'chiuso', aggiorno  'avcp_lotto'
-        $queryCheckLotto = "SHOW COLUMNS FROM `avcp_lotto` LIKE 'chiuso'";
-        $resCheckLotto = $db->query($queryCheckLotto);
-        $isUpLotto= $resCheckLotto->num_rows;
-        if ($isUpLotto === 0) {
-            $msgUpdate .= "Aggiorno tabella 'avcp_lotto'...   ";
-            $queryLotto = "ALTER TABLE `avcp_lotto` ADD `chiuso` BOOLEAN NOT NULL DEFAULT FALSE AFTER `flag`";
-            if ($resLotto = $db->query($queryLotto)) {
-                $msgUpdate .= "<strong>OK</strong><br />".PHP_EOL;
-            }
-        }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    } 
-    // Verifico la presenza, e nel caso creo, della vista 'avcp_export_ods'
-    try {
-        $queryCheckOds = "SHOW TABLES LIKE 'avcp_export_ods";
-        $resCheckOds = $db->query($queryCheckOds);
-        $isUpOds= $resCheckOds->num_rows;
-        if ($isUpOds === 0) {
-            $msgUpdate .= "Creo vista 'avcp_export_ods'...   ";
-            $queryOds = "
-            CREATE VIEW `avcp_export_ods` AS select 
-                `l`.`id` AS `id`,
-                `l`.`anno` AS `anno`,
-                `l`.`numAtto` AS `numAtto`,
-                `l`.`cig` AS `cig`,
-                `l`.`oggetto` AS `oggetto`,
-                `l`.`sceltaContraente` AS `sceltaContraente`,
-                `l`.`dataInizio` AS `dataInizio`,
-                `l`.`dataUltimazione` AS `dataUltimazione`,
-                `l`.`importoAggiudicazione` AS `importoAggiudicazione`,
-                `l`.`importoSommeLiquidate` AS `importoSommeLiquidate`,
-                `l`.`chiuso` AS `chiuso`,
-                (select count(0) 
-                    from `avcp_ld` `ldl` 
-                    where ((`l`.`id` = `ldl`.`id`) 
-                        and (`ldl`.`funzione` = '01-PARTECIPANTE'))) AS `partecipanti`,
-                (select count(0) from `avcp_ld` `ldl` 
-                    where ((`l`.`id` = `ldl`.`id`) 
-                        and (`ldl`.`funzione` = '02-AGGIUDICATARIO'))) AS `aggiudicatari`,
-                `l`.`userins` AS `userins`,
-                group_concat(`ditta`.`ragioneSociale` separator 'xxxxx') AS `nome_aggiudicatari` 
-                from ((`avcp_lotto` `l` 
-                        left join `avcp_ld` `ld` 
-                        on(((`l`.`id` = `ld`.`id`) 
-                                and (`ld`.`funzione` = '02-AGGIUDICATARIO')))) 
-                    left join `avcp_ditta` `ditta` 
-                    on((`ld`.`codiceFiscale` = `ditta`.`codiceFiscale`))) 
-                group by `l`.`id` 
-                order by `l`.`anno`,
-                `l`.`id`";
-            if ($resOds = $db->query($queryOds)) {
-                $msgUpdate .= "<strong>OK</strong><br />".PHP_EOL;
-            }
-        }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    } 
-    // Aggiorno 'avcp_vista_ditte' per ultima
-    try {
-        $queryDelDitte = "DROP VIEW IF EXISTS `avcp_vista_ditte";
-        $resDelDitte= $db->query($queryDelDitte);
-        $msgUpdate .= "Aggiorno vista 'avcp_vista_ditte'...   ";
-        $queryDitte = "
-        CREATE VIEW `avcp_vista_ditte` AS
-        SELECT
-            `d`.`codiceFiscale` AS `codiceFiscale`,
-            `d`.`ragioneSociale` AS `ragioneSociale`,
-            `d`.`estero` AS `estero`,
-            `d`.`flag` AS `flag`,
-            `d`.`userins` AS `userins`,
-            (
-            SELECT
-                COUNT(0)
-            FROM
-                `avcp_ld` `ldl`
-            WHERE
-                (
-                    `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
-                ) AND(
-                    `ldl`.`funzione` LIKE '01-PARTECIPANTE'
-                )
-        ) AS `partecipa`,
-        (
-        SELECT
-            COUNT(0)
-        FROM
-            `avcp_ld` `ldl`
-        WHERE
-            (
-                `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
-            ) AND(
-                `ldl`.`funzione` LIKE '02-AGGIUDICATARIO'
-            )
-        ) AS `aggiudica`
-        FROM
-            (
-                `avcp_ditta` `d`
-            LEFT JOIN
-                `avcp_ld` `ld`
-            ON
-                (
-                    `d`.`codiceFiscale` = `ld`.`codiceFiscale`
-                ) AND(
-                    `ld`.`funzione` LIKE '01-PARTECIPANTE'
-                )
-            )
-        GROUP BY
-            `d`.`codiceFiscale`
-        ORDER BY
-            `d`.`ragioneSociale`";
-        if ($resDitte = $db->query($queryDitte)) {
-            $msgUpdate .= "<strong>OK</strong><br />".PHP_EOL;
-        }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    } 
-    $msgUpdate .= "<h4>Aggiornamento db terminato</h4>".PHP_EOL;
+    }
+    $msgUpdate .= "<h4>Aggiornamento da versione ".$updateFrom." terminato!</h4>".PHP_EOL;
 }
 
 /* 
@@ -248,17 +137,19 @@ if ($toUpdate === true) {
 }
 
 /*
- * Controllo che esista la tabella `avcp_versioni`
+ * Verifico l'esistenza di una tabella
  *
  * @param object $db Database connection handler
  * @param string $tName Name of the table to check
  *
  * @return bool 
  */
-function checkVersionTable($db, $tName) {
+function checkIfExistsTable($db, $tName) {
     $db->real_escape_string(trim($tName));
     $query = "SHOW TABLES LIKE '".$tName."'";
-    $res = $db->query($query);
+    if (false === $res = $db->query($query)) {
+        die "Non riesco a verificare l'esistenza della tabella ".$tName.". Aggiornamento fallito!";
+    }
     if ($res->num_rows === 0) 
         return false;
     return true;
@@ -277,7 +168,7 @@ function createVersionTable($db) {
             `data` DATE NOT NULL COMMENT 'Data di aggiornamento', 
             PRIMARY KEY (`numero`)
         ) ENGINE = InnoDB COMMENT = 'Versioni del programma installate'";
-    if (!$db->query($query))
+    if (false === $db->query($query))
         return false;
     return true;
 }
@@ -290,8 +181,8 @@ function createVersionTable($db) {
  */
 function updateViewDitte($db) {
     $queryDeletw = "DROP VIEW IF EXISTS `avcp_vista_ditte";
-    if (!$db->query($queryDelDitte)) {
-        return "Fallito il DROP sulla vista avcp_vista_ditte. Aggiornamento vista abortito!";
+    if (false === $db->query($queryDelDitte)) {
+        return false;
     }
     $query= "
         CREATE VIEW `avcp_vista_ditte` AS
@@ -341,8 +232,8 @@ function updateViewDitte($db) {
             `d`.`codiceFiscale`
         ORDER BY
             `d`.`ragioneSociale`";
-    if (!$db->query($query)) {
-        return "Aggiornamento vista avcp_vista_ditte fallito.";
+    if (false === $db->query($query)) {
+        return false;
     }
     return true;
 }
@@ -356,8 +247,8 @@ function updateViewDitte($db) {
  */
 function createViewExportOds($db) {
     $query = "DROP TABLE IF EXISTS `avcp_export_ods`"
-    if (!$db->query($query)) {
-        return "Fallito il DROP sulla vista avcp_export_ods. Aggiornamento vista abortito!";
+    if (false === $db->query($query)) {
+        return false;
     }
     $query = " CREATE VIEW `avcp_export_ods` AS select 
     `l`.`id` AS `id`,
@@ -389,8 +280,8 @@ function createViewExportOds($db) {
     GROUP BY `l`.`id` 
     ORDER BY `l`.`anno`,
     `l`.`id`";
-    if (!$db->query($query)) {
-        return "Fallita la creazione della vista avcp_export_ods. Aggiornamento vista abortito!";
+    if (false === $db->query($query)) {
+        return false;
     }
 }
 
@@ -403,17 +294,11 @@ function createViewExportOds($db) {
  * @return bool, string 
  */
 function updateTableAvcpLotto($db) {
-    $query = "SHOW COLUMNS FROM `avcp_lotto` LIKE 'chiuso'";
-    $res = $db->query($query);
-    $isUpdated= $res->num_rows;
-    if ($isUpdated === 1) {
-        return true;
-    }
     $queryLotto = "ALTER TABLE `avcp_lotto` ADD `chiuso` BOOLEAN NOT NULL DEFAULT FALSE AFTER `flag`";
-    if ($resLotto = $db->query($queryLotto)) {
-        return true;
+    if (false === $db->query($queryLotto)) {
+        return false;
     }
-    return "Fallita aggiunta campo 'chiuso' alla tabella avcp_lotto.";
+    return true;
 }
 
 /*
@@ -426,14 +311,14 @@ function updateTableAvcpLotto($db) {
  */
 function updateTableSceltaContraente($db) {
     $query = "DROP TABLE IF EXISTS `avcp_sceltaContraenteType`";
-    if (!$db->query($query)) {
-        return "Fallito il DROP sulla tabella avcp_sceltaContraenteType. Aggiornamento tabella abortito!";
+    if (false === $db->query($query)) {
+        return false;
     }
     $query = " CREATE TABLE `avcp_sceltaContraenteType` 
         (`ruolo` varchar(255) NOT NULL COMMENT 'tipo scelta contraente') 
         ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tipo scelta contraente'";
-    if (!$db->query($query)) {
-        return "Fallita la creazione della tabella avcp_sceltaContraenteType. Aggiornamento tabella abortito!";
+    if (false === $db->query($query)) {
+        return false;
     }
     $query = 'INSERT INTO `avcp_sceltaContraenteType` (`ruolo`) VALUES
         ("01-PROCEDURA APERTA"),
@@ -464,9 +349,10 @@ function updateTableSceltaContraente($db) {
         ("36-AFFIDAMENTO DIRETTO PER LAVORI, SERVIZI O FORNITURE SUPPLEMENTARI"),
         ("37-PROCEDURA COMPETITIVA CON NEGOZIAZIONE"),
         ("38-PROCEDURA DISCIPLINATA DA REGOLAMENTO INTERNO PER SETTORI SPECIALI")';
-    if (!$db->query($query)) {
-        return "Fallito l'inserimento nella tabella avcp_sceltaContraenteType. Aggiornamento tabella abortito!";
+    if (false === $db->query($query)) {
+        return false;
     }
+    return true;
 }
 
 
@@ -481,32 +367,32 @@ function updateTableSceltaContraente($db) {
  */
 function updateLottiSceltaContraente($db) {
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '03-PROCEDURA NEGOZIATA PREVIA PUBBLICAZIONE' WHERE `sceltaContraente` LIKE '03-%'";
-    if (!$db->query($query)) {
-        return "Fallito UPDATE scelta contraente codice 03. Aggiornamento lotti esistenti abortito!";
+    if (false === $db->query($query)) {
+        return false;
     }
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '04-PROCEDURA NEGOZIATA SENZA PREVIA PUBBLICAZIONE' WHERE `sceltaContraente` LIKE '04-%'";
-    if (!$db->query($query)) {
-        return "Fallito UPDATE scelta contraente codice 04. Aggiornamento lotti esistenti abortito!";
+    if (false === $db->query($query)) {
+        return false;
     }
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI GARA (SETTORI SPECIALI)' WHERE `sceltaContraente` LIKE '06-%'";
-    if (!$db->query($query)) {
-        return "Fallito UPDATE scelta contraente codice 06. Aggiornamento lotti esistenti abortito!";
+    if (false === $db->query($query)) {
+        return false;
     }
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '17-AFFIDAMENTO DIRETTO EX ART. 5 DELLA LEGGE 381/91' WHERE `sceltaContraente` LIKE '17-%'";
-    if (!$db->query($query)) {
-        return "Fallito UPDATE scelta contraente codice 17. Aggiornamento lotti esistenti abortito!";
+    if (false === $db->query($query)) {
+        return false;
     }
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '22-PROCEDURA NEGOZIATA CON PREVIA INDIZIONE DI GARA (SETTORI SPECIALI)' WHERE `sceltaContraente` LIKE '22-%'";
-    if (!$db->query($query)) {
-        return "Fallito UPDATE scelta contraente codice 22. Aggiornamento lotti esistenti abortito!";
+    if (false === $db->query($query)) {
+        return false;
     }
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '23-AFFIDAMENTO DIRETTO' WHERE `sceltaContraente` LIKE '23-%'";
-    if (!$db->query($query)) {
-        return "Fallito UPDATE scelta contraente codice 23. Aggiornamento lotti esistenti abortito!";
+    if (false === $db->query($query)) {
+        return false;
     }
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '27-CONFRONTO COMPETITIVO IN ADESIONE AD ACCORDO QUADRO/CONVENZIONE' WHERE `sceltaContraente` LIKE '27-%'";
-    if (!$db->query($query)) {
-        return "Fallito UPDATE scelta contraente codice 27. Aggiornamento lotti esistenti abortito!";
+    if (false === $db->query($query)) {
+        return false;
     }
     return true;
 }
@@ -523,7 +409,7 @@ function updateLottiSceltaContraente($db) {
  */
 function getCurrentVersion() {
     $fname = AVCP_DIR."version.txt";
-    if ($fvh = fopen($fname, "r") == false) {
+    if (false === $fvh = fopen($fname, "r")) {
         return false;
     }
     $currentVersion = strtr(fread($fvh, 1024), '_', '.');
@@ -532,34 +418,92 @@ function getCurrentVersion() {
 }
 
 function updateVersionTable($db, $currentVersion) {
+    if (empty($currentVersion)) {
+        return false;
+    }
     $query = "INSERT INTO `avcp_versioni` (`numero`, `data`) VALUES ('".$currentVersion."', NOW())";
-    if (!($db->query($query)) {
+    if (false === $db->query($query) {
         return false;
     }
     return true;
 }
 
-function updateFrom071To072($db) {
-    // campo chiuso in avcp_lotto
-    // vista avcp_export_ods
-}
-
-function updateFrom072To080($db) {
-    // campo aggiudica in avcp_vista_ditte
-    // nuove scelte del contraente
-}
-
-// determino se vengo da 0.7.1 o 0.7.2
+// Determino se vengo da 0.7.1/2/4
+// La versione 0.7.4 dovrebbe essere in uso solo 
+// all'interno della Provincia di Cremona
 function fromWhichOldVersion($db) {
     $queryCheckOds = "SHOW TABLES LIKE 'avcp_export_ods";
-    $resCheckOds = $db->query($queryCheckOds);
+    if (false === $resCheckOds = $db->query($queryCheckOds)) {
+        return false;
+    }
     if ($resCheckOds->num_rows !== 1) {
         return '0.7.1';
     }
     $query = "SHOW COLUMNS FROM `avcp_vista_ditte` LIKE 'aggiudica'";
-    $res = $db->query($query);
+    if (false === $res = $db->query($query)) {
+        return false;
+    }
     if ($res->num_rows === 0) {
         return '0.7.2';
     }
     return '0.7.4';
+}
+
+function updateVistaDitte($db) {
+        $queryDelDitte = "DROP VIEW IF EXISTS `avcp_vista_ditte";
+        if (false === $db->query($queryDelDitte)) {
+            return false;
+        }
+        $query = "
+        CREATE VIEW `avcp_vista_ditte` AS
+        SELECT
+            `d`.`codiceFiscale` AS `codiceFiscale`,
+            `d`.`ragioneSociale` AS `ragioneSociale`,
+            `d`.`estero` AS `estero`,
+            `d`.`flag` AS `flag`,
+            `d`.`userins` AS `userins`,
+            (
+            SELECT
+                COUNT(0)
+            FROM
+                `avcp_ld` `ldl`
+            WHERE
+                (
+                    `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
+                ) AND(
+                    `ldl`.`funzione` LIKE '01-PARTECIPANTE'
+                )
+        ) AS `partecipa`,
+        (
+        SELECT
+            COUNT(0)
+        FROM
+            `avcp_ld` `ldl`
+        WHERE
+            (
+                `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
+            ) AND(
+                `ldl`.`funzione` LIKE '02-AGGIUDICATARIO'
+            )
+        ) AS `aggiudica`
+        FROM
+            (
+                `avcp_ditta` `d`
+            LEFT JOIN
+                `avcp_ld` `ld`
+            ON
+                (
+                    `d`.`codiceFiscale` = `ld`.`codiceFiscale`
+                ) AND(
+                    `ld`.`funzione` LIKE '01-PARTECIPANTE'
+                )
+            )
+        GROUP BY
+            `d`.`codiceFiscale`
+        ORDER BY
+            `d`.`ragioneSociale`";
+        if (false === $db->query($query)) {
+            return false;
+        }
+        return true;
 }
