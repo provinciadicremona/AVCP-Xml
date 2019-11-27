@@ -67,7 +67,7 @@ if (checkIfExistsTable($db, 'avcp_versioni') === false) {
     // Leggo l'ultima versione installata e decido cosa fare
     $query = "SELECT `numero` FROM `avcp_versioni` ORDER BY `data` DESC LIMIT 0,1";
     $res = $db->query($query);
-    $row = $res->fetch_assoc($res);
+    $row = $res->fetch_assoc();
     if ($row['numero'] < $currentVersion) {
         $updateFrom = $row['numero'];
         $toUpdate = true;
@@ -77,13 +77,13 @@ if (checkIfExistsTable($db, 'avcp_versioni') === false) {
 
 if ($toUpdate === true) {
     $msgUpdate  .= "<h3>Aggiornamento dalla versione ".$updateFrom." alla versione ".$currentVersion." del programma:</h3>".PHP_EOL;
-    switch $updateFrom {
+    switch ($updateFrom) {
     case '0.7.1':
         if (false === updateTableAvcpLotto($db)) {
             die("Non posso aggiungere campo chiuso ad avcp_lotti. Aggiornamento fallito!");
         }
-        if (false === addExportOds($db)) {
-            die("Errore in addExportOds. Aggiornamento fallito!");
+        if (false === createViewExportOds($db)) {
+            die("Errore in createViewExportOds. Aggiornamento fallito!");
         }
         if (false === updateVistaDitte($db)) {
             die("Errore in updateVistaDitte. Aggiornamento fallito!");
@@ -96,7 +96,7 @@ if ($toUpdate === true) {
         }
         break;
     case '0.7.2':
-        if (false === updateVistaDitte($db) == false) {
+        if (false === updateVistaDitte($db)) {
             die("Errore in updateVistaDitte. Aggiornamento fallito!");
         }
         if (false === updateTableSceltaContraente($db)) {
@@ -115,7 +115,7 @@ if ($toUpdate === true) {
         }
         break;
     default:
-        die("Non riesco a capire da che versione aggiornare. Aggiornamento fallito!");
+        die("Non riesco a capire da che versione aggiornare. ".$updateFrom."Aggiornamento fallito!");
         break;
     }
     $msgUpdate .= "<h4>Aggiornamento da versione ".$updateFrom." terminato!</h4>".PHP_EOL;
@@ -246,7 +246,7 @@ function updateViewDitte($db) {
  * @return bool, string 
  */
 function createViewExportOds($db) {
-    $query = "DROP TABLE IF EXISTS `avcp_export_ods`"
+    $query = "DROP TABLE IF EXISTS `avcp_export_ods`";
     if (false === $db->query($query)) {
         return false;
     }
@@ -422,7 +422,7 @@ function updateVersionTable($db, $currentVersion) {
         return false;
     }
     $query = "INSERT INTO `avcp_versioni` (`numero`, `data`) VALUES ('".$currentVersion."', NOW())";
-    if (false === $db->query($query) {
+    if (false === $db->query($query)) {
         return false;
     }
     return true;
@@ -432,7 +432,7 @@ function updateVersionTable($db, $currentVersion) {
 // La versione 0.7.4 dovrebbe essere in uso solo 
 // all'interno della Provincia di Cremona
 function fromWhichOldVersion($db) {
-    $queryCheckOds = "SHOW TABLES LIKE 'avcp_export_ods";
+    $queryCheckOds = "SHOW TABLES LIKE 'avcp_export_ods'";
     if (false === $resCheckOds = $db->query($queryCheckOds)) {
         return false;
     }
