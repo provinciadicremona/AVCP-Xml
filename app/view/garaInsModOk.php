@@ -39,6 +39,7 @@ function dataIta($data) {
     <?php else : ?>
 
             <a class="btn btn-large btn-success"
+                title="Chiudo il lotto anche se le somme liquidate sono inferiori alle aggiudicate"
                 href="?mask=gara&amp;do=cercaGara&amp;event=pagamenti&amp;idDaElenco=<?php echo $id;?>"><i
                 class="icon-folder-close icon-white"></i>&nbsp;Pagamenti conclusi</a>&nbsp;
             <a class="btn btn-large btn-warning"
