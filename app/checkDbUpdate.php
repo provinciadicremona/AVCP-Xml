@@ -8,8 +8,8 @@
  * © 2013 Provincia di Cremona <sito@provincia.cremona.it>
  * 
  * SPDX-License-Identifier: GPL-3.0-only
-*/
-/* ----------------------------------------------
+ *
+ * ----------------------------------------------
  * VERSIONE 0.8.0
  * ----------------------------------------------
  * Se non esiste la tabella avcp_versioni presumo
@@ -50,6 +50,7 @@
  * - Esco dalla fase di aggiornamento e torno al login
  *
  */
+
 $msgUpdate  = null;
 $toUpdate   = false;
 $updateFrom = null;
@@ -96,22 +97,30 @@ if ($toUpdate === true) {
         die("Non riesco a capire da che versione aggiornare. ".$updateFrom."Aggiornamento fallito!");
         break;
     }
-    $msgUpdate  .= "<h3>Aggiornamento dalla versione ".$updateFrom." alla versione ".$currentVersion." del programma terminato.</h3>".PHP_EOL;
-}
-
-/* 
- * Se è stato effettuato un aggiornamento,
- * visualizzo il messaggio di operazione riuscita
- */
-if ($toUpdate === true) {
+    /* 
+     * Se sono arrivato fino a qui, allora è stato effettuato
+     * un aggiornamento e l'esito è positivo.
+     *
+     * Visualizzo il messaggio di operazione riuscita
+     */
     echo '
     <div class="row">
         <div class="span8 offset2">
-        '.$msgUpdate.'
+            <h3>Aggiornamento dalla versione '.$updateFrom.' alla versione '.$currentVersion.' del programma terminato.</h3>
         </div>
     </div>
     <br />';
 }
+
+///====================================================
+///          FINE DELLA LOGICA DEL PROGRAMMA
+///====================================================
+
+
+///====================================================
+///                    FUNZIONI
+///====================================================
+
 
 /*
  * Verifico l'esistenza di una tabella
@@ -328,7 +337,7 @@ function updateLottiSceltaContraente($db) {
 function getCurrentVersion() {
     $fname = AVCP_DIR."version.txt";
     if (false === $fvh = fopen($fname, "r")) {
-        die ("Non riesco a leggere il file version.txt. Aggiornamento annullato!");
+        die ("Non riesco a leggere il file version.txt. Aggiornamento fallito!");
     }
     $currentVersion = strtr(fread($fvh, 1024), '_', '.');
     fclose($fvh);
@@ -344,7 +353,7 @@ function getCurrentVersion() {
  * @param string $currentVersion nuovo numero di versione
  *
  *
- * @return string
+ * @return bool
  */
 function updateVersionTable($db, $currentVersion) {
     if (empty($currentVersion)) {
@@ -357,20 +366,29 @@ function updateVersionTable($db, $currentVersion) {
     return true;
 }
 
-// Determino se vengo da 0.7.1/2/4
-// La versione 0.7.4 dovrebbe essere in uso solo 
-// all'interno della Provincia di Cremona
+/*
+ * Aggiorno la tabella avcp_versioni con il nuovo valore
+ * Determino se vengo da 0.7.1/2/4
+ * La versione 0.7.4 dovrebbe essere in uso solo 
+ * all'interno della Provincia di Cremona
+ *
+ * Se fallisco, annullo l'aggiornamento.
+ *
+ * @param object $db Database connection handler
+ *
+ * @return string La versione da cui aggiornare
+ */
 function fromWhichOldVersion($db) {
     $queryCheckOds = "SHOW TABLES LIKE 'avcp_export_ods'";
     if (false === $resCheckOds = $db->query($queryCheckOds)) {
-        return false;
+        die("Errore durante SHOW TABLE in fromWhichOldVersion. Aggiornamento fallito!");
     }
     if ($resCheckOds->num_rows !== 1) {
         return '0.7.1';
     }
     $query = "SHOW COLUMNS FROM `avcp_vista_ditte` LIKE 'aggiudica'";
     if (false === $res = $db->query($query)) {
-        return false;
+        die("Errore durante SHOW COLUMNS in fromWhichOldVersion. Aggiornamento fallito!");
     }
     if ($res->num_rows === 0) {
         return '0.7.2';
@@ -390,7 +408,7 @@ function fromWhichOldVersion($db) {
 function updateViewDitte($db) {
         $queryDelDitte = "DROP VIEW IF EXISTS `avcp_vista_ditte";
         if (false === $db->query($queryDelDitte)) {
-            die("Errore in updateViewDitte. Aggiornamento fallito!");
+            die("Errore nella DROP di updateViewDitte. Aggiornamento fallito!");
         }
         $query = "
         CREATE VIEW `avcp_vista_ditte` AS
@@ -441,7 +459,7 @@ function updateViewDitte($db) {
         ORDER BY
             `d`.`ragioneSociale`";
         if (false === $db->query($query)) {
-            return false;
+            die("Errore nella CREATE di updateViewDitte. Aggiornamento fallito!");
         }
         return true;
 }
