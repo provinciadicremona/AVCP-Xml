@@ -54,9 +54,7 @@ $msgUpdate  = null;
 $toUpdate   = false;
 $updateFrom = null;
 // Leggo il file version.txt per stabilire a che versione aggiornare
-if (($currentVersion = getCurrentVersion()) === false) {
-    die ("Non riesco a leggere il file version.txt. Aggiornamento fallito!");
-}
+$currentVersion = getCurrentVersion(); 
 // Controllo che esista la tabella delle versioni e se non c'è la creo
 // e poi stabilisco se aggiornare dalla 0.7.1 o dalla 0.7.2
 if (checkIfExistsTable($db, 'avcp_versioni') === false) {
@@ -79,40 +77,20 @@ if (checkIfExistsTable($db, 'avcp_versioni') === false) {
 if ($toUpdate === true) {
     switch ($updateFrom) {
     case '0.7.1':
-        if (false === updateTableAvcpLotto($db)) {
-            die("Non posso aggiungere campo chiuso ad avcp_lotti. Aggiornamento fallito!");
-        }
-        if (false === createViewExportOds($db)) {
-            die("Errore in createViewExportOds. Aggiornamento fallito!");
-        }
-        if (false === updateVistaDitte($db)) {
-            die("Errore in updateVistaDitte. Aggiornamento fallito!");
-        }
-        if (false === updateTableSceltaContraente($db)) {
-            die("Errore in updateTableSceltaContraente. Aggiornamento fallito!");
-        }
-        if (false === updateLottiSceltaContraente($db)) {
-            die("Errore in updateLottiSceltaContraente. Aggiornamento fallito!");
-        }
+        updateTableAvcpLotto($db);
+        createViewExportOds($db);
+        updateViewDitte($db);
+        updateTableSceltaContraente($db);
+        updateLottiSceltaContraente($db);
         break;
     case '0.7.2':
-        if (false === updateVistaDitte($db)) {
-            die("Errore in updateVistaDitte. Aggiornamento fallito!");
-        }
-        if (false === updateTableSceltaContraente($db)) {
-            die("Errore in updateTableSceltaContraente. Aggiornamento fallito!");
-        }
-        if (false === updateLottiSceltaContraente($db)) {
-            die("Errore in updateLottiSceltaContraente. Aggiornamento fallito!");
-        }
+        updateViewDitte($db);
+        updateTableSceltaContraente($db);
+        updateLottiSceltaContraente($db);
         break;
     case '0.7.4':
-        if (false === updateTableSceltaContraente($db)) {
-            die("Errore in updateTableSceltaContraente. Aggiornamento fallito!");
-        }
-        if (false === updateLottiSceltaContraente($db)) {
-            die("Errore in updateLottiSceltaContraente. Aggiornamento fallito!");
-        }
+        updateTableSceltaContraente($db);
+        updateLottiSceltaContraente($db);
         break;
     default:
         die("Non riesco a capire da che versione aggiornare. ".$updateFrom."Aggiornamento fallito!");
@@ -141,6 +119,8 @@ if ($toUpdate === true) {
  * @param object $db Database connection handler
  * @param string $tName Name of the table to check
  *
+ * Se la query fallisce, annullo l'aggiornamento.
+ *
  * @return bool 
  */
 function checkIfExistsTable($db, $tName) {
@@ -157,6 +137,8 @@ function checkIfExistsTable($db, $tName) {
 /*
  * Creo la tabella `avcp_versioni`
  *
+ * Se la query fallisce, annullo l'aggiornamento.
+ *
  * @param object $db Database connection handler
  *
  * @return bool 
@@ -171,83 +153,18 @@ function createVersionTable($db) {
         die("Non riesco a creare la tabella avcp_versioni. Aggiornamento fallito!");
     return true;
 }
-/*
- * Aggiorno la vista `avcp_vista_ditte`
- *
- * @param object $db Database connection handler
- *
- * @return bool, string
- */
-function updateViewDitte($db) {
-    $queryDeletw = "DROP VIEW IF EXISTS `avcp_vista_ditte";
-    if (false === $db->query($queryDelDitte)) {
-        return false;
-    }
-    $query= "
-        CREATE VIEW `avcp_vista_ditte` AS
-        SELECT
-            `d`.`codiceFiscale` AS `codiceFiscale`,
-            `d`.`ragioneSociale` AS `ragioneSociale`,
-            `d`.`estero` AS `estero`,
-            `d`.`flag` AS `flag`,
-            `d`.`userins` AS `userins`,
-            (
-            SELECT
-                COUNT(0)
-            FROM
-                `avcp_ld` `ldl`
-            WHERE
-                (
-                    `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
-                ) AND(
-                    `ldl`.`funzione` LIKE '01-PARTECIPANTE'
-                )
-        ) AS `partecipa`,
-        (
-        SELECT
-            COUNT(0)
-        FROM
-            `avcp_ld` `ldl`
-        WHERE
-            (
-                `d`.`codiceFiscale` = `ldl`.`codiceFiscale`
-            ) AND(
-                `ldl`.`funzione` LIKE '02-AGGIUDICATARIO'
-            )
-        ) AS `aggiudica`
-        FROM
-            (
-                `avcp_ditta` `d`
-            LEFT JOIN
-                `avcp_ld` `ld`
-            ON
-                (
-                    `d`.`codiceFiscale` = `ld`.`codiceFiscale`
-                ) AND(
-                    `ld`.`funzione` LIKE '01-PARTECIPANTE'
-                )
-            )
-        GROUP BY
-            `d`.`codiceFiscale`
-        ORDER BY
-            `d`.`ragioneSociale`";
-    if (false === $db->query($query)) {
-        return false;
-    }
-    return true;
-}
 
 /*
  * Creo la vista `avcp_export_ods`
  *
  * @param object $db Database connection handler
  *
- * @return bool, string 
+ * @return bool
  */
 function createViewExportOds($db) {
     $query = "DROP TABLE IF EXISTS `avcp_export_ods`";
     if (false === $db->query($query)) {
-        return false;
+        die("Errore nel DROP di createViewExportOds. Aggiornamento fallito!");
     }
     $query = " CREATE VIEW `avcp_export_ods` AS select 
     `l`.`id` AS `id`,
@@ -280,14 +197,16 @@ function createViewExportOds($db) {
     ORDER BY `l`.`anno`,
     `l`.`id`";
     if (false === $db->query($query)) {
-        return false;
+        die("Errore nella CREATE di createViewExportOds. Aggiornamento fallito!");
     }
 }
 
 /*
  * Aggiorno la tabella `avcp_lotto`
  * controllo se manca la colonna "chiuso" e nel caso la aggiungo
- *
+
+ * Se la query fallisce, annullo l'aggiornamento
+
  * @param object $db Database connection handler
  *
  * @return bool, string 
@@ -295,7 +214,7 @@ function createViewExportOds($db) {
 function updateTableAvcpLotto($db) {
     $queryLotto = "ALTER TABLE `avcp_lotto` ADD `chiuso` BOOLEAN NOT NULL DEFAULT FALSE AFTER `flag`";
     if (false === $db->query($queryLotto)) {
-        return false;
+        die("Non posso aggiungere campo chiuso ad avcp_lotti. Aggiornamento fallito!");
     }
     return true;
 }
@@ -311,13 +230,13 @@ function updateTableAvcpLotto($db) {
 function updateTableSceltaContraente($db) {
     $query = "DROP TABLE IF EXISTS `avcp_sceltaContraenteType`";
     if (false === $db->query($query)) {
-        return false;
+        die("Errore nel DROP di updateTableSceltaContraente. Aggiornamento fallito!");
     }
     $query = " CREATE TABLE `avcp_sceltaContraenteType` 
         (`ruolo` varchar(255) NOT NULL COMMENT 'tipo scelta contraente') 
         ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tipo scelta contraente'";
     if (false === $db->query($query)) {
-        return false;
+        die("Errore nella CREATE di updateTableSceltaContraente. Aggiornamento fallito!");
     }
     $query = 'INSERT INTO `avcp_sceltaContraenteType` (`ruolo`) VALUES
         ("01-PROCEDURA APERTA"),
@@ -349,7 +268,7 @@ function updateTableSceltaContraente($db) {
         ("37-PROCEDURA COMPETITIVA CON NEGOZIAZIONE"),
         ("38-PROCEDURA DISCIPLINATA DA REGOLAMENTO INTERNO PER SETTORI SPECIALI")';
     if (false === $db->query($query)) {
-        return false;
+        die("Errore nell'INSERT di updateTableSceltaContraente. Aggiornamento fallito!");
     }
     return true;
 }
@@ -360,38 +279,40 @@ function updateTableSceltaContraente($db) {
  * tipologie di scelta del contraente aggiornate il 4/11/2019
  * Modificano i codici 3, 4, 6, 17, 22 e 23
  *
+ * Se una query fallisce, annullo l'aggiornamento.
+ *
  * @param object $db Database connection handler
  *
- * @return bool, string 
+ * @return bool
  */
 function updateLottiSceltaContraente($db) {
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '03-PROCEDURA NEGOZIATA PREVIA PUBBLICAZIONE' WHERE `sceltaContraente` LIKE '03-%'";
     if (false === $db->query($query)) {
-        return false;
+        die("Errore in updateLottiSceltaContraente cod. 03. Aggiornamento fallito!");
     }
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '04-PROCEDURA NEGOZIATA SENZA PREVIA PUBBLICAZIONE' WHERE `sceltaContraente` LIKE '04-%'";
     if (false === $db->query($query)) {
-        return false;
+        die("Errore in updateLottiSceltaContraente cod. 04. Aggiornamento fallito!");
     }
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI GARA (SETTORI SPECIALI)' WHERE `sceltaContraente` LIKE '06-%'";
     if (false === $db->query($query)) {
-        return false;
+        die("Errore in updateLottiSceltaContraente cod. 06. Aggiornamento fallito!");
     }
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '17-AFFIDAMENTO DIRETTO EX ART. 5 DELLA LEGGE 381/91' WHERE `sceltaContraente` LIKE '17-%'";
     if (false === $db->query($query)) {
-        return false;
+        die("Errore in updateLottiSceltaContraente cod. 17. Aggiornamento fallito!");
     }
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '22-PROCEDURA NEGOZIATA CON PREVIA INDIZIONE DI GARA (SETTORI SPECIALI)' WHERE `sceltaContraente` LIKE '22-%'";
     if (false === $db->query($query)) {
-        return false;
+        die("Errore in updateLottiSceltaContraente cod. 22. Aggiornamento fallito!");
     }
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '23-AFFIDAMENTO DIRETTO' WHERE `sceltaContraente` LIKE '23-%'";
     if (false === $db->query($query)) {
-        return false;
+        die("Errore in updateLottiSceltaContraente cod. 23. Aggiornamento fallito!");
     }
     $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '27-CONFRONTO COMPETITIVO IN ADESIONE AD ACCORDO QUADRO/CONVENZIONE' WHERE `sceltaContraente` LIKE '27-%'";
     if (false === $db->query($query)) {
-        return false;
+        die("Errore in updateLottiSceltaContraente cod. 27. Aggiornamento fallito!");
     }
     return true;
 }
@@ -400,29 +321,38 @@ function updateLottiSceltaContraente($db) {
  * Leggo il file version.txt per determinare la 
  * versione corrente del programma.
  *
- * Se non riesco a leggerla, restituisco false
+ * Se fallisco, annullo l'aggiornamento.
  *
- * @param object $db Database connection handler
- *
- * @return bool, string 
+ * @return string
  */
 function getCurrentVersion() {
     $fname = AVCP_DIR."version.txt";
     if (false === $fvh = fopen($fname, "r")) {
-        return false;
+        die ("Non riesco a leggere il file version.txt. Aggiornamento annullato!");
     }
     $currentVersion = strtr(fread($fvh, 1024), '_', '.');
     fclose($fvh);
     return $currentVersion;
 }
 
+/*
+ * Aggiorno la tabella avcp_versioni con il nuovo valore
+ *
+ * Se fallisco, annullo l'aggiornamento.
+ *
+ * @param object $db Database connection handler
+ * @param string $currentVersion nuovo numero di versione
+ *
+ *
+ * @return string
+ */
 function updateVersionTable($db, $currentVersion) {
     if (empty($currentVersion)) {
-        return false;
+        die("Manca la versione corrente del programma in updateVersionTable. Aggiornamento fallito!");
     }
     $query = "INSERT INTO `avcp_versioni` (`numero`, `data`) VALUES ('".$currentVersion."', NOW())";
     if (false === $db->query($query)) {
-        return false;
+        die("Non riesco ad inserire nella tabella avcp_versioni. Aggiornamento fallito!");
     }
     return true;
 }
@@ -448,10 +378,19 @@ function fromWhichOldVersion($db) {
     return '0.7.4';
 }
 
-function updateVistaDitte($db) {
+/*
+ * Aggiorno la vista `avcp_vista_ditte`
+ *
+ * @param object $db Database connection handler
+ *
+ * Se la queri fallisce, annullo l'aggiornamento
+ *
+ * @return bool
+ */
+function updateViewDitte($db) {
         $queryDelDitte = "DROP VIEW IF EXISTS `avcp_vista_ditte";
         if (false === $db->query($queryDelDitte)) {
-            return false;
+            die("Errore in updateViewDitte. Aggiornamento fallito!");
         }
         $query = "
         CREATE VIEW `avcp_vista_ditte` AS
