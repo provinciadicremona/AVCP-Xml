@@ -17,7 +17,23 @@ if (empty($anno_rif)) {
     die('Anno non corretto');
 }
 $dataPubb = $anno_rif + 1 . "-01-31";
-header("Content-Disposition: attachment; filename=avcp_dataset_" . $anno_rif . ".xml");
+
+// Determino l'url ed il nome del file xml
+if (URL_XML_FILE_ANNUALE == 'NO') {
+    $url = URL_XML_FILE;
+} else {
+    if (false === strpos(URL_XML_FILE_ANNUALE, '{{anno}}')) {
+        $url = URL_XML_FILE_ANNUALE . $anno_rif; // Per la retrocompatibilità.
+    } else {
+        $url = str_replace('{{anno}}', $anno_rif, URL_XML_FILE_ANNUALE);
+    }
+    $url .= ".xml";
+    $splitUrl = explode('/', $url);
+    $fileName = $splitUrl[count($splitUrl) -1];
+}
+
+// Inizio la generazione del file
+header("Content-Disposition: attachment; filename=" . $fileName);
 header("Content-Type: application/force-download");
 header("content-type: application/xml");
 echo '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>' . PHP_EOL;
@@ -34,19 +50,11 @@ echo '<legge190:pubblicazione xsi:schemaLocation="legge190_1_0 datasetAppaltiL19
 <dataPubblicazioneDataset>' . $dataPubb . '</dataPubblicazioneDataset>
 <entePubblicatore>' . stripslashes(ENTE_PROPONENTE) . '</entePubblicatore>
 <dataUltimoAggiornamentoDataset>' . $date_agg . '</dataUltimoAggiornamentoDataset>
-<annoRiferimento>' . $anno_rif . '</annoRiferimento>';
-if (URL_XML_FILE_ANNUALE == 'NO') {
-    echo '<urlFile>' . URL_XML_FILE . '</urlFile>' . PHP_EOL;
-} else {
-    $url = strpos(URL_XML_FILE_ANNUALE, '{{anno}}') === false
-        ? URL_XML_FILE_ANNUALE . $anno_rif // Per la retrocompatibilità.
-        : str_replace('{{anno}}', $anno_rif, URL_XML_FILE_ANNUALE);
-
-    echo '<urlFile>' . $url . '.xml</urlFile>' . PHP_EOL;
-}
-
-echo '<licenza>' . LICENZA . '</licenza>'.PHP_EOL.'</metadata>' . PHP_EOL;
-echo '<data>' . PHP_EOL;
+<annoRiferimento>' . $anno_rif . '</annoRiferimento>
+<urlFile>' . $url . '</urlFile>
+<licenza>' . LICENZA . '</licenza>
+</metadata>
+<data>' . PHP_EOL;
 while ($lotto = $result_lotti->fetch_assoc()) {
     foreach ($lotto as $key => $value) {
         $$key = stripslashes($value);

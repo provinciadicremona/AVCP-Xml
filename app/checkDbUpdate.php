@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: GPL-3.0-only
 */
 /* ----------------------------------------------
- * VERSIONE 0.8
+ * VERSIONE 0.8.0
  * ----------------------------------------------
  * Se non esiste la tabella avcp_versioni presumo
  * che l'applicazione debba essere aggiornata.
@@ -23,6 +23,7 @@
  * ============================================
  *   - Se non ha la vista avcp_export_ods -> 0.7.1
  *   - Se la vista avcp_vista_ditte non ha il campo "aggiudica" -> 0.7.2
+ *   - Altrimenti -> 0.7.4 (in uso solo ala Provincia di Cremona)
  *
  *
  * FLUSSO DELLO SCRIPT DI AGGIORNAMENTO:
@@ -76,7 +77,6 @@ if (checkIfExistsTable($db, 'avcp_versioni') === false) {
 }
 
 if ($toUpdate === true) {
-    $msgUpdate  .= "<h3>Aggiornamento dalla versione ".$updateFrom." alla versione ".$currentVersion." del programma:</h3>".PHP_EOL;
     switch ($updateFrom) {
     case '0.7.1':
         if (false === updateTableAvcpLotto($db)) {
@@ -118,13 +118,12 @@ if ($toUpdate === true) {
         die("Non riesco a capire da che versione aggiornare. ".$updateFrom."Aggiornamento fallito!");
         break;
     }
-    $msgUpdate .= "<h4>Aggiornamento da versione ".$updateFrom." terminato!</h4>".PHP_EOL;
+    $msgUpdate  .= "<h3>Aggiornamento dalla versione ".$updateFrom." alla versione ".$currentVersion." del programma terminato.</h3>".PHP_EOL;
 }
 
 /* 
  * Se è stato effettuato un aggiornamento,
- * visualizzo i messaggi relativi alle singole 
- * fasi del processo.
+ * visualizzo il messaggio di operazione riuscita
  */
 if ($toUpdate === true) {
     echo '
@@ -169,7 +168,7 @@ function createVersionTable($db) {
             PRIMARY KEY (`numero`)
         ) ENGINE = InnoDB COMMENT = 'Versioni del programma installate'";
     if (false === $db->query($query))
-        return false;
+        die("Non riesco a creare la tabella avcp_versioni. Aggiornamento fallito!");
     return true;
 }
 /*
