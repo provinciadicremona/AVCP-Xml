@@ -1,7 +1,10 @@
 # AVCP-Xml - Repository di sviluppo
 Generatore di dataset XML per l'Autorità per la Vigilanza sui Contratti Pubblici - art. 1 comma 32 L. 190/2012
 
-**Attenzione**, non scaricate il programma da questa pagina, è una versione di sviluppo e **potrebbe non funzionare correttamente**: fate affidamento solo sulla release più recente del programma che trovate linkata di seguito.
+**Attenzione**, a meno che non siate sviluppatori interessati a contribuire al progetto, vi consigliamo di scaricare sempre l'[ultima release stabile disponibile](https://github.com/provinciadicremona/AVCP-Xml/releases/latest).
+
+## Screenshots
+![Homepage del programma](./screenshots/home080.png)
 
 ## Upgrade dalla versione 0.7.1
 Per aggiornare il programma, [scaricare la release più recente](https://github.com/provinciadicremona/AVCP-Xml/releases/latest) e seguire le istruzioni riportate di seguito.
@@ -9,47 +12,13 @@ Per aggiornare il programma, [scaricare la release più recente](https://github.
 ## API per l'ultima versione disponibile
 `https://api.github.com/repos/provinciadicremona/AVCP-Xml/releases/latest`
 
-## Aggiungere le nuove modalità di scelta del contraente
-Il 21 gennaio 2019, l'ANAC ha [modificato le modalità di scelta del contraente]( http://www.anticorruzione.it/portal/public/classic/Comunicazione/News/_news?id=7102507a0a778042193e31c2da0782b7) introducendo 3 nuove tipologie.
+## Compatibile con la versione 1.3 delle specifiche tecniche ANAC per l'anno 2020
+Il 4 novembre 2019, l'ANAC ha introdotto [una nuova versione dei file xsd non retrocompatibili](http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190) introducendo nuove tipologie e modificando alcune di quelle esistenti.
 
-Indipendentemente dalla versione del programma utilizzata, è possibile aggiungerle seguendo la procedura descritta di seguito.
+I nuovi formati dovranno essere utilizzati a partire dalla rilevazione relativa ai lotti dell'**anno 2019**.
 
-Aprite il vostro gestore di database, solitamente phpMyAdmin, selezionare il database avcp e nella tab 'SQL' lanciate le seguenti query:
+## Limitazioni del programma
+Attualmente il programma non consente di:
 
-```sql
-
-DROP TABLE IF EXISTS `avcp_sceltaContraenteType`;
-
-CREATE TABLE `avcp_sceltaContraenteType` (
-  `ruolo` varchar(255) NOT NULL COMMENT 'tipo scelta contraente'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tipo scelta contraente';
-
-
-INSERT INTO `avcp_sceltaContraenteType` (`ruolo`) VALUES
-('01-PROCEDURA APERTA'),
-('02-PROCEDURA RISTRETTA'),
-('03-PROCEDURA NEGOZIATA PREVIA PUBBLICAZIONE DEL BANDO'),
-('04-PROCEDURA NEGOZIATA SENZA PREVIA PUBBLICAZIONE DEL BANDO'),
-('05-DIALOGO COMPETITIVO'),
-('06-PROCEDURA NEGOZIATA SENZA PREVIA INDIZIONE DI GARA ART. 221 D.LGS. 163/2006'),
-('07-SISTEMA DINAMICO DI ACQUISIZIONE'),
-('08-AFFIDAMENTO IN ECONOMIA - COTTIMO FIDUCIARIO'),
-('14-PROCEDURA SELETTIVA EX ART 238 C.7, D.LGS. 163/2006'),
-('17-AFFIDAMENTO DIRETTO EX ART. 5 DELLA LEGGE N.381/91'),
-('21-PROCEDURA RISTRETTA DERIVANTE DA AVVISI CON CUI SI INDICE LA GARA'),
-('22-PROCEDURA NEGOZIATA DERIVANTE DA AVVISI CON CUI SI INDICE LA GARA'),
-('23-AFFIDAMENTO IN ECONOMIA - AFFIDAMENTO DIRETTO'),
-('24-AFFIDAMENTO DIRETTO A SOCIETA\' IN HOUSE'),
-('25-AFFIDAMENTO DIRETTO A SOCIETA\' RAGGRUPPATE/CONSORZIATE O CONTROLLATE NELLE CONCESSIONI DI LL.PP'),
-('26-AFFIDAMENTO DIRETTO IN ADESIONE AD ACCORDO QUADRO/CONVENZIONE'),
-('27-CONFRONTO COMPETITIVO IN ADESIONE AD ACCORDO QUADRO/CONVENZIONE'),
-('28-PROCEDURA AI SENSI DEI REGOLAMENTI DEGLI ORGANI COSTITUZIONALI'),
-('29-PROCEDURA RISTRETTA SEMPLIFICATA'),
-('30-PROCEDURA DERIVANTE DA LEGGE REGIONALE'),
-('31-AFFIDAMENTO DIRETTO PER VARIANTE SUPERIORE AL 20% DELL''IMPORTO CONTRATTUALE');
-
-ALTER TABLE `avcp_sceltaContraenteType`
-  ADD UNIQUE KEY `ruolo` (`ruolo`);
-
-```
-Una volta fatto questo, sostituite il file `app/xml/TypesL190.xsd` con [quello nuovo fornito da ANAC](https://raw.githubusercontent.com/provinciadicremona/AVCP-Xml/master/app/xml/TypesL190.xsd)
+* Importare file XML;
+* Gestire la creazione di file indice per xml superiori ai 5Mb
