@@ -37,7 +37,9 @@ it:
     codiceIPA: p_cr
 description:
   it:
+    localisedName: AVCP-Xml
     genericName: Web Application
+    shortDescription: Generatore di dataset XML per l'ANAC - art. 1 comma 32 L. 190/2012
     longDescription: "Generatore di dataset XML per l'ANAC - art. 1 comma 32 L. 190/2012 - da publbicare annualmente sul sito dell'ente.\n\n### Requisiti di sistema\n\n- \t\tWeb Server Apache (testato su Apache 2.0 ma dovrebbe funzionare anche su 1.3)\n- \t\tPHP 5 e successivi con abilitati libxml e json (solo per PHP > 5.2)\n- \t\tMySQL 5 e successivi\n\n**Attenzione: **nonostante la procedura di installazione  sia banale, trattandosi a tutti gli effetti di un sito è consigliabile  rivolgersi ad un esperto che verifichi i requisiti di sistema e proceda  alla configurazione.\n\n_Per chi desidera utilizzare il software su un pc windows consigliamo  di predisporre l'ambiente di esecuzione corretto installando il  programma _[_XAMPP_](http://www.apachefriends.org/index.html)_._\n"
     features:
       - Generazione file XML per adempimento ANAC
@@ -46,4 +48,14 @@ description:
       - Importazione gare da csv
       - Importazione ditte da csv
       - Validazione dei dataset
-    shortDescription: Generatore di dataset XML per l'ANAC - art. 1 comma 32 L. 190/2012
+    screenshots:
+        - screenshots/home080.png
+dependsOn:
+    open:
+        - name: MySQL
+          versionMin: "5.0"
+          versionMax: "8.0"
+        - name: Apache
+          versionMin: "2.0"
+        - name: PHP
+          versionMin: "5.2"
