@@ -37,11 +37,14 @@ function dataIta($data) {
             <a class="btn btn-large disabled pull-right" href="#"><i class="icon-trash"></i>&nbsp;Elimina</a>
 
     <?php else : ?>
-
+            <a class="btn btn-large btn-success"
+                title="Pago tutto impostando le somme liquidate uguali a quelle aggiudicate"
+                href="?mask=gara&amp;do=cercaGara&amp;event=pagatutto&amp;idDaElenco=<?php echo $id;?>"><i
+                class="icon-folder-close icon-white"></i>&nbsp;Paga tutto</a>&nbsp;
             <a class="btn btn-large btn-success"
                 title="Chiudo il lotto anche se le somme liquidate sono inferiori alle aggiudicate"
                 href="?mask=gara&amp;do=cercaGara&amp;event=pagamenti&amp;idDaElenco=<?php echo $id;?>"><i
-                class="icon-folder-close icon-white"></i>&nbsp;Pagamenti conclusi</a>&nbsp;
+                class="icon-folder-close icon-white"></i>&nbsp;Fine pagamenti</a>&nbsp;
             <a class="btn btn-large btn-warning"
                 href="?mask=gara&amp;id=<?php echo $id;?>"><i
                 class="icon-pencil icon-white"></i>&nbsp;Gara</a>&nbsp;
