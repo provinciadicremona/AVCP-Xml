@@ -406,7 +406,7 @@ function fromWhichOldVersion($db) {
  * @return bool
  */
 function updateViewDitte($db) {
-        $queryDelDitte = "DROP VIEW IF EXISTS `avcp_vista_ditte";
+        $queryDelDitte = "DROP VIEW IF EXISTS `avcp_vista_ditte`";
         if (false === $db->query($queryDelDitte)) {
             die("Errore nella DROP di updateViewDitte. Aggiornamento fallito!");
         }
