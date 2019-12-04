@@ -1,3 +1,8 @@
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/provinciadicremona/AVCP-Xml?label=Last%20Release)
+![GitHub](https://img.shields.io/github/license/provinciadicremona/AVCP-Xml)
+![GitHub commits since latest release](https://img.shields.io/github/commits-since/provinciadicremona/AVCP-Xml/latest)
+
+
 # AVCP-Xml - Repository di sviluppo
 Generatore di dataset XML per l'Autorità per la Vigilanza sui Contratti Pubblici - art. 1 comma 32 L. 190/2012
 
