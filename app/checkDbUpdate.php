@@ -65,7 +65,7 @@ if (checkIfExistsTable($db, 'avcp_versioni') === false) {
     $toUpdate = true;
 } else {
     // Leggo l'ultima versione installata e decido cosa fare
-    $query = "SELECT `numero` FROM `avcp_versioni` ORDER BY `data` DESC LIMIT 0,1";
+    $query = "SELECT `numero` FROM `avcp_versioni` ORDER BY `numero` DESC LIMIT 0,1";
     $res = $db->query($query);
     $row = $res->fetch_assoc();
     if ($row['numero'] < $currentVersion) {
@@ -94,7 +94,6 @@ if ($toUpdate === true) {
         updateLottiSceltaContraente($db);
         break;
     default:
-        die("Non riesco a capire da che versione aggiornare. ".$updateFrom."Aggiornamento fallito!");
         break;
     }
     /* 
