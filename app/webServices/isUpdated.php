@@ -71,4 +71,3 @@ if ($currentVersion > $localVersion) {
     $outVersion .= '<p><strong>Questa versione di AVCP Xml è aggiornata</strong><br />' . PHP_EOL;
     $outVersion .= '<a href="./">Torna all\'homepage</a></p>' . PHP_EOL;
 }
-echo $outVersion;
