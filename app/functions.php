@@ -19,7 +19,11 @@
  * @return string
  */
 function stampaValuta($val) {
-    echo strtr(money_format('%.2n', $val), 'EUR', '€');
+    if (PHP_SO === 'Linux') {
+        echo strtr(money_format('%.2n', $val), 'EUR', '€');
+    } else {
+        echo '€ ' .$val;
+    }
 }
 
 /**
