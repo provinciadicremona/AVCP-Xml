@@ -6,7 +6,7 @@ publiccodeYmlVersion: '0.2'
 name: AVCP-Xml
 url: 'https://github.com/provinciadicremona/AVCP-Xml'
 landingURL: 'http://www.provincia.cremona.it/urp/?view=Pagina&id=5354'
-softwareVersion: v0.8.4
+softwareVersion: v0.8.6
 developmentStatus: stable
 releaseDate: '2019-12-05'
 softwareType: standalone/web
