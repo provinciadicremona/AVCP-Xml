@@ -27,6 +27,7 @@ function get_resource_path($resource) {
 }
 // Prendo in GET anno e user
 $anno = (int) $_GET['anno'];
+$where = null;
 if (array_key_exists('user', $_GET) && !empty($_GET['user'])) {
     $user = $db->real_escape_string($_GET['user']);
     if ($user != 'tutti') {
