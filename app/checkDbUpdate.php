@@ -171,7 +171,7 @@ function createVersionTable($db) {
  */
 function createViewExportOds($db) {
     $query = "DROP TABLE IF EXISTS `avcp_export_ods`";
-    if (false === $db->query($query)) {
+    if (false === ($db->query($query))) {
         die("Errore nel DROP di createViewExportOds. Aggiornamento fallito!");
     }
     $query = " CREATE VIEW `avcp_export_ods` AS select 
@@ -237,7 +237,7 @@ function updateTableAvcpLotto($db) {
  */
 function updateTableSceltaContraente($db) {
     $query = "DROP TABLE IF EXISTS `avcp_sceltaContraenteType`";
-    if (false === $db->query($query)) {
+    if (false === ($db->query($query))) {
         die("Errore nel DROP di updateTableSceltaContraente. Aggiornamento fallito!");
     }
     $query = " CREATE TABLE `avcp_sceltaContraenteType` 
@@ -406,7 +406,7 @@ function fromWhichOldVersion($db) {
  */
 function updateViewDitte($db) {
         $queryDelDitte = "DROP VIEW IF EXISTS `avcp_vista_ditte`";
-        if (false === $db->query($queryDelDitte)) {
+        if (false === ($db->query($queryDelDitte))) {
             die("Errore nella DROP di updateViewDitte. Aggiornamento fallito!");
         }
         $query = "
