@@ -321,7 +321,7 @@ function updateLottiSceltaContraente($db) {
     if (false === $db->query($query)) {
         die("Errore in updateLottiSceltaContraente cod. 23. Aggiornamento fallito!");
     }
-    $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '25-AFFIDAMENTO DIRETTO A SOCIETA' RAGGRUPPATE/CONSORZIATE O CONTROLLATE NELLE CONCESSIONI E NEI PARTENARIATI' WHERE `sceltaContraente` LIKE '25-%'";
+    $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '25-AFFIDAMENTO DIRETTO A SOCIETA\' RAGGRUPPATE/CONSORZIATE O CONTROLLATE NELLE CONCESSIONI E NEI PARTENARIATI' WHERE `sceltaContraente` LIKE '25-%'";
     if (false === $db->query($query)) {
         die("Errore in updateLottiSceltaContraente cod. 25. Aggiornamento fallito!");
     }
