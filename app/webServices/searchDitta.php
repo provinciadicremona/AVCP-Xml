@@ -9,9 +9,6 @@
  * 
  * SPDX-License-Identifier: GPL-3.0-only
 */
-?>
-
-<?php
 // Effettua una ricerca nella tabella delle ditte
 // e restituisce un array di risultati in formato json
 require_once '../config.php';
@@ -39,8 +36,8 @@ for ($x = 0; $x < $num; $x++){
 $res->free();
 // Patch json per versioni php < 5.2
 if (version_compare(PHP_VERSION, '5.2', '<')) {
-    require_once 'ajaxFunctions.php';
-        echo array_to_json($matches);
+    require_once './ajaxFunctions.php';
+    echo array_to_json($matches);
 } else {
     echo json_encode($matches);
 }

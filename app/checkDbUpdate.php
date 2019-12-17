@@ -93,6 +93,9 @@ if ($toUpdate === true) {
         updateTableSceltaContraente($db);
         updateLottiSceltaContraente($db);
         break;
+    case ($updateFrom > '0.7.4' && $updateFrom < '0.8.9'):
+        updateLottiSceltaContraente($db);
+        break;
     default:
         break;
     }
@@ -285,7 +288,7 @@ function updateTableSceltaContraente($db) {
 /*
  * Aggiorno i dati della abella `avcp_lotti con le nuove 
  * tipologie di scelta del contraente aggiornate il 4/11/2019
- * Modificano i codici 3, 4, 6, 17, 22 e 23
+ * Modificano i codici 3, 4, 6, 17, 22, 23 e 25
  *
  * Se una query fallisce, annullo l'aggiornamento.
  *
@@ -318,9 +321,9 @@ function updateLottiSceltaContraente($db) {
     if (false === $db->query($query)) {
         die("Errore in updateLottiSceltaContraente cod. 23. Aggiornamento fallito!");
     }
-    $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '27-CONFRONTO COMPETITIVO IN ADESIONE AD ACCORDO QUADRO/CONVENZIONE' WHERE `sceltaContraente` LIKE '27-%'";
+    $query = "UPDATE `avcp_lotto` SET `sceltaContraente` = '25-AFFIDAMENTO DIRETTO A SOCIETA\' RAGGRUPPATE/CONSORZIATE O CONTROLLATE NELLE CONCESSIONI E NEI PARTENARIATI' WHERE `sceltaContraente` LIKE '25-%'";
     if (false === $db->query($query)) {
-        die("Errore in updateLottiSceltaContraente cod. 27. Aggiornamento fallito!");
+        die("Errore in updateLottiSceltaContraente cod. 25. Aggiornamento fallito!");
     }
     return true;
 }

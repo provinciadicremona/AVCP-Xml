@@ -9,9 +9,6 @@
  * 
  * SPDX-License-Identifier: GPL-3.0-only
 */
-?>
-
-<?php
 // Cerca una gara all'interno della tabella avcp_lotti
 // e restituisce un array coi risultati in formato json
 require_once '../config.php';
