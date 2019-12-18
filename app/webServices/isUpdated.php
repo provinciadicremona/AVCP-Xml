@@ -13,17 +13,9 @@
 $outVersion = null;
 // determino la versione attuale:
 $fh = fopen('version.txt', 'r');
-$local= fread($fh, 1024);
+$localVer = fread($fh, 1024);
 fclose($fh);
 
-/* 
- * Converto il numero di versione per essere compatibile con 
- * quello usato su github:
- *  - In locale: 0_0_0
- *  - Su github: v0.0.0
- */
-// TODO: Spostare lo spezzettamento delle versioni nella funzione
-$localVersion = explode("_", $local);
 // crea una risorsa cURL
 $ch = curl_init();
 // Imposto come URL da interrogare quello dell'API di github per l'ultima release
@@ -40,15 +32,14 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $rispostaGithub = curl_exec($ch);
 // Converto il JSON in un array
 $githubData = json_decode($rispostaGithub, true); // true per avere un array e non un oggetto
-$currentVersion =  explode('.', str_replace('v', '', $githubData["tag_name"]));
+$remoteVer =  $githubData["tag_name"];
 $releaseTitle = $githubData['name'];
 $downloadZip = '<a href="'.$githubData['zipball_url'].'">Scarica in formato zip</a>';
 $downloadTarball = '<a href="'.$githubData['tarball_url'].'">Scarica in formato tar.gz</a>';
 // chiudo la risorsa cURL
 curl_close($ch);
 // Se hai una vecchia versione
-
-if (true === thereAreUpdates($localVersion, $currentVersion)) {
+if (true === ciSonoAggiornamenti($localVer, $remoteVer)) {
     // Comunico che esiste una nuova versione
     $outVersion .= '
     <div class="alert alert-info">
@@ -56,7 +47,7 @@ if (true === thereAreUpdates($localVersion, $currentVersion)) {
         <strong>Una nuova versione di AVCP Xml presente: ' . $githubData['tag_name'] . '</strong><br />
     </div>' . PHP_EOL;
     $outVersion .= "<h2>".$releaseTitle."</h2>".PHP_EOL;
-    // Per convertire il markdown delle note di release in html
+    // Per convertire il markdown delle note di release di github
     // uso parsedown https://github.com/erusev/parsedown
     require_once 'Parsedown.php';
     $Parsedown = new Parsedown();
@@ -81,15 +72,22 @@ if (true === thereAreUpdates($localVersion, $currentVersion)) {
  * La versione viene spezzata in 3 elementi che sono i
  * tre numeri separati da punti o underscore.
  *
- * @param array $local versione letta da version.txt 
- * @param array $remote versione letta github
+ * @param string $local versione letta da version.txt
+ * @param string $remote versione letta github
  *
  * Confronto gli elementi uno ad uno e se quello locale
  * è minore ritorno true
  *
  * @return bool
  */
-function thereAreUpdates($local, $remote) {
+function ciSonoAggiornamenti($local, $remote) {
+    /*
+     * Converto i numeri di versione per essere confrontati
+     *  - In locale: 0_0_0
+     *  - Su github: v0.0.0
+     */
+    $local = explode("_", $local);
+    $remote =  explode('.', str_replace('v', '', $remote));
     if ((int) $local[0] < (int) $remote[0]) {
         return true;
     }
