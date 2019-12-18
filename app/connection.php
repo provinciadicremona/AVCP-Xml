@@ -17,7 +17,7 @@
 $db = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
 if ($db->connect_errno) {
-    echo "Connessione a MySQL fallita: (Error " . $db->connect_errno . ") " . $db->connect_error;
+    die("Connessione a MySQL fallita: (Error " . $db->connect_errno . ") " . $db->connect_error);
 }
 
 // possibili anni compresi tra l'introduzione della rilevazione (2012)
