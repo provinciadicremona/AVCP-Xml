@@ -8,7 +8,7 @@ url: 'https://github.com/provinciadicremona/AVCP-Xml'
 landingURL: 'http://www.provincia.cremona.it/urp/?view=Pagina&id=5354'
 softwareVersion: v0.8.11
 developmentStatus: stable
-releaseDate: '2019-12-05'
+releaseDate: '2020-01-13'
 softwareType: standalone/web
 platforms:
   - web
