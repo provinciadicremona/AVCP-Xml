@@ -65,11 +65,14 @@ if (checkIfExistsTable($db, 'avcp_versioni') === false) {
     $toUpdate = true;
 } else {
     // Leggo l'ultima versione installata e decido cosa fare
-    $query = "SELECT `numero` FROM `avcp_versioni` ORDER BY `numero` DESC LIMIT 0,1";
+    $query = "SELECT `numero` FROM `avcp_versioni` ORDER BY `numero` DESC";
     $res = $db->query($query);
-    $row = $res->fetch_assoc();
-    if ($row['numero'] < $currentVersion) {
-        $updateFrom = $row['numero'];
+    $versioneDatabase = "0.0.0";
+    foreach($res as $row){
+		$versioneDatabase = getVersioneMaggiore($versioneDatabase,$row['numero']);
+	}
+    if ($versioneDatabase != getVersioneMaggiore($versioneDatabase,$currentVersion)) {
+		$updateFrom = $versioneDatabase;
         $toUpdate = true;
         updateVersionTable($db, $currentVersion);
     }
@@ -343,7 +346,7 @@ function getCurrentVersion() {
     }
     $currentVersion = strtr(fread($fvh, 1024), '_', '.');
     fclose($fvh);
-    return $currentVersion;
+    return trim($currentVersion);
 }
 
 /*
@@ -465,3 +468,25 @@ function updateViewDitte($db) {
         }
         return true;
 }
+
+function getVersioneMaggiore($iniziale,$finale){
+	$inizialeSplitted = explode('.', str_replace('v', '', $iniziale));
+	$finaleSplitted =  explode('.', str_replace('v', '', $finale));
+	
+	// SE MAJOR VERSION DIFFERENTI, RITORNO LA MAGGIORE
+	if($inizialeSplitted[0] != $finaleSplitted[0]){
+		return ((int) $inizialeSplitted[0] < (int) $finaleSplitted[0]) ? $finale : $iniziale;
+	}
+	// MAJOR VERSION UGUALI, CONTROLLO LA MINOR VERSION
+	if($inizialeSplitted[1] != $finaleSplitted[1]){
+		return ((int) $inizialeSplitted[1] < (int) $finaleSplitted[1]) ? $finale : $iniziale;
+	}
+	// MAJOR E MINOR VERSION UGUALI, CONTROLLO IL BUILD NUMBER 
+	if($inizialeSplitted[2] != $finaleSplitted[2]){
+		return ((int) $inizialeSplitted[2] < (int) $finaleSplitted[2]) ? $finale : $iniziale;
+	}
+	// VERSIONI IDENTICHE NE RITORNO UNA
+	return $iniziale;
+}
+
+
