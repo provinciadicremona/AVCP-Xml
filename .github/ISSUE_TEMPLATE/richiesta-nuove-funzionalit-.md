@@ -7,14 +7,14 @@ assignees: ClaudioRoncaglio
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**La tua richiesta è relativa ad un problema che incontri utilizzando il software?**
+Aggiungi una breve descrizione di qual'è il problema che vorresti risolvere con la tua richiesta.
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**Descrivi la soluzione che hai in mente**
+Spiegaci brevemente come vorresti modificare il programma.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**Pensi ci sia più di un modo di risolvere il problema?**
+Descrivili brevemente.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Dacci qualche informazione in più**
+Aggiungi qui ogni cosa pensi ci possa aiutare a capire meglio la tua richiesta, screenshot compresi.
