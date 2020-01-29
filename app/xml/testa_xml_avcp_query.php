@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 error_reporting(E_ALL ^ E_NOTICE);
-require_once __DIR__ . '/../config.php';
+require_once dirname(__FILE__).'/../config.php';
 $anno = (int) $_GET['anno'];
 $XML_FILE = null;
 $XML_TOT = null;

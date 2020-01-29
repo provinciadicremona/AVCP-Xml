@@ -9,7 +9,7 @@
  * 
  * SPDX-License-Identifier: GPL-3.0-only
 */
-require_once __DIR__ . '/../config.php';
+require_once dirname(__FILE__).'/../config.php';
 
 // Converte una data dal formato Y-m-d a quello d-m-Y
 function dataIta($data) {

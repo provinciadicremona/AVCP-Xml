@@ -2,11 +2,11 @@
 /*
  * This file is part of project AVCP-Xml that can be found at:
  * https://github.com/provinciadicremona/AVCP-Xml
- * 
+ *
  * © 2013 Claudio Roncaglio <claudio.roncaglio@provincia.cremona.it>
  * © 2013 Gianni Bassini <gianni.bassini@provincia.cremona.it>
  * © 2013 Provincia di Cremona <sito@provincia.cremona.it>
- * 
+ *
  * SPDX-License-Identifier: GPL-3.0-only
  *
  * ----------------------------------------------
@@ -55,7 +55,7 @@ $msgUpdate  = null;
 $toUpdate   = false;
 $updateFrom = null;
 // Leggo il file version.txt per stabilire a che versione aggiornare
-$currentVersion = getCurrentVersion(); 
+$currentVersion = getCurrentVersion();
 // Controllo che esista la tabella delle versioni e se non c'è la creo
 // e poi stabilisco se aggiornare dalla 0.7.1 o dalla 0.7.2
 if (checkIfExistsTable($db, 'avcp_versioni') === false) {
@@ -68,11 +68,13 @@ if (checkIfExistsTable($db, 'avcp_versioni') === false) {
     $query = "SELECT `numero` FROM `avcp_versioni` ORDER BY `numero` DESC";
     $res = $db->query($query);
     $versioneDatabase = "0.0.0";
-    foreach($res as $row){
-		$versioneDatabase = getVersioneMaggiore($versioneDatabase,$row['numero']);
-	}
+    if ($res->num_rows > 0) {
+        while($row = $res->fetch_assoc()){
+            $versioneDatabase = getVersioneMaggiore($versioneDatabase,$row['numero']);
+        }
+    }
     if ($versioneDatabase != getVersioneMaggiore($versioneDatabase,$currentVersion)) {
-		$updateFrom = $versioneDatabase;
+        $updateFrom = $versioneDatabase;
         $toUpdate = true;
         updateVersionTable($db, $currentVersion);
     }
@@ -102,7 +104,7 @@ if ($toUpdate === true) {
     default:
         break;
     }
-    /* 
+    /*
      * Se sono arrivato fino a qui, allora è stato effettuato
      * un aggiornamento e l'esito è positivo.
      *
@@ -135,7 +137,7 @@ if ($toUpdate === true) {
  *
  * Se la query fallisce, annullo l'aggiornamento.
  *
- * @return bool 
+ * @return bool
  */
 function checkIfExistsTable($db, $tName) {
     $db->real_escape_string(trim($tName));
@@ -143,7 +145,7 @@ function checkIfExistsTable($db, $tName) {
     if (false === $res = $db->query($query)) {
         die("Non riesco a verificare l'esistenza della tabella ".$tName.". Aggiornamento fallito!");
     }
-    if ($res->num_rows === 0) 
+    if ($res->num_rows === 0)
         return false;
     return true;
 }
@@ -155,13 +157,13 @@ function checkIfExistsTable($db, $tName) {
  *
  * @param object $db Database connection handler
  *
- * @return bool 
+ * @return bool
  */
 function createVersionTable($db) {
-    $query = "CREATE TABLE `avcp_versioni` ( 
-            `numero` VARCHAR(10) NOT NULL COMMENT 'Numero della versione' , 
-            `data` DATE NOT NULL COMMENT 'Data di aggiornamento', 
-            PRIMARY KEY (`numero`)
+    $query = "CREATE TABLE `avcp_versioni` (
+        `numero` VARCHAR(10) NOT NULL COMMENT 'Numero della versione' ,
+        `data` DATE NOT NULL COMMENT 'Data di aggiornamento',
+        PRIMARY KEY (`numero`)
         ) ENGINE = InnoDB COMMENT = 'Versioni del programma installate'";
     if (false === $db->query($query))
         die("Non riesco a creare la tabella avcp_versioni. Aggiornamento fallito!");
@@ -180,36 +182,36 @@ function createViewExportOds($db) {
     if (false === $db->query($query)) {
         die("Errore nel DROP di createViewExportOds. Aggiornamento fallito!");
     }
-    $query = " CREATE VIEW `avcp_export_ods` AS select 
-    `l`.`id` AS `id`,
-    `l`.`anno` AS `anno`,
-    `l`.`numAtto` AS `numAtto`,
-    `l`.`cig` AS `cig`,
-    `l`.`oggetto` AS `oggetto`,
-    `l`.`sceltaContraente` AS `sceltaContraente`,
-    `l`.`dataInizio` AS `dataInizio`,
-    `l`.`dataUltimazione` AS `dataUltimazione`,
-    `l`.`importoAggiudicazione` AS `importoAggiudicazione`,
-    `l`.`importoSommeLiquidate` AS `importoSommeLiquidate`,
-    `l`.`chiuso` AS `chiuso`,
-    (SELECT COUNT(0) 
-        FROM `avcp_ld` `ldl` 
-        WHERE ((`l`.`id` = `ldl`.`id`) 
-            AND (`ldl`.`funzione` = '01-PARTECIPANTE'))) AS `partecipanti`,
-    (SELECT COUNT(0) FROM `avcp_ld` `ldl` 
-        WHERE ((`l`.`id` = `ldl`.`id`) 
-            AND (`ldl`.`funzione` = '02-AGGIUDICATARIO'))) AS `aggiudicatari`,
-    `l`.`userins` AS `userins`,
-    group_concat(`ditta`.`ragioneSociale` separator 'xxxxx') AS `nome_aggiudicatari` 
-    FROM ((`avcp_lotto` `l` 
-            LEFT JOIN `avcp_ld` `ld` 
-            ON(((`l`.`id` = `ld`.`id`) 
-                    and (`ld`.`funzione` = '02-AGGIUDICATARIO')))) 
-        LEFT JOIN `avcp_ditta` `ditta` 
-        ON(`ld`.`codiceFiscale` = `ditta`.`codiceFiscale`)) 
-    GROUP BY `l`.`id` 
-    ORDER BY `l`.`anno`,
-    `l`.`id`";
+    $query = " CREATE VIEW `avcp_export_ods` AS select
+        `l`.`id` AS `id`,
+        `l`.`anno` AS `anno`,
+        `l`.`numAtto` AS `numAtto`,
+        `l`.`cig` AS `cig`,
+        `l`.`oggetto` AS `oggetto`,
+        `l`.`sceltaContraente` AS `sceltaContraente`,
+        `l`.`dataInizio` AS `dataInizio`,
+        `l`.`dataUltimazione` AS `dataUltimazione`,
+        `l`.`importoAggiudicazione` AS `importoAggiudicazione`,
+        `l`.`importoSommeLiquidate` AS `importoSommeLiquidate`,
+        `l`.`chiuso` AS `chiuso`,
+        (SELECT COUNT(0)
+        FROM `avcp_ld` `ldl`
+        WHERE ((`l`.`id` = `ldl`.`id`)
+        AND (`ldl`.`funzione` = '01-PARTECIPANTE'))) AS `partecipanti`,
+        (SELECT COUNT(0) FROM `avcp_ld` `ldl`
+        WHERE ((`l`.`id` = `ldl`.`id`)
+        AND (`ldl`.`funzione` = '02-AGGIUDICATARIO'))) AS `aggiudicatari`,
+        `l`.`userins` AS `userins`,
+        group_concat(`ditta`.`ragioneSociale` separator 'xxxxx') AS `nome_aggiudicatari`
+        FROM ((`avcp_lotto` `l`
+        LEFT JOIN `avcp_ld` `ld`
+        ON(((`l`.`id` = `ld`.`id`)
+        and (`ld`.`funzione` = '02-AGGIUDICATARIO'))))
+        LEFT JOIN `avcp_ditta` `ditta`
+        ON(`ld`.`codiceFiscale` = `ditta`.`codiceFiscale`))
+        GROUP BY `l`.`id`
+        ORDER BY `l`.`anno`,
+        `l`.`id`";
     if (false === $db->query($query)) {
         die("Errore nella CREATE di createViewExportOds. Aggiornamento fallito!");
     }
@@ -223,7 +225,7 @@ function createViewExportOds($db) {
 
  * @param object $db Database connection handler
  *
- * @return bool, string 
+ * @return bool, string
  */
 function updateTableAvcpLotto($db) {
     $queryLotto = "ALTER TABLE `avcp_lotto` ADD `chiuso` BOOLEAN NOT NULL DEFAULT FALSE AFTER `flag`";
@@ -239,15 +241,15 @@ function updateTableAvcpLotto($db) {
  *
  * @param object $db Database connection handler
  *
- * @return bool 
+ * @return bool
  */
 function updateTableSceltaContraente($db) {
     $query = "DROP TABLE IF EXISTS `avcp_sceltaContraenteType`";
     if (false === $db->query($query)) {
         die("Errore nel DROP di updateTableSceltaContraente. Aggiornamento fallito!");
     }
-    $query = " CREATE TABLE `avcp_sceltaContraenteType` 
-        (`ruolo` varchar(255) NOT NULL COMMENT 'tipo scelta contraente') 
+    $query = " CREATE TABLE `avcp_sceltaContraenteType`
+        (`ruolo` varchar(255) NOT NULL COMMENT 'tipo scelta contraente')
         ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tipo scelta contraente'";
     if (false === $db->query($query)) {
         die("Errore nella CREATE di updateTableSceltaContraente. Aggiornamento fallito!");
@@ -289,7 +291,7 @@ function updateTableSceltaContraente($db) {
 
 
 /*
- * Aggiorno i dati della abella `avcp_lotti con le nuove 
+ * Aggiorno i dati della abella `avcp_lotti con le nuove
  * tipologie di scelta del contraente aggiornate il 4/11/2019
  * Modificano i codici 3, 4, 6, 17, 22, 23 e 25
  *
@@ -332,7 +334,7 @@ function updateLottiSceltaContraente($db) {
 }
 
 /*
- * Leggo il file version.txt per determinare la 
+ * Leggo il file version.txt per determinare la
  * versione corrente del programma.
  *
  * Se fallisco, annullo l'aggiornamento.
@@ -374,7 +376,7 @@ function updateVersionTable($db, $currentVersion) {
 /*
  * Aggiorno la tabella avcp_versioni con il nuovo valore
  * Determino se vengo da 0.7.1/2/4
- * La versione 0.7.4 dovrebbe essere in uso solo 
+ * La versione 0.7.4 dovrebbe essere in uso solo
  * all'interno della Provincia di Cremona
  *
  * Se fallisco, annullo l'aggiornamento.
@@ -411,11 +413,11 @@ function fromWhichOldVersion($db) {
  * @return bool
  */
 function updateViewDitte($db) {
-        $queryDelDitte = "DROP VIEW IF EXISTS `avcp_vista_ditte`";
-        if (false === $db->query($queryDelDitte)) {
-            die("Errore nella DROP di updateViewDitte. Aggiornamento fallito!");
-        }
-        $query = "
+    $queryDelDitte = "DROP VIEW IF EXISTS `avcp_vista_ditte`";
+    if (false === $db->query($queryDelDitte)) {
+        die("Errore nella DROP di updateViewDitte. Aggiornamento fallito!");
+    }
+    $query = "
         CREATE VIEW `avcp_vista_ditte` AS
         SELECT
             `d`.`codiceFiscale` AS `codiceFiscale`,
@@ -463,30 +465,30 @@ function updateViewDitte($db) {
             `d`.`codiceFiscale`
         ORDER BY
             `d`.`ragioneSociale`";
-        if (false === $db->query($query)) {
-            die("Errore nella CREATE di updateViewDitte. Aggiornamento fallito!");
-        }
-        return true;
+    if (false === $db->query($query)) {
+        die("Errore nella CREATE di updateViewDitte. Aggiornamento fallito!");
+    }
+    return true;
 }
 
 function getVersioneMaggiore($iniziale,$finale){
-	$inizialeSplitted = explode('.', str_replace('v', '', $iniziale));
-	$finaleSplitted =  explode('.', str_replace('v', '', $finale));
-	
-	// SE MAJOR VERSION DIFFERENTI, RITORNO LA MAGGIORE
-	if($inizialeSplitted[0] != $finaleSplitted[0]){
-		return ((int) $inizialeSplitted[0] < (int) $finaleSplitted[0]) ? $finale : $iniziale;
-	}
-	// MAJOR VERSION UGUALI, CONTROLLO LA MINOR VERSION
-	if($inizialeSplitted[1] != $finaleSplitted[1]){
-		return ((int) $inizialeSplitted[1] < (int) $finaleSplitted[1]) ? $finale : $iniziale;
-	}
-	// MAJOR E MINOR VERSION UGUALI, CONTROLLO IL BUILD NUMBER 
-	if($inizialeSplitted[2] != $finaleSplitted[2]){
-		return ((int) $inizialeSplitted[2] < (int) $finaleSplitted[2]) ? $finale : $iniziale;
-	}
-	// VERSIONI IDENTICHE NE RITORNO UNA
-	return $iniziale;
+    $inizialeSplitted = explode('.', str_replace('v', '', $iniziale));
+    $finaleSplitted =  explode('.', str_replace('v', '', $finale));
+
+    // SE MAJOR VERSION DIFFERENTI, RITORNO LA MAGGIORE
+    if($inizialeSplitted[0] != $finaleSplitted[0]){
+        return ((int) $inizialeSplitted[0] < (int) $finaleSplitted[0]) ? $finale : $iniziale;
+    }
+    // MAJOR VERSION UGUALI, CONTROLLO LA MINOR VERSION
+    if($inizialeSplitted[1] != $finaleSplitted[1]){
+        return ((int) $inizialeSplitted[1] < (int) $finaleSplitted[1]) ? $finale : $iniziale;
+    }
+    // MAJOR E MINOR VERSION UGUALI, CONTROLLO IL BUILD NUMBER
+    if($inizialeSplitted[2] != $finaleSplitted[2]){
+        return ((int) $inizialeSplitted[2] < (int) $finaleSplitted[2]) ? $finale : $iniziale;
+    }
+    // VERSIONI IDENTICHE NE RITORNO UNA
+    return $iniziale;
 }
 
 
