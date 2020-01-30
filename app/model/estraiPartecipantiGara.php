@@ -36,7 +36,7 @@ if ($aggiudicata > 0) {
                     <div class="span12">
                         <div class="alert alert-error">
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong>Errore nella selezione aggiudicatari</strong><br /> ' . mysql_error() . '
+                            <strong>Errore nella selezione aggiudicatari</strong><br /> ' . $db->error . '
                         </div>
                     </div>
                     </div>', 1);

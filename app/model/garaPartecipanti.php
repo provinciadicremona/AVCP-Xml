@@ -204,7 +204,7 @@ switch ($_GET['do']){
                     <div class="span12">
                         <div class="alert alert-error">
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong>Errore nell\'aggiunta dell\'azienda alla gara:</strong><br /> ' . mysql_error() . '
+                            <strong>Errore nell\'aggiunta dell\'azienda alla gara:</strong><br /> ' . $db->error . '
                         </div>
                     </div>
                     </div>', 1);
