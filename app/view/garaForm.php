@@ -114,7 +114,7 @@ isset($importoSommeLiquidate) || $importoSommeLiquidate = '';
                     <!-- / modal atto -->
                     <label for="oggetto">Oggetto</label>
                     <textarea name="oggetto" class="span6" maxlength="250"
-                        placeholder="Oggeto della gara"><?php echo $oggetto; ?></textarea>
+                        placeholder="Oggetto della gara"><?php echo $oggetto; ?></textarea>
                     <label for="sceltaContraente">Scelta contraente</label> <select
                         name="sceltaContraente" class="span6">
                         <?php echo $ruoloOutput;	?>
