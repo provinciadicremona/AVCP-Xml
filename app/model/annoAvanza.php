@@ -60,7 +60,7 @@ if ($_SESSION['user'] == 'admin' && $bloccati[$annoStart] == 'n') {
                     '${oldLotto['oggetto']}',
                     '${oldLotto['sceltaContraente']}',
                     '${oldLotto['importoAggiudicazione']}',
-                    '${oldLotto['dataInizio']}',
+                    NULLIF('${oldLotto['dataInizio']}', ''),
                     NULLIF('${oldLotto['dataUltimazione']}', ''),
                     '${oldLotto['importoSommeLiquidate']}',
                     '${oldLotto['userins']}',
