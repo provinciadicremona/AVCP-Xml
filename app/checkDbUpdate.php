@@ -88,18 +88,25 @@ if ($toUpdate === true) {
         updateViewDitte($db);
         updateTableSceltaContraente($db);
         updateLottiSceltaContraente($db);
+        updateTypesL190V1_3($db);
         break;
     case '0.7.2':
         updateViewDitte($db);
         updateTableSceltaContraente($db);
         updateLottiSceltaContraente($db);
+        updateTypesL190V1_3($db);
         break;
     case '0.7.4':
         updateTableSceltaContraente($db);
         updateLottiSceltaContraente($db);
+        updateTypesL190V1_3($db);
         break;
     case ($updateFrom > '0.7.4' && $updateFrom < '0.8.9'):
         updateLottiSceltaContraente($db);
+        updateTypesL190V1_3($db);
+        break;
+    case ($updateFrom >= '0.8.9':
+        updateTypesL190V1_3($db);
         break;
     default:
         break;
@@ -492,3 +499,20 @@ function getVersioneMaggiore($iniziale,$finale){
 }
 
 
+/*
+ * Aggiorno la tabella `avcp_sceltaContraenteType`
+ * per aggiungere la voce 39 prevista dalla versione
+ * 1.3 del file TypesL190.xsd del 17/11/2021
+ *
+ * @param object $db Database connection handler
+ *
+ * @return bool
+ */
+function updateTypesL190V1_3($db) {
+    $query = 'INSERT INTO `avcp_sceltaContraenteType` (`ruolo`) VALUES
+        ("39-AFFIDAMENTO DIRETTO PER MODIFICHE CONTRATTUALI O VARIANTI PER LE QUALI È NECESSARIA UNA NUOVA PROCEDURA DI AFFIDAMENTO")';
+    if (false === $db->query($query)) {
+        die("Errore nell'INSERT di updateTypesL190V1_3. Aggiornamento fallito!");
+    }
+    return true;
+}

@@ -11,8 +11,8 @@ Generatore di dataset XML per l'Autorità per la Vigilanza sui Contratti Pubblic
 ## Screenshots
 ![Homepage del programma](./screenshots/home080.png)
 
-## Upgrade dalla versione 0.7.1
-Per aggiornare il programma, [scaricare la release più recente](https://github.com/provinciadicremona/AVCP-Xml/releases/latest) e seguire le istruzioni riportate di seguito.
+## Aggiornata alle specifiche ANAC del 17/11/2021
+Supporta la [versione 1.3 del file TypesL190.xsd](https://dati.anticorruzione.it/schema/TypesL190.xsd) che introduce una nuova modalità di scelta del contraente.
 
 ## API per l'ultima versione disponibile
 `https://api.github.com/repos/provinciadicremona/AVCP-Xml/releases/latest`

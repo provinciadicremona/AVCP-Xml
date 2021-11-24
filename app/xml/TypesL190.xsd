@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema xmlns:legge190="legge190_1_0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="qualified">
-	<!-- VERSIONE 1.2 -->
+	<!-- VERSIONE 1.3 -->
 	<xsd:simpleType name="CigType">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="10"/>
@@ -51,6 +51,7 @@
 			<xsd:enumeration value="36-AFFIDAMENTO DIRETTO PER LAVORI, SERVIZI O FORNITURE SUPPLEMENTARI"/>
 			<xsd:enumeration value="37-PROCEDURA COMPETITIVA CON NEGOZIAZIONE"/>
 			<xsd:enumeration value="38-PROCEDURA DISCIPLINATA DA REGOLAMENTO INTERNO PER SETTORI SPECIALI"/>
+			<xsd:enumeration value="39-AFFIDAMENTO DIRETTO PER MODIFICHE CONTRATTUALI O VARIANTI PER LE QUALI È NECESSARIA UNA NUOVA PROCEDURA DI AFFIDAMENTO"/>			
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="denominazioneType">
