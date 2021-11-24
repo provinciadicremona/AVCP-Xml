@@ -105,7 +105,7 @@ if ($toUpdate === true) {
         updateLottiSceltaContraente($db);
         updateTypesL190V1_3($db);
         break;
-    case ($updateFrom >= '0.8.9':
+    case ($updateFrom >= '0.8.9'):
         updateTypesL190V1_3($db);
         break;
     default:
