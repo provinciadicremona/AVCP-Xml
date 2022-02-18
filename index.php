@@ -28,7 +28,7 @@ setlocale(LC_MONETARY, 'it_IT.UTF-8');
  * @var [type]
  */
 $customJsScript = null;
-
+// Commento di prova
 $callToJqueryUI = '
     <script src="js/jquery.ui.core.js"></script>
     <script src="js/jquery.ui.widget.js"></script>
