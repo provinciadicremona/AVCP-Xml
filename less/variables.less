@@ -291,7 +291,8 @@
 @errorBorder:             darken(spin(@errorBackground, -10), 3%);
 
 @successText:             #468847;
-@successBackground:       #dff0d8;
+// @successBackground:       #dff0d8;
+@successBackground:       #b3fcb4;
 @successBorder:           darken(spin(@successBackground, -10), 5%);
 
 @infoText:                #3a87ad;
@@ -341,13 +342,13 @@
 
 // Fluid grid
 // -------------------------
-@fluidGridColumnWidth:    percentage(@gridColumnWidth/@gridRowWidth);
-@fluidGridGutterWidth:    percentage(@gridGutterWidth/@gridRowWidth);
+@fluidGridColumnWidth:    percentage((@gridColumnWidth/@gridRowWidth));
+@fluidGridGutterWidth:    percentage((@gridGutterWidth/@gridRowWidth));
 
 // 1200px min
-@fluidGridColumnWidth1200:     percentage(@gridColumnWidth1200/@gridRowWidth1200);
-@fluidGridGutterWidth1200:     percentage(@gridGutterWidth1200/@gridRowWidth1200);
+@fluidGridColumnWidth1200:     percentage((@gridColumnWidth1200/@gridRowWidth1200));
+@fluidGridGutterWidth1200:     percentage((@gridGutterWidth1200/@gridRowWidth1200));
 
 // 768px-979px
-@fluidGridColumnWidth768:      percentage(@gridColumnWidth768/@gridRowWidth768);
-@fluidGridGutterWidth768:      percentage(@gridGutterWidth768/@gridRowWidth768);
+@fluidGridColumnWidth768:      percentage((@gridColumnWidth768/@gridRowWidth768));
+@fluidGridGutterWidth768:      percentage((@gridGutterWidth768/@gridRowWidth768));
