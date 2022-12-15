@@ -37,7 +37,7 @@ $customJsScript = '
 </script>
 ';
 // inizialize unset variables
-isset($anno) || $anno = '';
+isset($anno) || $anno = date('Y');
 isset($id) || $id = '';
 isset($cig) || $cig = '';
 isset($numAtto) || $numAtto = '';
@@ -69,13 +69,13 @@ isset($importoSommeLiquidate) || $importoSommeLiquidate = '';
                     <legend>Dati gara:</legend>
                     <label for="anno">Anno di riferimento</label> <input type="text"
                         name="anno" class="span1" placeholder="Anno"
-                        value="<?php echo $anno; ?>" autofocus/> 
+                        value="<?php echo $anno; ?>" /> 
                     <input type="hidden" name="id"
                         value="<?php echo $id; ?>" /> 
                     <label for="cig">C.I.G.</label>
                     <input type="text" name="cig" maxlength="10"
                         placeholder="Codice Identificativo Gara"
-                        value="<?php echo $cig; ?>" /> 
+                        value="<?php echo $cig; ?>" autofocus /> 
                     <label for="numAtto">Numero Atto/i (facoltativo)</label>
                     <input type="text" name="numAtto"
                         maxlength="255" placeholder="Numero della determinazione"
