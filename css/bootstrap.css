@@ -542,7 +542,7 @@ a:focus {
   clear: both;
 }
 p {
-  margin: 0 0 20px / 2;
+  margin: 0 0 10px;
 }
 .lead {
   margin-bottom: 20px;
@@ -672,7 +672,7 @@ h4 small {
 ul,
 ol {
   padding: 0;
-  margin: 0 0 20px / 2 25px;
+  margin: 0 0 10px 25px;
 }
 ul ul,
 ul ol,
@@ -713,7 +713,7 @@ dt {
   font-weight: bold;
 }
 dd {
-  margin-left: 20px / 2;
+  margin-left: 10px;
 }
 .dl-horizontal {
   *zoom: 1;
@@ -864,7 +864,7 @@ input[type="color"],
   display: inline-block;
   height: 20px;
   padding: 4px 6px;
-  margin-bottom: 20px / 2;
+  margin-bottom: 10px;
   font-size: 14px;
   line-height: 20px;
   color: #555;
@@ -1346,7 +1346,7 @@ select:focus:invalid:focus {
 }
 .help-block {
   display: block;
-  margin-bottom: 20px / 2;
+  margin-bottom: 10px;
 }
 .help-inline {
   display: inline-block;
@@ -1359,7 +1359,7 @@ select:focus:invalid:focus {
 .input-append,
 .input-prepend {
   display: inline-block;
-  margin-bottom: 20px / 2;
+  margin-bottom: 10px;
   vertical-align: middle;
   font-size: 0;
   white-space: nowrap;
@@ -1596,7 +1596,7 @@ input.search-query {
   margin-left: 0;
 }
 .control-group {
-  margin-bottom: 20px / 2;
+  margin-bottom: 10px;
 }
 legend + .control-group {
   margin-top: 20px;
@@ -1639,7 +1639,7 @@ legend + .control-group {
 .form-horizontal .uneditable-input + .help-block,
 .form-horizontal .input-prepend + .help-block,
 .form-horizontal .input-append + .help-block {
-  margin-top: 20px / 2;
+  margin-top: 10px;
 }
 .form-horizontal .form-actions {
   padding-left: 180px;
@@ -1885,7 +1885,7 @@ table th[class*="span"],
   display: inline-block;
   width: 14px;
   height: 14px;
-  *margin-right: 0.3em;
+  *margin-right: .3em;
   line-height: 14px;
   vertical-align: text-top;
   background-image: url("../img/glyphicons-halflings.png");
@@ -2601,7 +2601,7 @@ table th[class*="span"],
   line-height: 20px;
   color: #000;
   text-shadow: 0 1px 0 #ffffff;
-  opacity: 20 / 100;
+  opacity: 0.2;
   filter: alpha(opacity=20);
 }
 .close:hover,
@@ -2609,7 +2609,7 @@ table th[class*="span"],
   color: #000;
   text-decoration: none;
   cursor: pointer;
-  opacity: 40 / 100;
+  opacity: 0.4;
   filter: alpha(opacity=40);
 }
 button.close {
@@ -2652,7 +2652,7 @@ button.close {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
-  *margin-left: 0.3em;
+  *margin-left: .3em;
   -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
   -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
@@ -2704,7 +2704,7 @@ button.close {
 .btn[disabled] {
   cursor: default;
   background-image: none;
-  opacity: 65 / 100;
+  opacity: 0.65;
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -3295,7 +3295,7 @@ input[type="submit"].btn.btn-mini {
 .nav li.dropdown.open a:focus .caret {
   border-top-color: #fff;
   border-bottom-color: #fff;
-  opacity: 100 / 100;
+  opacity: 1;
   filter: alpha(opacity=100);
 }
 .tabs-stacked .open > a:hover,
@@ -3490,7 +3490,7 @@ input[type="submit"].btn.btn-mini {
 }
 .navbar .btn,
 .navbar .btn-group {
-  margin-top: 10px / 2;
+  margin-top: 5px;
 }
 .navbar .btn-group .btn,
 .navbar .input-prepend .btn,
@@ -3516,7 +3516,7 @@ input[type="submit"].btn.btn-mini {
 .navbar-form select,
 .navbar-form .radio,
 .navbar-form .checkbox {
-  margin-top: 10px / 2;
+  margin-top: 5px;
 }
 .navbar-form input,
 .navbar-form select,
@@ -3541,7 +3541,7 @@ input[type="submit"].btn.btn-mini {
 .navbar-search {
   position: relative;
   float: left;
-  margin-top: 10px / 2;
+  margin-top: 5px;
   margin-bottom: 0;
 }
 .navbar-search .search-query {
@@ -3932,7 +3932,7 @@ input[type="submit"].btn.btn-mini {
 }
 .modal-backdrop,
 .modal-backdrop.fade.in {
-  opacity: 80 / 100;
+  opacity: 0.8;
   filter: alpha(opacity=80);
 }
 .modal {
@@ -4028,11 +4028,11 @@ input[type="submit"].btn.btn-mini {
   visibility: visible;
   font-size: 11px;
   line-height: 1.4;
-  opacity: 0 / 100;
+  opacity: 0;
   filter: alpha(opacity=0);
 }
 .tooltip.in {
-  opacity: 80 / 100;
+  opacity: 0.8;
   filter: alpha(opacity=80);
 }
 .tooltip.top {
