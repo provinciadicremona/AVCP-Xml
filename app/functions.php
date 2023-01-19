@@ -19,14 +19,10 @@
  * @return string
  */
 function stampaValuta($val) {
-    if (php_uname('s') === 'Linux') {
-        if (PHP_MAJOR_VERSION < 8) {
+    if (php_uname('s') === 'Linux' && PHP_MAJOR_VERSION < 8 ) {
             echo strtr(money_format('%.2n', $val), 'EUR', '€');
-        } else {
-            echo '€ ' .$val;
-        }
     } else {
-        echo '€ ' .$val;
+        echo '€ '.sprintf('%01.2f', $val);
     }
 }
 
