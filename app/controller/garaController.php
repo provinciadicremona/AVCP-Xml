@@ -36,6 +36,9 @@ case 'eliminaGara':
 case 'elencaGareAnno':
     require_once AVCP_DIR . 'app/model/garaElenca.php';
     break;
+case 'duplicaGara':
+    require_once AVCP_DIR . 'app/model/garaDuplica.php';
+    break;
 default:
     require_once AVCP_DIR . 'app/model/gara.php';
     break;

@@ -240,6 +240,9 @@ switch ($_GET['do']){
     case 'elencaGareAnno':
         require_once AVCP_DIR . 'app/view/garaElenca.php';
         break;
+    case 'duplicaGara':
+        require_once AVCP_DIR . 'app/view/garaDuplica.php';
+        break;
     case 'errore':
         require_once AVCP_DIR . 'footer.php';
         break;

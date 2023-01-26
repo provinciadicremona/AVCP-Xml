@@ -140,6 +140,7 @@ foreach ($userList as $u) :
                     <th><abbr title="Numero partecipanti">Part.</abbr></th>
                     <th width="8%"><abbr title="Aggiudicatari">Agg.</abbr></th>
                     <th><abbr title="Utente che ha inserito o importato la gara">Utente</abbr></th>
+                    <th>&nbsp;</th>
                 </tr>
             <?php for($x=0; $x < $quante; $x++): ?>
 <?php if ($out[$x]['chiuso'] == 1 || $out[$x]['importoSommeLiquidate'] >= ($out[$x]['importoAggiudicazione'] )) : ?>
@@ -179,6 +180,9 @@ if ($out[$x]['aggiudicatari'] > 0) {
 ?>
                     </td>
                     <td><?php echo $out[$x]['userins'];?></td>
+                    <td>
+                        <p>&nbsp;<a href="?mask=gara&amp;do=duplicaGara&amp;idDaElenco=<?php echo $out[$x]['id'];?>" title="Duplica Gara"><i class="icon-plus"></i></a>&nbsp;</p>
+                    </td>
                 </tr>
                 <?php endfor;?>
 
