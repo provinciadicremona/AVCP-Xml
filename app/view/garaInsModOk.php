@@ -22,6 +22,8 @@ function dataIta($data) {
     return $dataNew;
 }
 
+isset($chiuso) || $chiuso = 0;
+
 ?>
 <div class="row">
     <div class="span10 offset1">
