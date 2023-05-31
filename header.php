@@ -55,7 +55,7 @@ html, body {
 }
 </style>
 <link href="css/bootstrap-responsive.css" rel="stylesheet" />
-<link rel="stylesheet" href="js/jquery-ui.css">
+<link rel="stylesheet" href="css/jquery.ui.all.css">
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -91,7 +91,7 @@ html, body {
                             <li class="dropdown<?php echo $actAzioni;?>"><a href="#"
                                 class="dropdown-toggle" data-toggle="dropdown">Azioni <b
                                     class="caret"></b></a>
-                                <ul class="dropdown-menu" id="menu">
+                                <ul class="dropdown-menu">
                                     <li class="nav-header">Gare</li>
                                     <li><a href="?mask=gara"><i class="icon-plus"></i>&nbsp;Inserisci
                                             nuova gara</a></li>

@@ -29,18 +29,14 @@ setlocale(LC_MONETARY, 'it_IT.UTF-8');
  */
 $customJsScript = null;
 // Commento di prova
-/* $callToJqueryUI = ' */
-/*     <script src="js/jquery.ui.core.js"></script> */
-/*     <script src="js/jquery.ui.widget.js"></script> */
-/*     <script src="js/jquery.ui.position.js"></script> */
-/*     <script src="js/jquery.ui.menu.js"></script> */
-/*     <script src="js/jquery.ui.autocomplete.js"></script> */
-/*     <script src="js/jquery.ui.datepicker.js"></script> */
-/*     <script src="js/jquery.ui.datepicker-it.js"></script> */
-/*     '; */
-
 $callToJqueryUI = '
-    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.ui.core.js"></script>
+    <script src="js/jquery.ui.widget.js"></script>
+    <script src="js/jquery.ui.position.js"></script>
+    <script src="js/jquery.ui.menu.js"></script>
+    <script src="js/jquery.ui.autocomplete.js"></script>
+    <script src="js/jquery.ui.datepicker.js"></script>
+    <script src="js/jquery.ui.datepicker-it.js"></script>
     ';
 
 require_once AVCP_DIR.'app/config.php';
