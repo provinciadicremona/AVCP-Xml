@@ -22,7 +22,7 @@ function stampaValuta($val) {
     if (php_uname('s') === 'Linux' && PHP_MAJOR_VERSION < 8 ) {
             echo strtr(money_format('%.2n', $val), 'EUR', '€');
     } else {
-        echo '€ '.sprintf('%01.2f', $val);
+        echo '€ '.number_format($val, 2, ',', '.');
     }
 }
 
